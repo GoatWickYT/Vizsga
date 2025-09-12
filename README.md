@@ -70,32 +70,23 @@
 ---
 
 <div>
-<h1 align="center">Adatbázis relációk és alkatrészek</h1>
+<h1 align="center">Leírás</h1>
 </div>
 
 > ## Belépők
 > 
 > Alkalmazásunk és webes platformunk nem csak lehetővé teszi a jegyek vásárlását de ezek szerkesztését és kénylemes kezelését is
 > 
-> <div>
-> <img src="./Images/Ticket.jpg"/>
-> </div>
 
 > ## Térkép
 > 
 > Amint belépnek a felhasználók a Vadaspark területére és megnyitják az alkalmazást egy térkép válik számukra elérhetővé ahol meg tudják tekinteni a saját, az állatok és egyéb fontos pontnak a helyzetét, emellett, a Vadasparkba történő eseményeket is látják
 > 
-> <div>
-> <img src="./Images/Map.jpg"/>
-> </div>
 
 > ## Hírek
 > 
 > Amellett hogy a Vadaspark híreit megnézhetik az alkalmazás értesítést is küld a telefonjukra az éppen fontos hírekről és közeledő eseményekről így biztosan tudni fognak a Vadaspark által tartott különleges alkalmakról
 > 
-> <div>
-> <img src="./Images/News.jpg"/>
-> </div>
 
 ---
 
@@ -154,32 +145,23 @@
 ---
 
 <div align="center">
-<h1>Database relations and parts</h1>
+<h1>Desscription</h1>
 </div>
 
 > ## Tickets
 > 
 > Our app and web platform will make it possible to purchase and manage your tickets without having to leave the comfort of your home
 > 
-> <div>
-> <img src="./Images/Ticket.jpg"/>
-> </div>
 
 > ## Map
 > 
 > Once you enter the establishment, you will be able to check on our mobile app your current whereabouts, location of bufets, animals and point of interests, along with different events going on nearby
 > 
-> <div>
-> <img src="./Images/Map.jpg"/>
-> </div>
 
 > ## News
 > 
 > With the extra addition of being able to not just check but be notified of upcoming events the zoo is hosting you will surely never miss a halloween event hosted by the zoo
 > 
-> <div>
-> <img src="./Images/News.jpg"/>
-> </div>
 
 ---
 
