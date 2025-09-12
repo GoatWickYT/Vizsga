@@ -1,3 +1,6 @@
+<img src="./Images/Logo.png"/>
+
+
 <div align="center">
 <h1>
 <a href="#hun">Magyar</a>
@@ -7,6 +10,10 @@
 </div>
 
 ---
+
+<div align="center">
+<img src="./Images/magyar.png"/>
+</div>
 
 <div align="center" id="hun">
 <h1 style="text-decoration: underline;">    
@@ -74,10 +81,6 @@
 > <img src="./Images/Ticket.jpg"/>
 > </div>
 
-
-
-
-
 > ## Térkép
 > 
 > Amint belépnek a felhasználók a Vadaspark területére és megnyitják az alkalmazást egy térkép válik számukra elérhetővé ahol meg tudják tekinteni a saját, az állatok és egyéb fontos pontnak a helyzetét, emellett, a Vadasparkba történő eseményeket is látják
@@ -85,8 +88,6 @@
 > <div>
 > <img src="./Images/Map.jpg"/>
 > </div>
-
-
 
 > ## Hírek
 > 
@@ -98,6 +99,10 @@
 
 ---
 
+<div align="center">
+<img src="./Images/english.png"/>
+</div>
+
 <div align="center" id="eng">
 <h1 style="text-decoration: underline;">    
 <strong>
@@ -106,8 +111,6 @@
 </strong>
 </h1>
 </div>
-
-
 
 <div align="center">
 <h1>To-Do List</h1>
@@ -162,8 +165,6 @@
 > <img src="./Images/Ticket.jpg"/>
 > </div>
 
-
-
 > ## Map
 > 
 > Once you enter the establishment, you will be able to check on our mobile app your current whereabouts, location of bufets, animals and point of interests, along with different events going on nearby
@@ -172,8 +173,6 @@
 > <img src="./Images/Map.jpg"/>
 > </div>
 
-
-
 > ## News
 > 
 > With the extra addition of being able to not just check but be notified of upcoming events the zoo is hosting you will surely never miss a halloween event hosted by the zoo
@@ -181,3 +180,13 @@
 > <div>
 > <img src="./Images/News.jpg"/>
 > </div>
+
+---
+
+> ### Elérhetőség:
+> 
+> email-BB: b1bodbal@vasvari.org
+> 
+> email-VT: b1vidtam@vasari.org
+> 
+> email-WA: b1witatt@vasvari.org
