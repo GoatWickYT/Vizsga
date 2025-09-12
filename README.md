@@ -1,4 +1,4 @@
-<div>
+<div align="center">
 <h1>
 <a href="#hun">Magyar</a>
 <span>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</span>
@@ -8,7 +8,7 @@
 
 ---
 
-<div id="hun">
+<div align="center" id="hun">
 <h1 style="text-decoration: underline;">    
 <strong>
 <u>
@@ -20,7 +20,9 @@
 
 ---
 
-# Teendők
+<div align="center">
+<h1>Teendők</h1>
+</div>
 
 - [ ] Adatbázis
   
@@ -54,49 +56,49 @@
 
 - [ ] \*\* Értékesítés
 
-
-
 \* Az asztali alkalmazás csak és kizárólag a Vadaspark Dolgozóinak lesz hasznos és ezen okból elérhető
 
 \*\* Miután elkészül az alkalmazás értékesítésre kerülne sor, a Vadaspark igazgatójával való tárgyalás után
 
 ---
 
-# Database relations and parts
+<div>
+<h1 align="center">Adatbázis relációk és alkatrészek</h1>
+</div>
 
 > ## Belépők
 > 
 > Alkalmazásunk és webes platformunk nem csak lehetővé teszi a jegyek vásárlását de ezek szerkesztését és kénylemes kezelését is
 > 
-> ![tickets.jpg](D:\Vizsga\tickets.jpg)
+> <div>
+> <img src="./Images/Ticket.jpg"/>
+> </div>
 
----
+
+
+
 
 > ## Térkép
 > 
 > Amint belépnek a felhasználók a Vadaspark területére és megnyitják az alkalmazást egy térkép válik számukra elérhetővé ahol meg tudják tekinteni a saját, az állatok és egyéb fontos pontnak a helyzetét, emellett, a Vadasparkba történő eseményeket is látják
 > 
-> ![map.jpg](D:\Vizsga\map.jpg)
+> <div>
+> <img src="./Images/Map.jpg"/>
+> </div>
 
----
+
 
 > ## Hírek
 > 
 > Amellett hogy a Vadaspark híreit megnézhetik az alkalmazás értesítést is küld a telefonjukra az éppen fontos hírekről és közeledő eseményekről így biztosan tudni fognak a Vadaspark által tartott különleges alkalmakról
 > 
-> ![news.jpg](D:\Vizsga\news.jpg)
-
-
-
----
+> <div>
+> <img src="./Images/News.jpg"/>
+> </div>
 
 ---
 
----
-
----
-
-<div id="eng">
+<div align="center" id="eng">
 <h1 style="text-decoration: underline;">    
 <strong>
 <u>
@@ -105,11 +107,14 @@
 </h1>
 </div>
 
---- 
 
-# To-do List
+
+<div align="center">
+<h1>To-Do List</h1>
+</div>
 
 - [ ] Database
+  
   - [ ] Code
   - [ ] Documentation
 
@@ -139,42 +144,40 @@
 
 - [ ] \*\*Bussiness Deal 
 
-
-
 \* Desktop Application is to be made purely for administrative work and therefore will only be useable and useful for employees
 
 \*\* After app is done and ready for use possible deal with the zoo manager to sell working app
 
 ---
 
-# Database relations and parts
+<div align="center">
+<h1>Database relations and parts</h1>
+</div>
 
 > ## Tickets
 > 
 > Our app and web platform will make it possible to purchase and manage your tickets without having to leave the comfort of your home
 > 
-> 
-> 
-> ![tickets.jpg](D:\Vizsga\tickets.jpg)
+> <div>
+> <img src="./Images/Ticket.jpg"/>
+> </div>
 
----
+
 
 > ## Map
 > 
 > Once you enter the establishment, you will be able to check on our mobile app your current whereabouts, location of bufets, animals and point of interests, along with different events going on nearby
 > 
-> 
-> 
-> ![tickets.jpg](D:\Vizsga\tickets.jpg)
+> <div>
+> <img src="./Images/Map.jpg"/>
+> </div>
 
----
+
 
 > ## News
 > 
 > With the extra addition of being able to not just check but be notified of upcoming events the zoo is hosting you will surely never miss a halloween event hosted by the zoo
 > 
-> 
-> 
-> ![tickets.jpg](D:\Vizsga\tickets.jpg)
-
-
+> <div>
+> <img src="./Images/News.jpg"/>
+> </div>
