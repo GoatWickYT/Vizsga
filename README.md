@@ -145,7 +145,7 @@
 ---
 
 <div align="center">
-<h1>Desscription</h1>
+<h1>Description</h1>
 </div>
 
 > ## Tickets
