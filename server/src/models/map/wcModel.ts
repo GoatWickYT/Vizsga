@@ -1,1 +1,71 @@
 import db from '../../config/db.js';
+import type { ResultSetHeader } from 'mysql2';
+
+export interface WC {
+    id?: number;
+    name: string;
+}
+
+/**
+ * Generic query helper
+ * @template T Type of the rows to return
+ * @param sql SQL query string
+ * @param params Optional array of query parameters
+ * @returns Promise resolving to an array of typed rows
+ */
+async function query<T = any>(sql: string, params?: any[]): Promise<T[]> {
+    const [rows] = await db.query(sql, params);
+    return rows as T[];
+}
+
+/**
+ * Get all WCs
+ * @returns Promise resolving to an array of all WC objects
+ */
+export async function getAllWCs(): Promise<WC[]> {
+    return query<WC>('SELECT * FROM WCs');
+}
+
+/**
+ * Get a single WC by ID
+ * @param id The ID of the WC to fetch
+ * @returns Promise resolving to the WC object if found, or null if not
+ */
+export async function getSingleWC(id: number): Promise<WC | null> {
+    const rows = await query<WC>('SELECT * FROM WCs WHERE id = ?', [id]);
+    return rows[0] || null;
+}
+
+/**
+ * Create a new WC
+ * @param WC The WC object to insert (name required)
+ * @returns Promise resolving to the ID of the newly inserted WC
+ */
+export async function createWC(WC: WC): Promise<number> {
+    const result = await query<ResultSetHeader>('INSERT INTO WCs (name) VALUES (?)', [WC.name]);
+    return result[0].insertId;
+}
+
+/**
+ * Update an existing WC
+ * @param id The ID of the WC to update
+ * @param WC Partial WC object with fields to update
+ * @returns Promise resolving to true if a row was updated, false otherwise
+ */
+export async function updateWC(id: number, WC: Partial<WC>): Promise<boolean> {
+    const result = await query<ResultSetHeader>('UPDATE WCs SET name = ? WHERE id = ?', [
+        WC.name,
+        id,
+    ]);
+    return result[0].affectedRows > 0;
+}
+
+/**
+ * Delete a WC by ID
+ * @param id The ID of the WC to delete
+ * @returns Promise resolving to true if a row was deleted, false otherwise
+ */
+export async function deleteWC(id: number): Promise<boolean> {
+    const result = await query<ResultSetHeader>('DELETE FROM WCs WHERE id = ?', [id]);
+    return result[0].affectedRows > 0;
+}
