@@ -2,6 +2,7 @@
 
 //////////////////////////////////
 
+This file is for to connect controllers with models.
 Import models used by controllers from ../model/*.js always has to end with .js
 
 //////////////////////////////////
