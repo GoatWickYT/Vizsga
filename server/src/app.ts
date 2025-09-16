@@ -1,4 +1,8 @@
 import express, { Request, Response, NextFunction } from 'express';
+import personRoutes from './routes/personRoutes.js';
+
+//need to add the ticket and the ticketType routes here
+
 // import the routes from ./routes/*.js, always ends in '.js'
 // import userRoutes from './routes/userRoutes.js';
 
@@ -16,5 +20,7 @@ app.use((err: unknown, req: Request, res: Response, next: NextFunction) => {
         res.status(500).json({ message: 'Server error', error: 'Unknown error' });
     }
 });
+
+app.use("/persons", personRoutes);
 
 export default app;

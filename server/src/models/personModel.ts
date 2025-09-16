@@ -48,4 +48,17 @@ export async function createPerson(person: Person): Promise<void> {
     await db.query('INSERT INTO Person (UserName, Name, Phone, Email, CreditCard, Password) VALUES (?, ?, ?, ?, ?, ?)', [person.UserName, person.Name, person.Phone, person.Email, person.CreditCard, person.Password]);
 }
 
-// get person by id, update person, delete person functions are going to be added similarly
+export async function getPersonById(id: number): Promise<Person | null> {
+    const [rows] = await db.query('SELECT * FROM Person WHERE id = ?', [id]);
+    const people = rows as Person[];
+    return people.length > 0 ? people[0] : null;
+}
+
+export async function updatePerson(id: number, person: Person): Promise<void> {
+    await db.query('UPDATE Person SET UserName = ?, Name = ?, Phone = ?, Email = ?, CreditCard = ?, Password = ? WHERE id = ?', [person.UserName, person.Name, person.Phone, person.Email, person.CreditCard, person.Password, id]);
+}   
+
+export async function deletePerson(id: number): Promise<void> {
+    await db.query('DELETE FROM Person WHERE id = ?', [id]);
+}
+
