@@ -6,16 +6,14 @@ export interface WC {
     name: string;
 }
 
-/**
- * Generic query helper
- * @template T Type of the rows to return
- * @param sql SQL query string
- * @param params Optional array of query parameters
- * @returns Promise resolving to an array of typed rows
- */
-async function query<T = any>(sql: string, params?: any[]): Promise<T[]> {
+export async function queryRows<T = any>(sql: string, params?: any[]): Promise<T[]> {
     const [rows] = await db.query(sql, params);
     return rows as T[];
+}
+
+export async function queryExec(sql: string, params?: any[]): Promise<ResultSetHeader> {
+    const [result] = await db.query(sql, params);
+    return result as ResultSetHeader;
 }
 
 /**
@@ -23,7 +21,7 @@ async function query<T = any>(sql: string, params?: any[]): Promise<T[]> {
  * @returns Promise resolving to an array of all WC objects
  */
 export async function getAllWCs(): Promise<WC[]> {
-    return query<WC>('SELECT * FROM WCs');
+    return queryRows<WC>('SELECT * FROM WCs');
 }
 
 /**
@@ -32,7 +30,7 @@ export async function getAllWCs(): Promise<WC[]> {
  * @returns Promise resolving to the WC object if found, or null if not
  */
 export async function getSingleWC(id: number): Promise<WC | null> {
-    const rows = await query<WC>('SELECT * FROM WCs WHERE id = ?', [id]);
+    const rows = await queryRows<WC>('SELECT * FROM WCs WHERE id = ?', [id]);
     return rows[0] || null;
 }
 
@@ -42,8 +40,8 @@ export async function getSingleWC(id: number): Promise<WC | null> {
  * @returns Promise resolving to the ID of the newly inserted WC
  */
 export async function createWC(WC: WC): Promise<number> {
-    const result = await query<ResultSetHeader>('INSERT INTO WCs (name) VALUES (?)', [WC.name]);
-    return result[0].insertId;
+    const result = await queryExec('INSERT INTO WCs (name) VALUES (?)', [WC.name]);
+    return result.insertId;
 }
 
 /**
@@ -53,11 +51,8 @@ export async function createWC(WC: WC): Promise<number> {
  * @returns Promise resolving to true if a row was updated, false otherwise
  */
 export async function updateWC(id: number, WC: Partial<WC>): Promise<boolean> {
-    const result = await query<ResultSetHeader>('UPDATE WCs SET name = ? WHERE id = ?', [
-        WC.name,
-        id,
-    ]);
-    return result[0].affectedRows > 0;
+    const result = await queryExec('UPDATE WCs SET name = ? WHERE id = ?', [WC.name, id]);
+    return result.affectedRows > 0;
 }
 
 /**
@@ -66,6 +61,6 @@ export async function updateWC(id: number, WC: Partial<WC>): Promise<boolean> {
  * @returns Promise resolving to true if a row was deleted, false otherwise
  */
 export async function deleteWC(id: number): Promise<boolean> {
-    const result = await query<ResultSetHeader>('DELETE FROM WCs WHERE id = ?', [id]);
-    return result[0].affectedRows > 0;
+    const result = await queryExec('DELETE FROM WCs WHERE id = ?', [id]);
+    return result.affectedRows > 0;
 }
