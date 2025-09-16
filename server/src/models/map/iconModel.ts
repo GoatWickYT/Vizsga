@@ -7,16 +7,14 @@ export interface Icon {
     imageLink: string;
 }
 
-/**
- * Generic query helper
- * @template T Type of the rows to return
- * @param sql SQL query string
- * @param params Optional array of query parameters
- * @returns Promise resolving to an array of typed rows
- */
-async function query<T = any>(sql: string, params?: any[]): Promise<T[]> {
+export async function queryRows<T = any>(sql: string, params?: any[]): Promise<T[]> {
     const [rows] = await db.query(sql, params);
     return rows as T[];
+}
+
+export async function queryExec(sql: string, params?: any[]): Promise<ResultSetHeader> {
+    const [result] = await db.query(sql, params);
+    return result as ResultSetHeader;
 }
 
 /**
@@ -24,7 +22,7 @@ async function query<T = any>(sql: string, params?: any[]): Promise<T[]> {
  * @returns Promise resolving to an array of all Icon objects
  */
 export async function getAllIcons(): Promise<Icon[]> {
-    return query<Icon>('SELECT * FROM icons');
+    return queryRows<Icon>('SELECT * FROM icons');
 }
 
 /**
@@ -33,7 +31,7 @@ export async function getAllIcons(): Promise<Icon[]> {
  * @returns Promise resolving to the Icon object if found, or null if not
  */
 export async function getSingleIcon(id: number): Promise<Icon | null> {
-    const rows = await query<Icon>('SELECT * FROM icons WHERE id = ?', [id]);
+    const rows = await queryRows<Icon>('SELECT * FROM icons WHERE id = ?', [id]);
     return rows[0] || null;
 }
 
@@ -43,11 +41,11 @@ export async function getSingleIcon(id: number): Promise<Icon | null> {
  * @returns Promise resolving to the ID of the newly inserted Icon
  */
 export async function createIcon(Icon: Icon): Promise<number> {
-    const result = await query<ResultSetHeader>(
-        'INSERT INTO icons (name, imageLink) VALUES (?, ?)',
-        [Icon.name, Icon.imageLink],
-    );
-    return result[0].insertId;
+    const result = await queryExec('INSERT INTO icons (name, image_link) VALUES (?, ?)', [
+        Icon.name,
+        Icon.imageLink,
+    ]);
+    return result.insertId;
 }
 
 /**
@@ -57,11 +55,12 @@ export async function createIcon(Icon: Icon): Promise<number> {
  * @returns Promise resolving to true if a row was updated, false otherwise
  */
 export async function updateIcon(id: number, Icon: Partial<Icon>): Promise<boolean> {
-    const result = await query<ResultSetHeader>(
-        'UPDATE icons SET name = ? imageLink = ? WHERE id = ?',
-        [Icon.name, Icon.imageLink, id],
-    );
-    return result[0].affectedRows > 0;
+    const result = await queryExec('UPDATE icons SET name = ? image_link = ? WHERE id = ?', [
+        Icon.name,
+        Icon.imageLink,
+        id,
+    ]);
+    return result.affectedRows > 0;
 }
 
 /**
@@ -70,6 +69,6 @@ export async function updateIcon(id: number, Icon: Partial<Icon>): Promise<boole
  * @returns Promise resolving to true if a row was deleted, false otherwise
  */
 export async function deleteIcon(id: number): Promise<boolean> {
-    const result = await query<ResultSetHeader>('DELETE FROM icons WHERE id = ?', [id]);
-    return result[0].affectedRows > 0;
+    const result = await queryExec('DELETE FROM icons WHERE id = ?', [id]);
+    return result.affectedRows > 0;
 }
