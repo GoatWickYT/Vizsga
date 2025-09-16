@@ -1,11 +1,21 @@
 import express, { Request, Response, NextFunction } from 'express';
+import cors from 'cors';
+import WCRoutes from './routes/map/wcRoutes.js';
+import iconRoutes from './routes/map/iconRoutes.js';
+
 // import the routes from ./routes/*.js, always ends in '.js'
 // import userRoutes from './routes/userRoutes.js';
 
 const app = express();
 
 app.use(express.json());
+app.use(cors());
+app.use();
 // app.use('/users', userRoutes);
+
+app.use('/wc', WCRoutes);
+app.use('/icon', iconRoutes);
+
 app.use((req: Request, res: Response) => {
     res.status(404).json({ message: 'Route not found' });
 });
