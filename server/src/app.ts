@@ -1,7 +1,9 @@
 import express, { Request, Response, NextFunction } from 'express';
 import cors from 'cors';
 import WCRoutes from './routes/map/wcRoutes.js';
+import menuRoutes from './routes/map/menuRoutes.js';
 import iconRoutes from './routes/map/iconRoutes.js';
+import statusRoutes from './routes/map/statusRoutes.js';
 import animalTypeRoutes from './routes/map/animalTypeRoutes.js';
 
 // import the routes from ./routes/*.js, always ends in '.js'
@@ -15,6 +17,8 @@ app.use(cors());
 
 app.use('/wc', WCRoutes);
 app.use('/icon', iconRoutes);
+app.use('/menu', menuRoutes);
+app.use('/status', statusRoutes);
 app.use('/animalType', animalTypeRoutes);
 
 app.use((req: Request, res: Response) => {

@@ -1,5 +1,5 @@
 import { Router, Request, Response, NextFunction } from 'express';
-import * as Controller from '../../controllers/map/menuController.js';
+import * as Controller from '../../controllers/map/statusController.js';
 
 const validateId = (req: Request, res: Response, next: NextFunction) => {
     const id = Number(req.params.id);

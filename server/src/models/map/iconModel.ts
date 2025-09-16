@@ -1,20 +1,8 @@
-import db from '../../config/db.js';
-import type { ResultSetHeader } from 'mysql2';
-
+import { queryExec, queryRows } from './queryHelper.js';
 export interface Icon {
     id?: number;
     name: string;
     imageLink: string;
-}
-
-export async function queryRows<T = any>(sql: string, params?: any[]): Promise<T[]> {
-    const [rows] = await db.query(sql, params);
-    return rows as T[];
-}
-
-export async function queryExec(sql: string, params?: any[]): Promise<ResultSetHeader> {
-    const [result] = await db.query(sql, params);
-    return result as ResultSetHeader;
 }
 
 /**
@@ -55,7 +43,7 @@ export async function createIcon(Icon: Icon): Promise<number> {
  * @returns Promise resolving to true if a row was updated, false otherwise
  */
 export async function updateIcon(id: number, Icon: Partial<Icon>): Promise<boolean> {
-    const result = await queryExec('UPDATE icons SET name = ? image_link = ? WHERE id = ?', [
+    const result = await queryExec('UPDATE icons SET name = ?, image_link = ? WHERE id = ?', [
         Icon.name,
         Icon.imageLink,
         id,
