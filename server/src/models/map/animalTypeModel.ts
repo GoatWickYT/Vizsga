@@ -3,6 +3,7 @@ import { queryExec, queryRows } from './queryHelper.js';
 export interface AnimalType {
     id?: number;
     name: string;
+    animalId?: number;
 }
 
 /**
@@ -29,7 +30,10 @@ export async function getSingleAnimalType(id: number): Promise<AnimalType | null
  * @returns Promise resolving to the ID of the newly inserted AnimalType
  */
 export async function createAnimalType(AnimalType: AnimalType): Promise<number> {
-    const result = await queryExec('INSERT INTO animal_types (name) VALUES (?)', [AnimalType.name]);
+    const result = await queryExec('INSERT INTO animal_types (name, animal_id) VALUES (?, ?)', [
+        AnimalType.name,
+        AnimalType.animalId,
+    ]);
     return result.insertId;
 }
 

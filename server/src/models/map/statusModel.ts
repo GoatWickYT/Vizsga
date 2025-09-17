@@ -4,6 +4,7 @@ export interface Status {
     id?: number;
     name: string;
     age: number;
+    spotId?: number;
 }
 
 /**
@@ -30,9 +31,10 @@ export async function getSingleStatus(id: number): Promise<Status | null> {
  * @returns Promise resolving to the ID of the newly inserted Status
  */
 export async function createStatus(Status: Status): Promise<number> {
-    const result = await queryExec('INSERT INTO statusses (name, age) VALUES (?, ?)', [
+    const result = await queryExec('INSERT INTO statusses (name, age, spot_id) VALUES (?, ?, ?)', [
         Status.name,
         Status.age,
+        Status.spotId,
     ]);
     return result.insertId;
 }

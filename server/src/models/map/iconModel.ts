@@ -3,6 +3,7 @@ export interface Icon {
     id?: number;
     name: string;
     imageLink: string;
+    spotId?: number;
 }
 
 /**
@@ -29,10 +30,10 @@ export async function getSingleIcon(id: number): Promise<Icon | null> {
  * @returns Promise resolving to the ID of the newly inserted Icon
  */
 export async function createIcon(Icon: Icon): Promise<number> {
-    const result = await queryExec('INSERT INTO icons (name, image_link) VALUES (?, ?)', [
-        Icon.name,
-        Icon.imageLink,
-    ]);
+    const result = await queryExec(
+        'INSERT INTO icons (name, image_link, spot_id) VALUES (?, ?, ?)',
+        [Icon.name, Icon.imageLink, Icon.spotId],
+    );
     return result.insertId;
 }
 

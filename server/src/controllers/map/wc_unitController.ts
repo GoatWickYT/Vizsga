@@ -1,12 +1,12 @@
 import { Request, Response, NextFunction } from 'express';
-import * as WCService from '../../models/map/wcModel.js';
+import * as WCService from '../../models/map/wc_unitModel.js';
 
 /**
  * Get all WCs
  */
 export async function getAll(req: Request, res: Response, next: NextFunction) {
     try {
-        const wcs = await WCService.getAllWCs();
+        const wcs = await WCService.getAllWc_units();
         res.json(wcs);
     } catch (err) {
         next(err);
@@ -19,7 +19,7 @@ export async function getAll(req: Request, res: Response, next: NextFunction) {
 export async function getSingle(req: Request, res: Response, next: NextFunction) {
     try {
         const id = Number(req.params.id);
-        const wc = await WCService.getSingleWC(id);
+        const wc = await WCService.getSingleWc_unit(id);
         if (!wc) return res.status(404).json({ message: 'WC not found' });
         res.json(wc);
     } catch (err) {
@@ -33,7 +33,7 @@ export async function getSingle(req: Request, res: Response, next: NextFunction)
 export async function create(req: Request, res: Response, next: NextFunction) {
     try {
         const wcData = req.body;
-        const insertId = await WCService.createWC(wcData);
+        const insertId = await WCService.createWc_unit(wcData);
         res.status(201).json({ message: 'WC created', id: insertId });
     } catch (err) {
         next(err);
@@ -47,7 +47,7 @@ export async function update(req: Request, res: Response, next: NextFunction) {
     try {
         const id = Number(req.params.id);
         const wcData = req.body;
-        const updated = await WCService.updateWC(id, wcData);
+        const updated = await WCService.updateWc_unit(id, wcData);
         if (!updated) return res.status(404).json({ message: 'WC not found or not updated' });
         res.json({ message: 'WC updated' });
     } catch (err) {
@@ -61,7 +61,7 @@ export async function update(req: Request, res: Response, next: NextFunction) {
 export async function remove(req: Request, res: Response, next: NextFunction) {
     try {
         const id = Number(req.params.id);
-        const deleted = await WCService.deleteWC(id);
+        const deleted = await WCService.deleteWc_unit(id);
         if (!deleted) return res.status(404).json({ message: 'WC not found or not deleted' });
         res.json({ message: 'WC deleted' });
     } catch (err) {
