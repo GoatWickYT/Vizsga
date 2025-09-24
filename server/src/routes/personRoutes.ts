@@ -18,14 +18,15 @@ export default router;
 */
 
 import { Router } from 'express';
-import {getPeople, addPeople, getPerson, updatePeople, deletePeople} from '../controllers/personController.js';
+import * as personController from '../controllers/personController.js';
 
-const router = Router();
+const personRouter = Router();
 
-router.get('/', getPeople);
-router.post('/', addPeople);
-router.get('/:id', getPerson);
-router.put('/:id', updatePeople);
-router.delete('/:id', deletePeople);
+// Define routes for people
+personRouter.get('/', personController.getPeople);
+personRouter.post('/', personController.addPeople);
+personRouter.get('/:id', personController.getPerson);
+personRouter.put('/:id', personController.updatePeople);
+personRouter.delete('/:id', personController.deletePeople);
 
-export default router;
+export default personRouter;
