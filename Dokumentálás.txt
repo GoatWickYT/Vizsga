@@ -14,3 +14,4 @@ Map Részleg backend branch - Wittner Attila
 2025 09 14 - alap szerver és adatbázis táblák bővítése wc táblával (később wc_unit)
 2025 09 16 - AnimalType és Icon táblák, controllerei és route-ok elkészítése, adatbázis működésbe lépése
 2025 09 17 - tesztelve és befejezve, összehangolást igényel
+2025 09 26 - Swagger elkészítve, merge
