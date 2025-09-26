@@ -1,5 +1,3 @@
-// Don't touch anything, if it works
-
 import mysql from 'mysql2/promise';
 import dotenv from 'dotenv';
 dotenv.config();

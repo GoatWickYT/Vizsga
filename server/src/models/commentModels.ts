@@ -2,6 +2,7 @@
 
 //////////////////////////////////
 
+This file is for connecting the database.
 Import DB and write the required functions
 
 //////////////////////////////////
@@ -25,3 +26,17 @@ export async function createUser(user: User): Promise<void> {
     await db.query('INSERT INTO users (name, email) VALUES (?, ?)', [user.name, user.email]);
 }
 */
+
+import db from '../config/db.js';
+
+export interface Comment {
+    id?: number;
+    title: string;
+    content: string;
+    date?: Date;
+}
+export async function getAllComments(): Promise<Comment[]> {
+    const [rows] = await db.query('SELECT * FROM omments');
+    return rows as Comment[];
+}
+    

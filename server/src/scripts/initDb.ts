@@ -1,33 +1,32 @@
 import db from '../config/db.js';
 
-export async function initDb() {
+async function initDb() {
     try {
-        db.query(
-            'CREATE TABLE IF NOT EXISTS WCs (id int PRIMARY KEY NOT NULL UNIQUE AUTO_INCREMENT,' +
-                ' name varchar(50) NOT NULL UNIQUE)',
-        );
-        db.query(
-            'CREATE TABLE IF NOT EXISTS icons (id int PRIMARY KEY NOT NULL UNIQUE AUTO_INCREMENT,' +
-                ' name varchar(50) NOT NULL UNIQUE,' +
-                ' image_link varchar(50)  NOT NULL UNIQUE)',
-        );
-        db.query(
-            'CREATE TABLE IF NOT EXISTS animal_types (id int PRIMARY KEY NOT NULL UNIQUE AUTO_INCREMENT,' +
-                ' name varchar(50) NOT NULL UNIQUE)',
-        );
-        db.query(
-            'CREATE TABLE IF NOT EXISTS menus (id int PRIMARY KEY NOT NULL UNIQUE AUTO_INCREMENT,' +
-                ' name varchar(50) NOT NULL UNIQUE,' +
-                ' price double NOT NULL,' +
-                ' available BOOLEAN)',
-        );
-        db.query(
-            'CREATE TABLE IF NOT EXISTS statusses (id int PRIMARY KEY NOT NULL UNIQUE AUTO_INCREMENT,' +
-                ' name varchar(50) NOT NULL UNIQUE,' +
-                ' age tinyint)',
-        );
+        await db.query(`
+            CREATE TABLE IF NOT EXISTS Post (
+                id INT AUTO_INCREMENT PRIMARY KEY,
+                Title TEXT NOT NULL,
+                Content TEXT NOT NULL,
+                CreatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                Comment VARCHAR()
+            );
+        `);
+        await db.query(`
+            CREATE TABLE IF NOT EXISTS Comment (
+                id INT AUTO_INCREMENT PRIMARY KEY,
+                UserName VARCHAR(255) NOT NULL,
+                Content TEXT NOT NULL,
+                PostId INT,
+                CreatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                FOREIGN KEY (PostId) REFERENCES Post(id) ON DELETE CASCADE
+            );
+        `);
         console.log('Database initialized successfully!');
     } catch (err) {
         console.error('Error initializing database:', err);
+    } finally {
+        db.end(); 
     }
 }
+
+initDb();
