@@ -7,7 +7,7 @@ import * as IconService from '../../models/map/iconModel.js';
 export async function getAll(req: Request, res: Response, next: NextFunction) {
     try {
         const icons = await IconService.getAllIcons();
-        res.json(icons);
+        res.status(200).json(icons);
     } catch (err) {
         next(err);
     }
@@ -21,7 +21,7 @@ export async function getSingle(req: Request, res: Response, next: NextFunction)
         const id = Number(req.params.id);
         const icon = await IconService.getSingleIcon(id);
         if (!icon) return res.status(404).json({ message: 'Icon not found' });
-        res.json(icon);
+        res.status(200).json(icon);
     } catch (err) {
         next(err);
     }
@@ -49,7 +49,7 @@ export async function update(req: Request, res: Response, next: NextFunction) {
         const iconData = req.body;
         const updated = await IconService.updateIcon(id, iconData);
         if (!updated) return res.status(404).json({ message: 'Icon not found or not updated' });
-        res.json({ message: 'Icon updated' });
+        res.status(200).json({ message: 'Icon updated' });
     } catch (err) {
         next(err);
     }
@@ -63,7 +63,7 @@ export async function remove(req: Request, res: Response, next: NextFunction) {
         const id = Number(req.params.id);
         const deleted = await IconService.deleteIcon(id);
         if (!deleted) return res.status(404).json({ message: 'Icon not found or not deleted' });
-        res.json({ message: 'Icon deleted' });
+        res.status(204).send();
     } catch (err) {
         next(err);
     }

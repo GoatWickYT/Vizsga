@@ -7,7 +7,7 @@ import * as SpotService from '../../models/map/spotModel.js';
 export async function getAll(req: Request, res: Response, next: NextFunction) {
     try {
         const spots = await SpotService.getAllSpots();
-        res.json(spots);
+        res.status(200).json(spots);
     } catch (err) {
         next(err);
     }
@@ -21,7 +21,7 @@ export async function getSingle(req: Request, res: Response, next: NextFunction)
         const id = Number(req.params.id);
         const spot = await SpotService.getSingleSpot(id);
         if (!spot) return res.status(404).json({ message: 'Spot not found' });
-        res.json(spot);
+        res.status(200).json(spot);
     } catch (err) {
         next(err);
     }
@@ -49,7 +49,7 @@ export async function update(req: Request, res: Response, next: NextFunction) {
         const spotData = req.body;
         const updated = await SpotService.updateSpot(id, spotData);
         if (!updated) return res.status(404).json({ message: 'Spot not found or not updated' });
-        res.json({ message: 'Spot updated' });
+        res.status(200).json({ message: 'Spot updated' });
     } catch (err) {
         next(err);
     }
@@ -63,7 +63,7 @@ export async function remove(req: Request, res: Response, next: NextFunction) {
         const id = Number(req.params.id);
         const deleted = await SpotService.deleteSpot(id);
         if (!deleted) return res.status(404).json({ message: 'Spot not found or not deleted' });
-        res.json({ message: 'Spot deleted' });
+        res.status(204).send();
     } catch (err) {
         next(err);
     }

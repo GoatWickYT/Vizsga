@@ -1,5 +1,5 @@
 import { Router, Request, Response, NextFunction } from 'express';
-import * as Controller from '../../controllers/map/statusController.js';
+import * as Controller from '../../controllers/map/wcUnitController.js';
 
 const validateId = (req: Request, res: Response, next: NextFunction) => {
     const id = Number(req.params.id);
@@ -14,105 +14,105 @@ const router = Router();
 
 /**
  * @openapi
- * /status:
+ * /wcUnits:
  *   get:
- *     summary: Get all status
+ *     summary: Get all wcUnits
  *     tags:
- *       - Map / Statuses
+ *       - Map / WcUnits
  *     responses:
  *       200:
- *         description: List of status
+ *         description: List of wcUnits
  *         content:
  *           application/json:
  *             schema:
  *               type: array
  *               items:
- *                 $ref: '#/components/schemas/Status'
+ *                 $ref: '#/components/schemas/WcUnit'
  */
 
 /**
  * @openapi
- * /status/{id}:
+ * /wcUnits/{id}:
  *   get:
- *     summary: Get a single status by ID
+ *     summary: Get a single wcUnit by ID
  *     tags:
- *       - Map / Statuses
+ *       - Map / WcUnits
  *     parameters:
  *       - in: path
  *         name: id
  *         schema:
  *           type: string
  *         required: true
- *         description: The status ID
+ *         description: The wcUnit ID
  *     responses:
  *       200:
- *         description: Single status
+ *         description: Single wcUnit
  *         content:
  *           application/json:
  *             schema:
- *               $ref: '#/components/schemas/Status'
+ *               $ref: '#/components/schemas/WcUnit'
  */
 
 /**
  * @openapi
- * /status:
+ * /wcUnits:
  *   post:
- *     summary: Create a new status
+ *     summary: Create a new wcUnit
  *     tags:
- *       - Map / Statuses
+ *       - Map / WcUnits
  *     requestBody:
  *       required: true
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/StatusInput'
+ *             $ref: '#/components/schemas/WcUnitInput'
  *     responses:
  *       201:
- *         description: status created
+ *         description: wcUnit created
  */
 
 /**
  * @openapi
- * /status/{id}:
+ * /wcUnits/{id}:
  *   patch:
- *     summary: Update a status
+ *     summary: Update a wcUnit
  *     tags:
- *       - Map / Statuses
+ *       - Map / WcUnits
  *     parameters:
  *       - in: path
  *         name: id
  *         schema:
  *           type: string
  *         required: true
- *         description: The status ID
+ *         description: The wcUnit ID
  *     requestBody:
  *       required: true
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/StatusInput'
+ *             $ref: '#/components/schemas/WcUnitInput'
  *     responses:
  *       200:
- *         description: status updated
+ *         description: wcUnit updated
  */
 
 /**
  * @openapi
- * /status/{id}:
+ * /wcUnits/{id}:
  *   delete:
- *     summary: Delete a status
+ *     summary: Delete a wcUnit
  *     tags:
- *       - Map / Statuses
+ *       - Map / WcUnits
  *     parameters:
  *       - in: path
  *         name: id
  *         schema:
  *           type: string
  *         required: true
- *         description: The status ID
+ *         description: The wcUnit ID
  *     responses:
  *       204:
- *         description: status deleted
+ *         description: wcUnit deleted
  */
 router.get('/', Controller.getAll);
 router.get('/:id', validateId, Controller.getSingle);

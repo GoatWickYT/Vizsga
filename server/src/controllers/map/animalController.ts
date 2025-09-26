@@ -7,7 +7,7 @@ import * as AnimalService from '../../models/map/animalModel.js';
 export async function getAll(req: Request, res: Response, next: NextFunction) {
     try {
         const animals = await AnimalService.getAllAnimals();
-        res.json(animals);
+        res.status(200).json(animals);
     } catch (err) {
         next(err);
     }
@@ -21,7 +21,7 @@ export async function getSingle(req: Request, res: Response, next: NextFunction)
         const id = Number(req.params.id);
         const animal = await AnimalService.getSingleAnimal(id);
         if (!animal) return res.status(404).json({ message: 'Animal not found' });
-        res.json(animal);
+        res.status(200).json(animal);
     } catch (err) {
         next(err);
     }
@@ -49,7 +49,7 @@ export async function update(req: Request, res: Response, next: NextFunction) {
         const animalData = req.body;
         const updated = await AnimalService.updateAnimal(id, animalData);
         if (!updated) return res.status(404).json({ message: 'Animal not found or not updated' });
-        res.json({ message: 'Animal updated' });
+        res.status(200).json({ message: 'Animal updated' });
     } catch (err) {
         next(err);
     }
@@ -63,7 +63,7 @@ export async function remove(req: Request, res: Response, next: NextFunction) {
         const id = Number(req.params.id);
         const deleted = await AnimalService.deleteAnimal(id);
         if (!deleted) return res.status(404).json({ message: 'Animal not found or not deleted' });
-        res.json({ message: 'Animal deleted' });
+        res.status(204).send();
     } catch (err) {
         next(err);
     }

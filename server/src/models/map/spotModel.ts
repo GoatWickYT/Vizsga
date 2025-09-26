@@ -3,8 +3,8 @@ import { queryExec, queryRows } from './queryHelper.js';
 export interface Spot {
     id?: number;
     name: string;
-    location_x: number;
-    location_y: number;
+    locationX: number;
+    locationY: number;
 }
 
 /**
@@ -33,7 +33,7 @@ export async function getSingleSpot(id: number): Promise<Spot | null> {
 export async function createSpot(Spot: Spot): Promise<number> {
     const result = await queryExec(
         'INSERT INTO spots (name, location_x, location_y) VALUES (?,?,?)',
-        [Spot.name, Spot.location_x, Spot.location_y],
+        [Spot.name, Spot.locationX, Spot.locationY],
     );
     return result.insertId;
 }
@@ -47,7 +47,7 @@ export async function createSpot(Spot: Spot): Promise<number> {
 export async function updateSpot(id: number, Spot: Partial<Spot>): Promise<boolean> {
     const result = await queryExec(
         'UPDATE spots SET name = ?, location_x = ?, location_y = ? WHERE id = ?',
-        [Spot.name, Spot.location_x, Spot.location_y, id],
+        [Spot.name, Spot.locationX, Spot.locationY, id],
     );
     return result.affectedRows > 0;
 }

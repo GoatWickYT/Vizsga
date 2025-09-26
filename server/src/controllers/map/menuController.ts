@@ -7,7 +7,7 @@ import * as MenuService from '../../models/map/menuModel.js';
 export async function getAll(req: Request, res: Response, next: NextFunction) {
     try {
         const menus = await MenuService.getAllMenus();
-        res.json(menus);
+        res.status(200).json(menus);
     } catch (err) {
         next(err);
     }
@@ -21,7 +21,7 @@ export async function getSingle(req: Request, res: Response, next: NextFunction)
         const id = Number(req.params.id);
         const menu = await MenuService.getSingleMenu(id);
         if (!menu) return res.status(404).json({ message: 'Menu not found' });
-        res.json(menu);
+        res.status(200).json(menu);
     } catch (err) {
         next(err);
     }
@@ -49,7 +49,7 @@ export async function update(req: Request, res: Response, next: NextFunction) {
         const menuData = req.body;
         const updated = await MenuService.updateMenu(id, menuData);
         if (!updated) return res.status(404).json({ message: 'Menu not found or not updated' });
-        res.json({ message: 'Menu updated' });
+        res.status(200).json({ message: 'Menu updated' });
     } catch (err) {
         next(err);
     }
@@ -63,7 +63,7 @@ export async function remove(req: Request, res: Response, next: NextFunction) {
         const id = Number(req.params.id);
         const deleted = await MenuService.deleteMenu(id);
         if (!deleted) return res.status(404).json({ message: 'Menu not found or not deleted' });
-        res.json({ message: 'Menu deleted' });
+        res.status(204).send();
     } catch (err) {
         next(err);
     }

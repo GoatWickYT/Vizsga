@@ -7,7 +7,7 @@ import * as StatusService from '../../models/map/statusModel.js';
 export async function getAll(req: Request, res: Response, next: NextFunction) {
     try {
         const statusses = await StatusService.getAllStatusses();
-        res.json(statusses);
+        res.status(200).json(statusses);
     } catch (err) {
         next(err);
     }
@@ -21,7 +21,7 @@ export async function getSingle(req: Request, res: Response, next: NextFunction)
         const id = Number(req.params.id);
         const status = await StatusService.getSingleStatus(id);
         if (!status) return res.status(404).json({ message: 'Status not found' });
-        res.json(status);
+        res.status(200).json(status);
     } catch (err) {
         next(err);
     }
@@ -49,7 +49,7 @@ export async function update(req: Request, res: Response, next: NextFunction) {
         const statusData = req.body;
         const updated = await StatusService.updateStatus(id, statusData);
         if (!updated) return res.status(404).json({ message: 'Status not found or not updated' });
-        res.json({ message: 'Status updated' });
+        res.status(200).json({ message: 'Status updated' });
     } catch (err) {
         next(err);
     }
@@ -63,7 +63,7 @@ export async function remove(req: Request, res: Response, next: NextFunction) {
         const id = Number(req.params.id);
         const deleted = await StatusService.deleteStatus(id);
         if (!deleted) return res.status(404).json({ message: 'Status not found or not deleted' });
-        res.json({ message: 'Status deleted' });
+        res.status(204).send();
     } catch (err) {
         next(err);
     }
