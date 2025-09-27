@@ -1,14 +1,6 @@
-import { Router, Request, Response, NextFunction } from 'express';
-import * as Controller from '../../controllers/map/menuController.js';
-
-const validateId = (req: Request, res: Response, next: NextFunction) => {
-    const id = Number(req.params.id);
-    if (isNaN(id) || id <= 0) {
-        return res.status(400).json({ message: 'Invalid ID parameter' });
-    }
-    (req as any).validId = id;
-    next();
-};
+import { Router } from 'express';
+import { validateId } from '../../middleware/validateId.js';
+import * as MenuController from '../../controllers/map/menuController.js';
 
 const router = Router();
 
@@ -114,10 +106,10 @@ const router = Router();
  *       204:
  *         description: menu deleted
  */
-router.get('/', Controller.getAll);
-router.get('/:id', validateId, Controller.getSingle);
-router.post('/', Controller.create);
-router.patch('/:id', validateId, Controller.update);
-router.delete('/:id', validateId, Controller.remove);
+router.get('/', MenuController.getMenus);
+router.get('/:id', validateId, MenuController.getMenu);
+router.post('/', MenuController.createMenu);
+router.patch('/:id', validateId, MenuController.updateMenu);
+router.delete('/:id', validateId, MenuController.deleteMenu);
 
 export default router;

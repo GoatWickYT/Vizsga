@@ -4,19 +4,19 @@ import * as WCService from '../../models/map/wcUnitModel.js';
 /**
  * Get all WCs
  */
-export async function getAll(req: Request, res: Response, next: NextFunction) {
+export const getWcUnits = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const wcs = await WCService.getAllWcUnits();
         res.status(200).json(wcs);
     } catch (err) {
         next(err);
     }
-}
+};
 
 /**
  * Get a single WC by ID
  */
-export async function getSingle(req: Request, res: Response, next: NextFunction) {
+export const getWcUnit = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const id = Number(req.params.id);
         const wc = await WCService.getSingleWcUnit(id);
@@ -25,12 +25,12 @@ export async function getSingle(req: Request, res: Response, next: NextFunction)
     } catch (err) {
         next(err);
     }
-}
+};
 
 /**
  * Create a new WC
  */
-export async function create(req: Request, res: Response, next: NextFunction) {
+export const createWcUnit = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const wcData = req.body;
         const insertId = await WCService.createWcUnit(wcData);
@@ -38,12 +38,12 @@ export async function create(req: Request, res: Response, next: NextFunction) {
     } catch (err) {
         next(err);
     }
-}
+};
 
 /**
  * Update an existing WC
  */
-export async function update(req: Request, res: Response, next: NextFunction) {
+export const updateWcUnit = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const id = Number(req.params.id);
         const wcData = req.body;
@@ -53,12 +53,12 @@ export async function update(req: Request, res: Response, next: NextFunction) {
     } catch (err) {
         next(err);
     }
-}
+};
 
 /**
  * Delete a WC by ID
  */
-export async function remove(req: Request, res: Response, next: NextFunction) {
+export const deleteWcUnit = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const id = Number(req.params.id);
         const deleted = await WCService.deleteWcUnit(id);
@@ -67,4 +67,4 @@ export async function remove(req: Request, res: Response, next: NextFunction) {
     } catch (err) {
         next(err);
     }
-}
+};

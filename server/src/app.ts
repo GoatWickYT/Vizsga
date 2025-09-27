@@ -1,7 +1,9 @@
 import express, { Request, Response, NextFunction } from 'express';
 import cors from 'cors';
+
 import swaggerUi from 'swagger-ui-express';
 import swaggerSpec from './swagger/swaggerSpec.js';
+
 import wc_unitRoutes from './routes/map/wcUnitRoutes.js';
 import menuRoutes from './routes/map/menuRoutes.js';
 import iconRoutes from './routes/map/iconRoutes.js';
@@ -10,15 +12,13 @@ import animalRoutes from './routes/map/animalRoutes.js';
 import statusRoutes from './routes/map/statusRoutes.js';
 import buffetRoutes from './routes/map/buffetRoutes.js';
 import animalTypeRoutes from './routes/map/animalTypeRoutes.js';
-import express, { Request, Response, NextFunction } from 'express';
-import postRoutes from './routes/postRoutes.js';
-import commentRoutes from './routes/commnetRoutes.js';
-import personRoutes from './routes/personRoutes.js';
 
-//need to add the ticket and the ticketType routes here
+import postRoutes from './routes/news/postRoutes.js';
+import commentRoutes from './routes/news/commentRoutes.js';
 
-// import the routes from ./routes/*.js, always ends in '.js'
-// import userRoutes from './routes/userRoutes.js';
+import personRoutes from './routes/ticket/personRoutes.js';
+import ticketTypeRoutes from './routes/ticket/ticketTypeRoutes.js';
+import ticketRoutes from './routes/ticket/ticketRoutes.js';
 
 const app = express();
 
@@ -103,39 +103,31 @@ app.use(
     }),
 );
 
-app.use('/wc_unit', wc_unitRoutes);
-app.use('/icon', iconRoutes);
-app.use('/menu', menuRoutes);
-app.use('/spot', spotRoutes);
-app.use('/buffet', buffetRoutes);
-app.use('/status', statusRoutes);
-app.use('/animal', animalRoutes);
-app.use('/animalType', animalTypeRoutes);
+app.use('/wc_units', wc_unitRoutes);
+app.use('/icons', iconRoutes);
+app.use('/menus', menuRoutes);
+app.use('/spots', spotRoutes);
+app.use('/buffets', buffetRoutes);
+app.use('/statuses', statusRoutes);
+app.use('/animals', animalRoutes);
+app.use('/animalTypes', animalTypeRoutes);
 
-app.use((req: Request, res: Response) => {
-    res.status(404).json({ message: 'Route not found' });
-});
-app.use((err: unknown, req: Request, res: Response, next: NextFunction) => {
-    if (err instanceof Error) {
-        res.status(500).json({ message: 'Server error', error: err.message });
-    } else {
-        res.status(500).json({ message: 'Server error', error: 'Unknown error' });
-    }
-});
 app.use('/comments', commentRoutes);
-app.use((req: Request, res: Response) => {
-    res.status(404).json({ message: 'Route not found' });
-});
-app.use((err: unknown, req: Request, res: Response, next: NextFunction) => {
-    if (err instanceof Error) {
-        res.status(500).json({ message: 'Server error', error: err.message });
-    } else {
-        res.status(500).json({ message: 'Server error', error: 'Unknown error' });
-    }
-});
-
 app.use('/posts', postRoutes);
 
-app.use('/persons', personRoutes);
+app.use('/people', personRoutes);
+app.use('/tickets', ticketRoutes);
+app.use('/ticketTypes', ticketTypeRoutes);
+
+app.use((req: Request, res: Response) => {
+    res.status(404).json({ message: 'Route not found' });
+});
+app.use((err: unknown, req: Request, res: Response, next: NextFunction) => {
+    if (err instanceof Error) {
+        res.status(500).json({ message: 'Server error', error: err.message });
+    } else {
+        res.status(500).json({ message: 'Server error', error: 'Unknown error' });
+    }
+});
 
 export default app;

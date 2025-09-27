@@ -4,19 +4,19 @@ import * as StatusService from '../../models/map/statusModel.js';
 /**
  * Get all Statusses
  */
-export async function getAll(req: Request, res: Response, next: NextFunction) {
+export const getStatuses = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const statusses = await StatusService.getAllStatusses();
         res.status(200).json(statusses);
     } catch (err) {
         next(err);
     }
-}
+};
 
 /**
  * Get a single Status by ID
  */
-export async function getSingle(req: Request, res: Response, next: NextFunction) {
+export const getStatus = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const id = Number(req.params.id);
         const status = await StatusService.getSingleStatus(id);
@@ -25,12 +25,12 @@ export async function getSingle(req: Request, res: Response, next: NextFunction)
     } catch (err) {
         next(err);
     }
-}
+};
 
 /**
  * Create a new Status
  */
-export async function create(req: Request, res: Response, next: NextFunction) {
+export const createStatus = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const statusData = req.body;
         const insertId = await StatusService.createStatus(statusData);
@@ -38,12 +38,12 @@ export async function create(req: Request, res: Response, next: NextFunction) {
     } catch (err) {
         next(err);
     }
-}
+};
 
 /**
  * Update an existing Status
  */
-export async function update(req: Request, res: Response, next: NextFunction) {
+export const updateStatus = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const id = Number(req.params.id);
         const statusData = req.body;
@@ -53,12 +53,12 @@ export async function update(req: Request, res: Response, next: NextFunction) {
     } catch (err) {
         next(err);
     }
-}
+};
 
 /**
  * Delete a Status by ID
  */
-export async function remove(req: Request, res: Response, next: NextFunction) {
+export const deleteStatus = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const id = Number(req.params.id);
         const deleted = await StatusService.deleteStatus(id);
@@ -67,4 +67,4 @@ export async function remove(req: Request, res: Response, next: NextFunction) {
     } catch (err) {
         next(err);
     }
-}
+};

@@ -4,19 +4,19 @@ import * as SpotService from '../../models/map/spotModel.js';
 /**
  * Get all Spots
  */
-export async function getAll(req: Request, res: Response, next: NextFunction) {
+export const getSpots = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const spots = await SpotService.getAllSpots();
         res.status(200).json(spots);
     } catch (err) {
         next(err);
     }
-}
+};
 
 /**
  * Get a single Spot by ID
  */
-export async function getSingle(req: Request, res: Response, next: NextFunction) {
+export const getSpot = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const id = Number(req.params.id);
         const spot = await SpotService.getSingleSpot(id);
@@ -25,12 +25,12 @@ export async function getSingle(req: Request, res: Response, next: NextFunction)
     } catch (err) {
         next(err);
     }
-}
+};
 
 /**
  * Create a new Spot
  */
-export async function create(req: Request, res: Response, next: NextFunction) {
+export const createSpot = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const spotData = req.body;
         const insertId = await SpotService.createSpot(spotData);
@@ -38,12 +38,12 @@ export async function create(req: Request, res: Response, next: NextFunction) {
     } catch (err) {
         next(err);
     }
-}
+};
 
 /**
  * Update an existing Spot
  */
-export async function update(req: Request, res: Response, next: NextFunction) {
+export const updateSpot = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const id = Number(req.params.id);
         const spotData = req.body;
@@ -53,12 +53,12 @@ export async function update(req: Request, res: Response, next: NextFunction) {
     } catch (err) {
         next(err);
     }
-}
+};
 
 /**
  * Delete a Spot by ID
  */
-export async function remove(req: Request, res: Response, next: NextFunction) {
+export const deleteSpot = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const id = Number(req.params.id);
         const deleted = await SpotService.deleteSpot(id);
@@ -67,4 +67,4 @@ export async function remove(req: Request, res: Response, next: NextFunction) {
     } catch (err) {
         next(err);
     }
-}
+};

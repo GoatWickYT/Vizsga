@@ -1,14 +1,6 @@
-import { Router, Request, Response, NextFunction } from 'express';
-import * as Controller from '../../controllers/map/animalTypeController.js';
-
-const validateId = (req: Request, res: Response, next: NextFunction) => {
-    const id = Number(req.params.id);
-    if (isNaN(id) || id <= 0) {
-        return res.status(400).json({ message: 'Invalid ID parameter' });
-    }
-    (req as any).validId = id;
-    next();
-};
+import { Router } from 'express';
+import { validateId } from '../../middleware/validateId.js';
+import * as AnimalTypeController from '../../controllers/map/animalTypeController.js';
 
 const router = Router();
 
@@ -114,10 +106,10 @@ const router = Router();
  *       204:
  *         description: AnimalType deleted
  */
-router.get('/', Controller.getAll);
-router.get('/:id', validateId, Controller.getSingle);
-router.post('/', Controller.create);
-router.patch('/:id', validateId, Controller.update);
-router.delete('/:id', validateId, Controller.remove);
+router.get('/', AnimalTypeController.getAnimalTypes);
+router.get('/:id', validateId, AnimalTypeController.getAnimalType);
+router.post('/', AnimalTypeController.createAnimalType);
+router.patch('/:id', validateId, AnimalTypeController.updateAnimalType);
+router.delete('/:id', validateId, AnimalTypeController.deleteAnimalType);
 
 export default router;

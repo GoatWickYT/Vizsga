@@ -4,19 +4,19 @@ import * as MenuService from '../../models/map/menuModel.js';
 /**
  * Get all Menus
  */
-export async function getAll(req: Request, res: Response, next: NextFunction) {
+export const getMenus = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const menus = await MenuService.getAllMenus();
         res.status(200).json(menus);
     } catch (err) {
         next(err);
     }
-}
+};
 
 /**
  * Get a single Menu by ID
  */
-export async function getSingle(req: Request, res: Response, next: NextFunction) {
+export const getMenu = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const id = Number(req.params.id);
         const menu = await MenuService.getSingleMenu(id);
@@ -25,12 +25,12 @@ export async function getSingle(req: Request, res: Response, next: NextFunction)
     } catch (err) {
         next(err);
     }
-}
+};
 
 /**
  * Create a new Menu
  */
-export async function create(req: Request, res: Response, next: NextFunction) {
+export const createMenu = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const menuData = req.body;
         const insertId = await MenuService.createMenu(menuData);
@@ -38,12 +38,12 @@ export async function create(req: Request, res: Response, next: NextFunction) {
     } catch (err) {
         next(err);
     }
-}
+};
 
 /**
  * Update an existing Menu
  */
-export async function update(req: Request, res: Response, next: NextFunction) {
+export const updateMenu = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const id = Number(req.params.id);
         const menuData = req.body;
@@ -53,12 +53,12 @@ export async function update(req: Request, res: Response, next: NextFunction) {
     } catch (err) {
         next(err);
     }
-}
+};
 
 /**
  * Delete a Menu by ID
  */
-export async function remove(req: Request, res: Response, next: NextFunction) {
+export const deleteMenu = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const id = Number(req.params.id);
         const deleted = await MenuService.deleteMenu(id);
@@ -67,4 +67,4 @@ export async function remove(req: Request, res: Response, next: NextFunction) {
     } catch (err) {
         next(err);
     }
-}
+};

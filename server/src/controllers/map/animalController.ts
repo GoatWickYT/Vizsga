@@ -4,19 +4,19 @@ import * as AnimalService from '../../models/map/animalModel.js';
 /**
  * Get all Animals
  */
-export async function getAll(req: Request, res: Response, next: NextFunction) {
+export const getAnimals = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const animals = await AnimalService.getAllAnimals();
         res.status(200).json(animals);
     } catch (err) {
         next(err);
     }
-}
+};
 
 /**
  * Get a single Animal by ID
  */
-export async function getSingle(req: Request, res: Response, next: NextFunction) {
+export const getAnimal = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const id = Number(req.params.id);
         const animal = await AnimalService.getSingleAnimal(id);
@@ -25,12 +25,12 @@ export async function getSingle(req: Request, res: Response, next: NextFunction)
     } catch (err) {
         next(err);
     }
-}
+};
 
 /**
  * Create a new Animal
  */
-export async function create(req: Request, res: Response, next: NextFunction) {
+export const createAnimal = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const animalData = req.body;
         const insertId = await AnimalService.createAnimal(animalData);
@@ -38,12 +38,12 @@ export async function create(req: Request, res: Response, next: NextFunction) {
     } catch (err) {
         next(err);
     }
-}
+};
 
 /**
  * Update an existing Animal
  */
-export async function update(req: Request, res: Response, next: NextFunction) {
+export const updateAnimal = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const id = Number(req.params.id);
         const animalData = req.body;
@@ -53,12 +53,12 @@ export async function update(req: Request, res: Response, next: NextFunction) {
     } catch (err) {
         next(err);
     }
-}
+};
 
 /**
  * Delete a Animal by ID
  */
-export async function remove(req: Request, res: Response, next: NextFunction) {
+export const deleteAnimal = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const id = Number(req.params.id);
         const deleted = await AnimalService.deleteAnimal(id);
@@ -67,4 +67,4 @@ export async function remove(req: Request, res: Response, next: NextFunction) {
     } catch (err) {
         next(err);
     }
-}
+};

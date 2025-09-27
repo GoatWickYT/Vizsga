@@ -4,19 +4,19 @@ import * as BuffetService from '../../models/map/buffetModel.js';
 /**
  * Get all Buffets
  */
-export async function getAll(req: Request, res: Response, next: NextFunction) {
+export const getBuffets = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const buffets = await BuffetService.getAllBuffets();
         res.status(200).json(buffets);
     } catch (err) {
         next(err);
     }
-}
+};
 
 /**
  * Get a single Buffet by ID
  */
-export async function getSingle(req: Request, res: Response, next: NextFunction) {
+export const getBuffet = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const id = Number(req.params.id);
         const buffet = await BuffetService.getSingleBuffet(id);
@@ -25,12 +25,12 @@ export async function getSingle(req: Request, res: Response, next: NextFunction)
     } catch (err) {
         next(err);
     }
-}
+};
 
 /**
  * Create a new Buffet
  */
-export async function create(req: Request, res: Response, next: NextFunction) {
+export const createBuffet = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const buffetData = req.body;
         const insertId = await BuffetService.createBuffet(buffetData);
@@ -38,12 +38,12 @@ export async function create(req: Request, res: Response, next: NextFunction) {
     } catch (err) {
         next(err);
     }
-}
+};
 
 /**
  * Update an existing Buffet
  */
-export async function update(req: Request, res: Response, next: NextFunction) {
+export const updateBuffet = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const id = Number(req.params.id);
         const buffetData = req.body;
@@ -53,12 +53,12 @@ export async function update(req: Request, res: Response, next: NextFunction) {
     } catch (err) {
         next(err);
     }
-}
+};
 
 /**
  * Delete a Buffet by ID
  */
-export async function remove(req: Request, res: Response, next: NextFunction) {
+export const deleteBuffet = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const id = Number(req.params.id);
         const deleted = await BuffetService.deleteBuffet(id);
@@ -67,4 +67,4 @@ export async function remove(req: Request, res: Response, next: NextFunction) {
     } catch (err) {
         next(err);
     }
-}
+};

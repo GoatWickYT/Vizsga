@@ -4,19 +4,19 @@ import * as IconService from '../../models/map/iconModel.js';
 /**
  * Get all Icon
  */
-export async function getAll(req: Request, res: Response, next: NextFunction) {
+export const getBuffets = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const icons = await IconService.getAllIcons();
         res.status(200).json(icons);
     } catch (err) {
         next(err);
     }
-}
+};
 
 /**
  * Get a single Icon by ID
  */
-export async function getSingle(req: Request, res: Response, next: NextFunction) {
+export const getBuffet = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const id = Number(req.params.id);
         const icon = await IconService.getSingleIcon(id);
@@ -25,12 +25,12 @@ export async function getSingle(req: Request, res: Response, next: NextFunction)
     } catch (err) {
         next(err);
     }
-}
+};
 
 /**
  * Create a new Icon
  */
-export async function create(req: Request, res: Response, next: NextFunction) {
+export const createBuffet = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const iconData = req.body;
         const insertId = await IconService.createIcon(iconData);
@@ -38,12 +38,12 @@ export async function create(req: Request, res: Response, next: NextFunction) {
     } catch (err) {
         next(err);
     }
-}
+};
 
 /**
  * Update an existing Icon
  */
-export async function update(req: Request, res: Response, next: NextFunction) {
+export const updateBuffet = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const id = Number(req.params.id);
         const iconData = req.body;
@@ -53,12 +53,12 @@ export async function update(req: Request, res: Response, next: NextFunction) {
     } catch (err) {
         next(err);
     }
-}
+};
 
 /**
  * Delete a Icon by ID
  */
-export async function remove(req: Request, res: Response, next: NextFunction) {
+export const deleteBuffet = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const id = Number(req.params.id);
         const deleted = await IconService.deleteIcon(id);
@@ -67,4 +67,4 @@ export async function remove(req: Request, res: Response, next: NextFunction) {
     } catch (err) {
         next(err);
     }
-}
+};
