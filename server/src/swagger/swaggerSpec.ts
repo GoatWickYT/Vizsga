@@ -150,6 +150,100 @@ const options = {
                     },
                     required: ['name', 'age', 'spotId'],
                 },
+                Comment: {
+                    type: 'object',
+                    properties: {
+                        id: { type: 'number' },
+                        content: { type: 'string' },
+                        date: { type: 'date' },
+                        userId: { type: 'number' },
+                        postId: { type: 'number' },
+                    },
+                },
+                CommentInput: {
+                    type: 'object',
+                    properties: {
+                        content: { type: 'string' },
+                        date: { type: 'date' },
+                        userId: { type: 'number' },
+                        postId: { type: 'number' },
+                    },
+                    required: ['content', 'date', 'spotId', 'userId'],
+                },
+                Post: {
+                    type: 'object',
+                    properties: {
+                        id: { type: 'number' },
+                        name: { type: 'string' },
+                        date: { type: 'date' },
+                        description: { type: 'string' },
+                    },
+                },
+                PostInput: {
+                    type: 'object',
+                    properties: {
+                        name: { type: 'string' },
+                        date: { type: 'date' },
+                        description: { type: 'string' },
+                    },
+                    required: ['name', 'date', 'description'],
+                },
+                Person: {
+                    type: 'object',
+                    properties: {
+                        id: { type: 'number' },
+                        userName: { type: 'string' },
+                        name: { type: 'string' },
+                        phone: { type: 'string' },
+                        email: { type: 'string' },
+                        creditCard: { type: 'string' },
+                    },
+                },
+                PersonInput: {
+                    type: 'object',
+                    properties: {
+                        userName: { type: 'string' },
+                        name: { type: 'string' },
+                        phone: { type: 'string' },
+                        email: { type: 'string' },
+                        creditCard: { type: 'string' },
+                    },
+                    required: ['userName', 'name', 'email', 'password'],
+                },
+                Ticket: {
+                    type: 'object',
+                    properties: {
+                        id: { type: 'number' },
+                        name: { type: 'string' },
+                        amount: { type: 'number' },
+                        typeId: { type: 'number' },
+                    },
+                },
+                TicketInput: {
+                    type: 'object',
+                    properties: {
+                        name: { type: 'string' },
+                        amount: { type: 'number' },
+                        typeId: { type: 'number' },
+                    },
+                    required: ['name', 'amount', 'typeId'],
+                },
+                TicketType: {
+                    type: 'object',
+                    properties: {
+                        id: { type: 'number' },
+                        name: { type: 'string' },
+                        price: { type: 'number' },
+                    },
+                },
+                TicketTypeInput: {
+                    type: 'object',
+                    properties: {
+                        name: { type: 'string' },
+                        price: { type: 'number' },
+                    },
+                    required: ['name', 'price'],
+                },
             },
         },
     },
