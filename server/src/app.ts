@@ -13,6 +13,12 @@ import animalTypeRoutes from './routes/map/animalTypeRoutes.js';
 import express, { Request, Response, NextFunction } from 'express';
 import postRoutes from './routes/postRoutes.js';
 import commentRoutes from './routes/commnetRoutes.js';
+import personRoutes from './routes/personRoutes.js';
+
+//need to add the ticket and the ticketType routes here
+
+// import the routes from ./routes/*.js, always ends in '.js'
+// import userRoutes from './routes/userRoutes.js';
 
 const app = express();
 
@@ -129,5 +135,7 @@ app.use((err: unknown, req: Request, res: Response, next: NextFunction) => {
 });
 
 app.use('/posts', postRoutes);
+
+app.use('/persons', personRoutes);
 
 export default app;
