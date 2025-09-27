@@ -1,4 +1,4 @@
-Import controllers used for routes from ../controller/*.js always has to end with .js
+/*.js always has to end with .js
 
 //////////////////////////////////
 
@@ -14,15 +14,15 @@ router.post('/', addUser);
 export default router;
 */
 
-import { Router } from 'express';
-import {getAllPosts,addPost, getPost, updatePost, deletePost} from '../controllers/postcontroller.js';
+import { Router } from 'express'
+import * as PostController from '../controllers/postcontroller.js'
 
 const router = Router();
 
-router.get('/', getAllPosts);
-router.post('/', addPost);
-router.get('/:id', getPost);
-router.put('/:id', updatePost);
-router.delete('/:id', deletePost);
+router.get('/', PostController.getPosts);
+router.post('/', PostController.addPost);
+router.get('/:id', PostController.getPost);
+router.put('/:id', PostController.updatePosts);
+router.delete('/:id', PostController.removePost);
 
 export default router;

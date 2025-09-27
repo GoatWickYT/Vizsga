@@ -31,12 +31,28 @@ import db from '../config/db.js';
 
 export interface Post {
     id?: number;
-    title: string;
-    content: string;
-    date?: Date;
+    Name: string;
+    Description: string;
+    Comment: string;
+    Date?: Date;
 }
 export async function getAllPosts(): Promise<Post[]> {
     const [rows] = await db.query('SELECT * FROM posts');
     return rows as Post[];
 }
-    
+export async function createPost(post: Post): Promise<void> {
+    await db.query('INSERT INTO Post (Name, Description, Comment, Date) VALUES (?, ?, ?, ?, ?, ?)', [post.Name, post.Description, post.Comment, post.Date]);
+}
+export async function getPostById(id: number): Promise<Post | null> {
+    const [rows] = await db.query('SELECT * FROM Post WHERE id = ?', [id]);
+    const posts = rows as Post[];
+    return posts.length > 0 ? posts[0] : null;
+}
+
+export async function updatePost(id: number, post: Post): Promise<void> {
+    await db.query('UPDATE Post SET Name = ?, Description = ?, Comment = ?, Date= ? WHERE id = ?', [post.Name, post.Description, post.Comment, post.Date, id]);
+}   
+
+export async function deletePost(id: number): Promise<void> {
+    await db.query('DELETE FROM Post WHERE id = ?', [id]);
+}

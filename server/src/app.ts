@@ -1,10 +1,6 @@
 import express, { Request, Response, NextFunction } from 'express';
 import postRoutes from './routes/postRoutes.js';
-import commentRoutes from './routes/commentRoutes.js';
-
-
-// import the routes from ./routes/*.js, always ends in '.js'
-// import userRoutes from './routes/userRoutes.js';
+import commentRoutes from './routes/commnetRoutes.js'
 
 const app = express();
 

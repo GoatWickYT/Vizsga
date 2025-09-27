@@ -30,7 +30,6 @@ export const addUser = async (req: Request, res: Response) => {
     }
 };
 */
-from '../models/postModel.js';
 import { Request, Response } from 'express';
 import {
     getAllPosts,
@@ -39,9 +38,9 @@ import {
     updatePost,
     deletePost,
     Post,
-} 
+} from '../models/postModels.js'
 
-export const getAllPosts = async (req: Request, res: Response) => {
+export const getPosts = async (req: Request, res: Response) => {
     try {
         const posts = await getAllPosts();
         res.json(posts);
@@ -60,6 +59,7 @@ export const addPost = async (req: Request, res: Response) => {
     }
 };
 
+
 export const getPost = async (req: Request, res: Response) => {
     try {
         const id = parseInt(req.params.id);
@@ -72,28 +72,22 @@ export const getPost = async (req: Request, res: Response) => {
         res.status(500).json({ message: 'Server error', error: err });
     }
 };
-export const updatePost = async (req: Request, res: Response) => {
+export const updatePosts = async (req: Request, res: Response) => {
     try {
         const id = parseInt(req.params.id);
         const post: Post = req.body;
-        const updated = await updatePost(id, post);
-        if (!updated) {
-            return res.status(404).json({ message: 'Post not found' });
-        }
-        res.json({ message: 'Post updated' });
-    } catch (err) {
-        res.status(500).json({ message: 'Server error', error: err });
-    }           
+       await updatePost(id, post);
+               res.json({ message: 'Post updated' });
+           } catch (err) {
+               res.status(500).json({ message: 'Server error', error: err });
+           }        
 };
 export const removePost = async (req: Request, res: Response) => {
     try {
         const id = parseInt(req.params.id);
-        const deleted = await deletePost(id);
-        if (!deleted) {
-            return res.status(404).json({ message: 'Post not found' });
-        }
-        res.json({ message: 'Post deleted' });
-    } catch (err) {
-        res.status(500).json({ message: 'Server error', error: err });
-    }
+       await deletePost(id);
+               res.json({ message: 'Post deleted' });
+           } catch (err) {
+               res.status(500).json({ message: 'Server error', error: err });
+           }
 }; 

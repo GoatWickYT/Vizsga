@@ -30,7 +30,7 @@ export const addUser = async (req: Request, res: Response) => {
     }
 };
 */
-from '../models/commentModel.js';
+
 import { Request, Response } from 'express';
 import {
     getAllComments,
@@ -39,10 +39,10 @@ import {
     updateComment,
     deleteComment,
     Comment,
-} from '../models/commentModel.js';
+} from '../models/commentModels.js'
 import { Post } from '../models/postModels.js';
 
-export const getAllComments = async (req: Request, res: Response) => {
+export const getComments = async (req: Request, res: Response) => {
     try {
         const comments = await getAllComments();
         res.json(comments);
@@ -73,26 +73,20 @@ export const getComment = async (req: Request, res: Response) => {
         res.status(500).json({ message: 'Server error', error: err });
     }
 };
-export const updateComment = async (req: Request, res: Response) => {
+export const updateComments = async (req: Request, res: Response) => {
     try {
         const id = parseInt(req.params.id);
         const comment: Comment = req.body;
-        const updated = await updateComment(id, comment);
-        if (!updated) {
-            return res.status(404).json({ message: 'Comment not found' });
-        }
+       await updateComment(id, comment);
         res.json({ message: 'Comment updated' });
     } catch (err) {
         res.status(500).json({ message: 'Server error', error: err });
-    }           
+    }  
 };
 export const removeComment = async (req: Request, res: Response) => {
     try {
         const id = parseInt(req.params.id);
-        const deleted = await deleteComment(id);
-        if (!deleted) {
-            return res.status(404).json({ message: 'Comment not found' });
-        }
+        await deleteComment(id);
         res.json({ message: 'Comment deleted' });
     } catch (err) {
         res.status(500).json({ message: 'Server error', error: err });

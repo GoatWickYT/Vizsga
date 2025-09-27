@@ -1,4 +1,4 @@
-Import controllers used for routes from ../controller/*.js always has to end with .js
+/*.js always has to end with .js
 
 //////////////////////////////////
 
@@ -15,14 +15,14 @@ export default router;
 */
 
 import { Router } from 'express';
-import {getAllComments,addComment, getComment, updateComment, deleteComment} from '../controllers/commnetcontroller.js';
+import * as CommentController from '../controllers/commentcontroller.js'
 
 const router = Router();
 
-router.get('/', getAllComments);
-router.post('/', addComment);
-router.get('/:id', getComment);
-router.put('/:id', updateComment);
-router.delete('/:id', deleteComment);
+router.get('/', CommentController.getComments);
+router.post('/', CommentController.addComment);
+router.get('/:id', CommentController.getComment);
+router.put('/:id', CommentController.updateComments);
+router.delete('/:id', CommentController.removeComment);
 
 export default router;
