@@ -6,7 +6,7 @@ const router = Router();
 
 /**
  * @openapi
- * /animalTypes:
+ * /animal-types:
  *   get:
  *     summary: Get all animalTypes
  *     tags:
@@ -24,7 +24,7 @@ const router = Router();
 
 /**
  * @openapi
- * /animalTypes/{id}:
+ * /animal-types/{id}:
  *   get:
  *     summary: Get a single animalType by ID
  *     tags:
@@ -47,7 +47,7 @@ const router = Router();
 
 /**
  * @openapi
- * /animalTypes:
+ * /animal-types:
  *   post:
  *     summary: Create a new animalType
  *     tags:
@@ -65,7 +65,7 @@ const router = Router();
 
 /**
  * @openapi
- * /animalTypes/{id}:
+ * /animal-types/{id}:
  *   patch:
  *     summary: Update an animalType
  *     tags:
@@ -90,7 +90,7 @@ const router = Router();
 
 /**
  * @openapi
- * /animalTypes/{id}:
+ * /animal-types/{id}:
  *   delete:
  *     summary: Delete an animalType
  *     tags:

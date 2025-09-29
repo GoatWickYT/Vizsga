@@ -1,10 +1,18 @@
-import express, { Request, Response, NextFunction } from 'express';
+import fs from 'fs';
+import { fileURLToPath } from 'url';
+import { dirname, join } from 'path';
+import path from 'path';
 import cors from 'cors';
+import helmet from 'helmet';
+import morgan from 'morgan';
+import cookieParser from 'cookie-parser';
+import express, { Request, Response } from 'express';
 
 import swaggerUi from 'swagger-ui-express';
 import swaggerSpec from './swagger/swaggerSpec.js';
 
-import wc_unitRoutes from './routes/map/wcUnitRoutes.js';
+// Routes
+import wcUnitRoutes from './routes/map/wcUnitRoutes.js';
 import menuRoutes from './routes/map/menuRoutes.js';
 import iconRoutes from './routes/map/iconRoutes.js';
 import spotRoutes from './routes/map/spotRoutes.js';
@@ -20,114 +28,55 @@ import personRoutes from './routes/ticket/personRoutes.js';
 import ticketTypeRoutes from './routes/ticket/ticketTypeRoutes.js';
 import ticketRoutes from './routes/ticket/ticketRoutes.js';
 
+// Middleware
+import errorHandler from './middleware/errorHandler.js';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+const swaggerCss = fs.readFileSync(join(__dirname, './swagger/swaggerTheme.css'), 'utf8');
+
 const app = express();
 
-app.use(express.json());
+// --- Global middleware ---
+app.use(helmet());
 app.use(cors());
+app.use(express.json());
+app.use(cookieParser());
+app.use(morgan('dev'));
+
+// --- Swagger docs ---
 app.use(
     '/api-docs',
     swaggerUi.serve,
     swaggerUi.setup(swaggerSpec, {
-        customCss: `
-            /* Backgrounds */
-            .swagger-ui, html {
-            background-color: #121212 !important;
-            color: #eee !important;
-            }
-
-            .swagger-ui .topbar {
-            background-color: #1f1f1f !important;
-            border-bottom: 1px solid #333 !important;
-            }
-
-            .swagger-ui .info, 
-            .swagger-ui .scheme-container,
-            .swagger-ui .opblock-summary {
-            background-color: #1a1a1a !important;
-            color: #eee !important;
-            }
-
-            .swagger-ui .opblock-description-wrapper,
-            .swagger-ui .parameters-container,
-            .swagger-ui .responses-wrapper {
-            background-color: #222 !important;
-            color: #eee !important;
-            }
-
-            /* Text colors */
-            .swagger-ui * {
-            color: #eee !important;
-            }
-
-            /* Links */
-            .swagger-ui a {
-            color: #4ea1f3 !important;
-            }
-
-            /* Buttons */
-            .swagger-ui .btn {
-            background-color: #333 !important;
-            color: #eee !important;
-            border: 1px solid #555 !important;
-            }
-
-            /* Inputs */
-            .swagger-ui input, 
-            .swagger-ui select, 
-            .swagger-ui textarea {
-            background-color: #333 !important;
-            color: #eee !important;
-            border: 1px solid #555 !important;
-            }
-
-            /* Scrollbar (optional) */
-            .swagger-ui::-webkit-scrollbar {
-            width: 8px;
-            }
-
-            .swagger-ui::-webkit-scrollbar-track {
-            background: #121212;
-            }
-
-            .swagger-ui::-webkit-scrollbar-thumb {
-            background-color: #555;
-            border-radius: 10px;
-            }
-
-            /* Expand/collapse icons */
-            .swagger-ui .opblock-summary-control {
-            color: #eee !important;
-            }
-
-    `,
+        customCss: swaggerCss,
     }),
 );
 
-app.use('/wc_units', wc_unitRoutes);
+// --- Routes ---
+app.use('/wc-units', wcUnitRoutes);
 app.use('/icons', iconRoutes);
 app.use('/menus', menuRoutes);
 app.use('/spots', spotRoutes);
 app.use('/buffets', buffetRoutes);
 app.use('/statuses', statusRoutes);
 app.use('/animals', animalRoutes);
-app.use('/animalTypes', animalTypeRoutes);
+app.use('/animal-types', animalTypeRoutes);
 
 app.use('/comments', commentRoutes);
 app.use('/posts', postRoutes);
 
 app.use('/people', personRoutes);
 app.use('/tickets', ticketRoutes);
-app.use('/ticketTypes', ticketTypeRoutes);
+app.use('/ticket-types', ticketTypeRoutes);
 
+// --- 404 handler ---
 app.use((req: Request, res: Response) => {
     res.status(404).json({ message: 'Route not found' });
 });
-app.use((err: unknown, req: Request, res: Response, next: NextFunction) => {
-    if (err instanceof Error) {
-        res.status(500).json({ message: 'Server error', error: err.message });
-    } else {
-        res.status(500).json({ message: 'Server error', error: 'Unknown error' });
-    }
-});
+
+// --- Error handler ---
+app.use(errorHandler);
 
 export default app;

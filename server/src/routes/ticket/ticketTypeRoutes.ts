@@ -6,7 +6,7 @@ const ticketTypeRouter = Router();
 
 /**
  * @openapi
- * /ticketTypes:
+ * /ticket-types:
  *   get:
  *     summary: Get all ticketTypes
  *     tags:
@@ -24,7 +24,7 @@ const ticketTypeRouter = Router();
 
 /**
  * @openapi
- * /ticketTypes/{id}:
+ * /ticket-types/{id}:
  *   get:
  *     summary: Get a single ticketType by ID
  *     tags:
@@ -47,7 +47,7 @@ const ticketTypeRouter = Router();
 
 /**
  * @openapi
- * /ticketTypes:
+ * /ticket-types:
  *   post:
  *     summary: Create a new ticketType
  *     tags:
@@ -65,7 +65,7 @@ const ticketTypeRouter = Router();
 
 /**
  * @openapi
- * /ticketTypes/{id}:
+ * /ticket-types/{id}:
  *   patch:
  *     summary: Update a ticketType
  *     tags:
@@ -90,7 +90,7 @@ const ticketTypeRouter = Router();
 
 /**
  * @openapi
- * /ticketTypes/{id}:
+ * /ticket-types/{id}:
  *   delete:
  *     summary: Delete a ticketType
  *     tags:

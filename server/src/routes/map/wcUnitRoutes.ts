@@ -6,7 +6,7 @@ const router = Router();
 
 /**
  * @openapi
- * /wcUnits:
+ * /wc-units:
  *   get:
  *     summary: Get all wcUnits
  *     tags:
@@ -24,7 +24,7 @@ const router = Router();
 
 /**
  * @openapi
- * /wcUnits/{id}:
+ * /wc-units/{id}:
  *   get:
  *     summary: Get a single wcUnit by ID
  *     tags:
@@ -47,7 +47,7 @@ const router = Router();
 
 /**
  * @openapi
- * /wcUnits:
+ * /wc-units:
  *   post:
  *     summary: Create a new wcUnit
  *     tags:
@@ -65,7 +65,7 @@ const router = Router();
 
 /**
  * @openapi
- * /wcUnits/{id}:
+ * /wc-units/{id}:
  *   patch:
  *     summary: Update a wcUnit
  *     tags:
@@ -90,7 +90,7 @@ const router = Router();
 
 /**
  * @openapi
- * /wcUnits/{id}:
+ * /wc-units/{id}:
  *   delete:
  *     summary: Delete a wcUnit
  *     tags:
