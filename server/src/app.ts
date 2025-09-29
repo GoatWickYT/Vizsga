@@ -1,11 +1,9 @@
 import fs from 'fs';
-import { fileURLToPath } from 'url';
-import { dirname, join } from 'path';
-import path from 'path';
 import cors from 'cors';
 import helmet from 'helmet';
 import morgan from 'morgan';
 import cookieParser from 'cookie-parser';
+import { join } from 'path';
 import express, { Request, Response } from 'express';
 
 import swaggerUi from 'swagger-ui-express';
@@ -31,10 +29,7 @@ import ticketRoutes from './routes/ticket/ticketRoutes.js';
 // Middleware
 import errorHandler from './middleware/errorHandler.js';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-
-const swaggerCss = fs.readFileSync(join(__dirname, './swagger/swaggerTheme.css'), 'utf8');
+const swaggerCss = fs.readFileSync(join(process.cwd(), 'swagger', 'swaggerTheme.css'), 'utf8');
 
 const app = express();
 
