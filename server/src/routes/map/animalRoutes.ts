@@ -1,4 +1,5 @@
 import { Router } from 'express';
+import { updateCount } from '../../middleware/updateCounts.js';
 import { validateId } from '../../middleware/validation/validateId.js';
 import {
     createAnimalValidator,
@@ -113,14 +114,21 @@ const router = Router();
  */
 router.get('/', AnimalController.getAnimals);
 router.get('/:id', validateId, AnimalController.getAnimal);
-router.post('/', createAnimalValidator, validateRequest, AnimalController.createAnimal);
+router.post(
+    '/',
+    createAnimalValidator,
+    validateRequest,
+    AnimalController.createAnimal,
+    updateCount('map'),
+);
 router.patch(
     '/:id',
     updateAnimalValidator,
     validateRequest,
     validateId,
     AnimalController.updateAnimal,
+    updateCount('map'),
 );
-router.delete('/:id', validateId, AnimalController.deleteAnimal);
+router.delete('/:id', validateId, AnimalController.deleteAnimal, updateCount('map'));
 
 export default router;

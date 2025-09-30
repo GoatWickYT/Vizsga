@@ -1,4 +1,5 @@
 import { Router } from 'express';
+import { updateCount } from '../../middleware/updateCounts.js';
 import {
     createAnimalTypeValidator,
     updateAnimalTypeValidator,
@@ -113,14 +114,21 @@ const router = Router();
  */
 router.get('/', AnimalTypeController.getAnimalTypes);
 router.get('/:id', validateId, AnimalTypeController.getAnimalType);
-router.post('/', createAnimalTypeValidator, validateRequest, AnimalTypeController.createAnimalType);
+router.post(
+    '/',
+    createAnimalTypeValidator,
+    validateRequest,
+    AnimalTypeController.createAnimalType,
+    updateCount('map'),
+);
 router.patch(
     '/:id',
     updateAnimalTypeValidator,
     validateRequest,
     validateId,
     AnimalTypeController.updateAnimalType,
+    updateCount('map'),
 );
-router.delete('/:id', validateId, AnimalTypeController.deleteAnimalType);
+router.delete('/:id', validateId, AnimalTypeController.deleteAnimalType, updateCount('map'));
 
 export default router;

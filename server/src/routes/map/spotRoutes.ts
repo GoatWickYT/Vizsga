@@ -1,4 +1,5 @@
 import { Router } from 'express';
+import { updateCount } from '../../middleware/updateCounts.js';
 import {
     createSpotValidator,
     updateSpotValidator,
@@ -113,8 +114,21 @@ const router = Router();
  */
 router.get('/', SpotController.getSpots);
 router.get('/:id', validateId, SpotController.getSpot);
-router.post('/', createSpotValidator, validateRequest, SpotController.createSpot);
-router.patch('/:id', updateSpotValidator, validateRequest, validateId, SpotController.updateSpot);
-router.delete('/:id', validateId, SpotController.deleteSpot);
+router.post(
+    '/',
+    createSpotValidator,
+    validateRequest,
+    SpotController.createSpot,
+    updateCount('map'),
+);
+router.patch(
+    '/:id',
+    updateSpotValidator,
+    validateRequest,
+    validateId,
+    SpotController.updateSpot,
+    updateCount('map'),
+);
+router.delete('/:id', validateId, SpotController.deleteSpot, updateCount('map'));
 
 export default router;

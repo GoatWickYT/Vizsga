@@ -1,4 +1,5 @@
 import { Router } from 'express';
+import { updateCount } from '../../middleware/updateCounts.js';
 import {
     createWcUnitValidator,
     updateWcUnitValidator,
@@ -113,14 +114,21 @@ const router = Router();
  */
 router.get('/', WcUnitController.getWcUnits);
 router.get('/:id', validateId, WcUnitController.getWcUnit);
-router.post('/', createWcUnitValidator, validateRequest, WcUnitController.createWcUnit);
+router.post(
+    '/',
+    createWcUnitValidator,
+    validateRequest,
+    WcUnitController.createWcUnit,
+    updateCount('map'),
+);
 router.patch(
     '/:id',
     updateWcUnitValidator,
     validateRequest,
     validateId,
     WcUnitController.updateWcUnit,
+    updateCount('map'),
 );
-router.delete('/:id', validateId, WcUnitController.deleteWcUnit);
+router.delete('/:id', validateId, WcUnitController.deleteWcUnit, updateCount('map'));
 
 export default router;

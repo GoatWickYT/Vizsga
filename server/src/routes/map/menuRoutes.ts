@@ -1,4 +1,5 @@
 import { Router } from 'express';
+import { updateCount } from '../../middleware/updateCounts.js';
 import {
     createMenuValidator,
     updateMenuValidator,
@@ -113,8 +114,21 @@ const router = Router();
  */
 router.get('/', MenuController.getMenus);
 router.get('/:id', validateId, MenuController.getMenu);
-router.post('/', createMenuValidator, validateRequest, MenuController.createMenu);
-router.patch('/:id', updateMenuValidator, validateRequest, validateId, MenuController.updateMenu);
-router.delete('/:id', validateId, MenuController.deleteMenu);
+router.post(
+    '/',
+    createMenuValidator,
+    validateRequest,
+    MenuController.createMenu,
+    updateCount('map'),
+);
+router.patch(
+    '/:id',
+    updateMenuValidator,
+    validateRequest,
+    validateId,
+    MenuController.updateMenu,
+    updateCount('map'),
+);
+router.delete('/:id', validateId, MenuController.deleteMenu, updateCount('map'));
 
 export default router;

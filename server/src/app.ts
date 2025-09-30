@@ -7,10 +7,11 @@ import cookieParser from 'cookie-parser';
 import { join } from 'path';
 import express, { Request, Response } from 'express';
 
+// --- Swagger ---
 import swaggerUi from 'swagger-ui-express';
 import swaggerSpec from './swagger/swaggerSpec.js';
 
-// Routes
+// --- Routes ---
 import menuRoutes from './routes/map/menuRoutes.js';
 import iconRoutes from './routes/map/iconRoutes.js';
 import spotRoutes from './routes/map/spotRoutes.js';
@@ -27,27 +28,53 @@ import personRoutes from './routes/ticket/personRoutes.js';
 import ticketRoutes from './routes/ticket/ticketRoutes.js';
 import ticketTypeRoutes from './routes/ticket/ticketTypeRoutes.js';
 
-// Middleware
+import updateRoutes from './routes/updateCountsRoutes.js';
+
+// --- Middleware ---
 import errorHandler from './middleware/errorHandler.js';
 import { apiLimiter } from './middleware/rateLimiter.js';
 
-const csrfProtection = csurf({ cookie: true });
+import basicAuth from 'express-basic-auth';
 
 const swaggerCss = fs.readFileSync(join(process.cwd(), 'swagger', 'swaggerTheme.css'), 'utf8');
 
 const app = express();
 
+const csrfProtection = csurf({
+    cookie: {
+        key: 'XSRF-TOKEN',
+        httpOnly: false,
+        sameSite: 'strict',
+        secure: process.env.NODE_ENV === 'production',
+    },
+    value: (req) => {
+        return (req.headers['x-csrf-token'] as string) || '';
+    },
+});
+
 // --- Global middleware ---
-app.use(helmet());
 app.use(cors());
+app.use(helmet());
+app.use(morgan('dev'));
 app.use(express.json());
 app.use(cookieParser());
-app.use(morgan('dev'));
 app.use(csrfProtection);
+
+app.get('/csrf-token', (req, res) => {
+    res.cookie('XSRF-TOKEN', req.csrfToken(), {
+        httpOnly: false,
+        sameSite: 'strict',
+        secure: process.env.NODE_ENV === 'production',
+    }).json({ csrfToken: req.csrfToken() });
+});
 
 // --- Swagger docs ---
 app.use(
     '/api-docs',
+    basicAuth({
+        users: { admin: 'supersecret' },
+        challenge: true,
+    }),
     swaggerUi.serve,
     swaggerUi.setup(swaggerSpec, {
         customCss: swaggerCss,
@@ -55,7 +82,10 @@ app.use(
 );
 
 // --- API Limiter ---
-app.use('/api/', apiLimiter);
+app.use('/', apiLimiter);
+
+// --- Get Updates ---
+app.use('/update-counts', updateRoutes);
 
 // --- Routes ---
 app.use('/wc-units', wcUnitRoutes);

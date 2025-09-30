@@ -1,4 +1,5 @@
 import { Router } from 'express';
+import { updateCount } from '../../middleware/updateCounts.js';
 import {
     createTicketTypeValidator,
     updateTicketTypeValidator,
@@ -111,21 +112,28 @@ const ticketTypeRouter = Router();
  *       204:
  *         description: ticketType deleted
  */
-ticketTypeRouter.get('/ticket-types', ticketTypeController.getTicketTypes);
-ticketTypeRouter.get('/ticket-types/:id', validateId, ticketTypeController.getTicketType);
+ticketTypeRouter.get('/', ticketTypeController.getTicketTypes);
+ticketTypeRouter.get('/:id', validateId, ticketTypeController.getTicketType);
 ticketTypeRouter.post(
-    '/ticket-types',
+    '/',
     createTicketTypeValidator,
     validateRequest,
     ticketTypeController.addTicketType,
+    updateCount('ticket'),
 );
 ticketTypeRouter.patch(
-    '/ticket-types/:id',
+    '/:id',
     updateTicketTypeValidator,
     validateRequest,
     validateId,
     ticketTypeController.updateTicketType,
+    updateCount('ticket'),
 );
-ticketTypeRouter.delete('/ticket-types/:id', validateId, ticketTypeController.deleteTicketType);
+ticketTypeRouter.delete(
+    '/:id',
+    validateId,
+    ticketTypeController.deleteTicketType,
+    updateCount('ticket'),
+);
 
 export default ticketTypeRouter;

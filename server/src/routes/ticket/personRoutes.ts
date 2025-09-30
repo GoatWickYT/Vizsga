@@ -1,4 +1,5 @@
 import { Router } from 'express';
+import { updateCount } from '../../middleware/updateCounts.js';
 import {
     createPersonValidator,
     updatePersonValidator,
@@ -113,14 +114,21 @@ const personRouter = Router();
  */
 personRouter.get('/', personController.getPeople);
 personRouter.get('/:id', validateId, personController.getPerson);
-personRouter.post('/', createPersonValidator, validateRequest, personController.addPeople);
+personRouter.post(
+    '/',
+    createPersonValidator,
+    validateRequest,
+    personController.addPeople,
+    updateCount('ticket'),
+);
 personRouter.patch(
     '/:id',
     updatePersonValidator,
     validateRequest,
     validateId,
     personController.updatePeople,
+    updateCount('ticket'),
 );
-personRouter.delete('/:id', validateId, personController.deletePeople);
+personRouter.delete('/:id', validateId, personController.deletePeople, updateCount('ticket'));
 
 export default personRouter;

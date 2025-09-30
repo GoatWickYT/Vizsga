@@ -1,4 +1,5 @@
 import { Router } from 'express';
+import { updateCount } from '../../middleware/updateCounts.js';
 import {
     createStatusValidator,
     updateStatusValidator,
@@ -113,14 +114,21 @@ const router = Router();
  */
 router.get('/', StatusController.getStatuses);
 router.get('/:id', validateId, StatusController.getStatus);
-router.post('/', createStatusValidator, validateRequest, StatusController.createStatus);
+router.post(
+    '/',
+    createStatusValidator,
+    validateRequest,
+    StatusController.createStatus,
+    updateCount('map'),
+);
 router.patch(
     '/:id',
     updateStatusValidator,
     validateRequest,
     validateId,
     StatusController.updateStatus,
+    updateCount('map'),
 );
-router.delete('/:id', validateId, StatusController.deleteStatus);
+router.delete('/:id', validateId, StatusController.deleteStatus, updateCount('map'));
 
 export default router;

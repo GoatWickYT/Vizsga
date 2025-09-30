@@ -1,4 +1,5 @@
 import { Router } from 'express';
+import { updateCount } from '../../middleware/updateCounts.js';
 import {
     createIconValidator,
     updateIconValidator,
@@ -111,10 +112,23 @@ const router = Router();
  *       204:
  *         description: Icon deleted
  */
-router.get('/', IconController.getBuffets);
-router.get('/:id', validateId, IconController.getBuffet);
-router.post('/', createIconValidator, validateRequest, IconController.createBuffet);
-router.patch('/:id', updateIconValidator, validateRequest, validateId, IconController.updateBuffet);
-router.delete('/:id', validateId, IconController.deleteBuffet);
+router.get('/', IconController.getIcons);
+router.get('/:id', validateId, IconController.getIcon);
+router.post(
+    '/',
+    createIconValidator,
+    validateRequest,
+    IconController.createIcon,
+    updateCount('map'),
+);
+router.patch(
+    '/:id',
+    updateIconValidator,
+    validateRequest,
+    validateId,
+    IconController.updateIcon,
+    updateCount('map'),
+);
+router.delete('/:id', validateId, IconController.deleteIcon, updateCount('map'));
 
 export default router;

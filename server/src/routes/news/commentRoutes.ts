@@ -1,4 +1,5 @@
 import { Router } from 'express';
+import { updateCount } from '../../middleware/updateCounts.js';
 import {
     createCommentValidator,
     updateCommentValidator,
@@ -113,14 +114,22 @@ const router = Router();
  */
 router.get('/', CommentController.getComments);
 router.get('/:id', CommentController.getComment);
-router.post('/', createCommentValidator, validateRequest, validateId, CommentController.addComment);
+router.post(
+    '/',
+    createCommentValidator,
+    validateRequest,
+    validateId,
+    CommentController.addComment,
+    updateCount('news'),
+);
 router.patch(
     '/:id',
     updateCommentValidator,
     validateRequest,
     validateId,
     CommentController.updateComments,
+    updateCount('news'),
 );
-router.delete('/:id', validateId, CommentController.removeComment);
+router.delete('/:id', validateId, CommentController.removeComment, updateCount('news'));
 
 export default router;

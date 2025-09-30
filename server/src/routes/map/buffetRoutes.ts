@@ -1,4 +1,5 @@
 import { Router } from 'express';
+import { updateCount } from '../../middleware/updateCounts.js';
 import {
     createBuffetValidator,
     updateBuffetValidator,
@@ -113,14 +114,21 @@ const router = Router();
  */
 router.get('/', BuffetController.getBuffets);
 router.get('/:id', validateId, BuffetController.getBuffet);
-router.post('/', createBuffetValidator, validateRequest, BuffetController.createBuffet);
+router.post(
+    '/',
+    createBuffetValidator,
+    validateRequest,
+    BuffetController.createBuffet,
+    updateCount('map'),
+);
 router.patch(
     '/:id',
     updateBuffetValidator,
     validateRequest,
     validateId,
     BuffetController.updateBuffet,
+    updateCount('map'),
 );
-router.delete('/:id', validateId, BuffetController.deleteBuffet);
+router.delete('/:id', validateId, BuffetController.deleteBuffet, updateCount('map'));
 
 export default router;
