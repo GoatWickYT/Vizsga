@@ -16,6 +16,7 @@ const options = {
                         name: { type: 'string' },
                         description: { type: 'string' },
                         adopter: { type: 'string' },
+                        spotId: { type: 'number' },
                     },
                 },
                 AnimalInput: {
@@ -24,8 +25,9 @@ const options = {
                         name: { type: 'string' },
                         description: { type: 'string' },
                         adopter: { type: 'string' },
+                        spotId: { type: 'number' },
                     },
-                    required: ['name', 'description'],
+                    required: ['name', 'description', 'spotId'],
                 },
                 AnimalType: {
                     type: 'object',

@@ -1,5 +1,10 @@
 import { Router } from 'express';
-import { validateId } from '../../middleware/validateId.js';
+import {
+    createIconValidator,
+    updateIconValidator,
+} from '../../middleware/validation/map/iconValidator.js';
+import { validateRequest } from '../../middleware/validation/validateRequest.js';
+import { validateId } from '../../middleware/validation/validateId.js';
 import * as IconController from '../../controllers/map/iconController.js';
 
 const router = Router();
@@ -108,8 +113,8 @@ const router = Router();
  */
 router.get('/', IconController.getBuffets);
 router.get('/:id', validateId, IconController.getBuffet);
-router.post('/', IconController.createBuffet);
-router.patch('/:id', validateId, IconController.updateBuffet);
+router.post('/', createIconValidator, validateRequest, IconController.createBuffet);
+router.patch('/:id', updateIconValidator, validateRequest, validateId, IconController.updateBuffet);
 router.delete('/:id', validateId, IconController.deleteBuffet);
 
 export default router;

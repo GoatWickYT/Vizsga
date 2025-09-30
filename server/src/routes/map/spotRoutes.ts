@@ -1,5 +1,10 @@
 import { Router } from 'express';
-import { validateId } from '../../middleware/validateId.js';
+import {
+    createSpotValidator,
+    updateSpotValidator,
+} from '../../middleware/validation/map/spotValidator.js';
+import { validateRequest } from '../../middleware/validation/validateRequest.js';
+import { validateId } from '../../middleware/validation/validateId.js';
 import * as SpotController from '../../controllers/map/spotController.js';
 
 const router = Router();
@@ -108,8 +113,8 @@ const router = Router();
  */
 router.get('/', SpotController.getSpots);
 router.get('/:id', validateId, SpotController.getSpot);
-router.post('/', SpotController.createSpot);
-router.patch('/:id', validateId, SpotController.updateSpot);
+router.post('/', createSpotValidator, validateRequest, SpotController.createSpot);
+router.patch('/:id', updateSpotValidator, validateRequest, validateId, SpotController.updateSpot);
 router.delete('/:id', validateId, SpotController.deleteSpot);
 
 export default router;

@@ -1,5 +1,10 @@
 import { Router } from 'express';
-import { validateId } from '../../middleware/validateId.js';
+import {
+    createPostValidator,
+    updatePostValidator,
+} from '../../middleware/validation/news/postValidator.js';
+import { validateRequest } from '../../middleware/validation/validateRequest.js';
+import { validateId } from '../../middleware/validation/validateId.js';
 import * as PostController from '../../controllers/news/postcontroller.js';
 
 const router = Router();
@@ -107,9 +112,9 @@ const router = Router();
  *         description: post deleted
  */
 router.get('/', PostController.getPosts);
-router.post('/', PostController.addPost);
 router.get('/:id', validateId, PostController.getPost);
-router.patch('/:id', validateId, PostController.updatePosts);
+router.post('/', createPostValidator, validateRequest, PostController.addPost);
+router.patch('/:id', updatePostValidator, validateRequest, validateId, PostController.updatePosts);
 router.delete('/:id', validateId, PostController.removePost);
 
 export default router;

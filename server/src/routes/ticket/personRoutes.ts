@@ -1,5 +1,10 @@
 import { Router } from 'express';
-import { validateId } from '../../middleware/validateId.js';
+import {
+    createPersonValidator,
+    updatePersonValidator,
+} from '../../middleware/validation/ticket/personValidator.js';
+import { validateRequest } from '../../middleware/validation/validateRequest.js';
+import { validateId } from '../../middleware/validation/validateId.js';
 import * as personController from '../../controllers/ticket/personController.js';
 
 const personRouter = Router();
@@ -107,9 +112,15 @@ const personRouter = Router();
  *         description: people deleted
  */
 personRouter.get('/', personController.getPeople);
-personRouter.post('/', personController.addPeople);
 personRouter.get('/:id', validateId, personController.getPerson);
-personRouter.patch('/:id', validateId, personController.updatePeople);
+personRouter.post('/', createPersonValidator, validateRequest, personController.addPeople);
+personRouter.patch(
+    '/:id',
+    updatePersonValidator,
+    validateRequest,
+    validateId,
+    personController.updatePeople,
+);
 personRouter.delete('/:id', validateId, personController.deletePeople);
 
 export default personRouter;

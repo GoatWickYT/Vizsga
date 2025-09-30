@@ -1,5 +1,10 @@
 import { Router } from 'express';
-import { validateId } from '../../middleware/validateId.js';
+import {
+    createTicketValidator,
+    updateTicketValidator,
+} from '../../middleware/validation/ticket/ticketValidator.js';
+import { validateRequest } from '../../middleware/validation/validateRequest.js';
+import { validateId } from '../../middleware/validation/validateId.js';
 import * as ticketController from '../../controllers/ticket/ticketController.js';
 
 const ticketRouter = Router();
@@ -107,9 +112,15 @@ const ticketRouter = Router();
  *         description: ticket deleted
  */
 ticketRouter.get('/tickets', ticketController.getTickets);
-ticketRouter.post('/tickets', ticketController.addTicket);
 ticketRouter.get('/tickets/:id', validateId, ticketController.getTicket);
-ticketRouter.patch('/tickets/:id', validateId, ticketController.updateTicket);
+ticketRouter.post('/tickets', createTicketValidator, validateRequest, ticketController.addTicket);
+ticketRouter.patch(
+    '/tickets/:id',
+    updateTicketValidator,
+    validateRequest,
+    validateId,
+    ticketController.updateTicket,
+);
 ticketRouter.delete('/tickets/:id', validateId, ticketController.deleteTicket);
 
 export default ticketRouter;

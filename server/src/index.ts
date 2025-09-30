@@ -12,6 +12,15 @@ const server = app.listen(PORT, async () => {
     console.log(`Server running on http://localhost:${PORT}`);
 });
 
+process.on('uncaughtException', (err) => {
+    console.error('Uncaught Exception:', err);
+    process.exit(1);
+});
+
+process.on('unhandledRejection', (reason) => {
+    console.error('Unhandled Rejection:', reason);
+});
+
 process.on('SIGINT', async () => {
     console.log('\nGracefully shutting down...');
     server.close(async () => {

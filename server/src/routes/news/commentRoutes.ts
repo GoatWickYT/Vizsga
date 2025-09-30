@@ -1,5 +1,10 @@
 import { Router } from 'express';
-import { validateId } from '../../middleware/validateId.js';
+import {
+    createCommentValidator,
+    updateCommentValidator,
+} from '../../middleware/validation/news/commentValidator.js';
+import { validateRequest } from '../../middleware/validation/validateRequest.js';
+import { validateId } from '../../middleware/validation/validateId.js';
 import * as CommentController from '../../controllers/news/commentcontroller.js';
 
 const router = Router();
@@ -107,9 +112,15 @@ const router = Router();
  *         description: comment deleted
  */
 router.get('/', CommentController.getComments);
-router.post('/', CommentController.addComment);
-router.get('/:id', validateId, CommentController.getComment);
-router.patch('/:id', validateId, CommentController.updateComments);
+router.get('/:id', CommentController.getComment);
+router.post('/', createCommentValidator, validateRequest, validateId, CommentController.addComment);
+router.patch(
+    '/:id',
+    updateCommentValidator,
+    validateRequest,
+    validateId,
+    CommentController.updateComments,
+);
 router.delete('/:id', validateId, CommentController.removeComment);
 
 export default router;

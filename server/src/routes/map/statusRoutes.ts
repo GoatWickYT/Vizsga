@@ -1,5 +1,10 @@
 import { Router } from 'express';
-import { validateId } from '../../middleware/validateId.js';
+import {
+    createStatusValidator,
+    updateStatusValidator,
+} from '../../middleware/validation/map/statusValidator.js';
+import { validateRequest } from '../../middleware/validation/validateRequest.js';
+import { validateId } from '../../middleware/validation/validateId.js';
 import * as StatusController from '../../controllers/map/statusController.js';
 
 const router = Router();
@@ -108,8 +113,14 @@ const router = Router();
  */
 router.get('/', StatusController.getStatuses);
 router.get('/:id', validateId, StatusController.getStatus);
-router.post('/', StatusController.createStatus);
-router.patch('/:id', validateId, StatusController.updateStatus);
+router.post('/', createStatusValidator, validateRequest, StatusController.createStatus);
+router.patch(
+    '/:id',
+    updateStatusValidator,
+    validateRequest,
+    validateId,
+    StatusController.updateStatus,
+);
 router.delete('/:id', validateId, StatusController.deleteStatus);
 
 export default router;

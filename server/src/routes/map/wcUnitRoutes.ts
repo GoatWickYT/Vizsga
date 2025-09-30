@@ -1,5 +1,10 @@
 import { Router } from 'express';
-import { validateId } from '../../middleware/validateId.js';
+import {
+    createWcUnitValidator,
+    updateWcUnitValidator,
+} from '../../middleware/validation/map/wcUnitValidator.js';
+import { validateRequest } from '../../middleware/validation/validateRequest.js';
+import { validateId } from '../../middleware/validation/validateId.js';
 import * as WcUnitController from '../../controllers/map/wcUnitController.js';
 
 const router = Router();
@@ -108,8 +113,14 @@ const router = Router();
  */
 router.get('/', WcUnitController.getWcUnits);
 router.get('/:id', validateId, WcUnitController.getWcUnit);
-router.post('/', WcUnitController.createWcUnit);
-router.patch('/:id', validateId, WcUnitController.updateWcUnit);
+router.post('/', createWcUnitValidator, validateRequest, WcUnitController.createWcUnit);
+router.patch(
+    '/:id',
+    updateWcUnitValidator,
+    validateRequest,
+    validateId,
+    WcUnitController.updateWcUnit,
+);
 router.delete('/:id', validateId, WcUnitController.deleteWcUnit);
 
 export default router;

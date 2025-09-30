@@ -1,5 +1,10 @@
 import { Router } from 'express';
-import { validateId } from '../../middleware/validateId.js';
+import {
+    createAnimalTypeValidator,
+    updateAnimalTypeValidator,
+} from '../../middleware/validation/map/animalTypeValidator.js';
+import { validateRequest } from '../../middleware/validation/validateRequest.js';
+import { validateId } from '../../middleware/validation/validateId.js';
 import * as AnimalTypeController from '../../controllers/map/animalTypeController.js';
 
 const router = Router();
@@ -108,8 +113,14 @@ const router = Router();
  */
 router.get('/', AnimalTypeController.getAnimalTypes);
 router.get('/:id', validateId, AnimalTypeController.getAnimalType);
-router.post('/', AnimalTypeController.createAnimalType);
-router.patch('/:id', validateId, AnimalTypeController.updateAnimalType);
+router.post('/', createAnimalTypeValidator, validateRequest, AnimalTypeController.createAnimalType);
+router.patch(
+    '/:id',
+    updateAnimalTypeValidator,
+    validateRequest,
+    validateId,
+    AnimalTypeController.updateAnimalType,
+);
 router.delete('/:id', validateId, AnimalTypeController.deleteAnimalType);
 
 export default router;

@@ -1,5 +1,10 @@
 import { Router } from 'express';
-import { validateId } from '../../middleware/validateId.js';
+import {
+    createBuffetValidator,
+    updateBuffetValidator,
+} from '../../middleware/validation/map/buffetValidator.js';
+import { validateRequest } from '../../middleware/validation/validateRequest.js';
+import { validateId } from '../../middleware/validation/validateId.js';
 import * as BuffetController from '../../controllers/map/buffetController.js';
 
 const router = Router();
@@ -108,8 +113,14 @@ const router = Router();
  */
 router.get('/', BuffetController.getBuffets);
 router.get('/:id', validateId, BuffetController.getBuffet);
-router.post('/', BuffetController.createBuffet);
-router.patch('/:id', validateId, BuffetController.updateBuffet);
+router.post('/', createBuffetValidator, validateRequest, BuffetController.createBuffet);
+router.patch(
+    '/:id',
+    updateBuffetValidator,
+    validateRequest,
+    validateId,
+    BuffetController.updateBuffet,
+);
 router.delete('/:id', validateId, BuffetController.deleteBuffet);
 
 export default router;

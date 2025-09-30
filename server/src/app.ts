@@ -1,5 +1,6 @@
 import fs from 'fs';
 import cors from 'cors';
+import csurf from 'csurf';
 import helmet from 'helmet';
 import morgan from 'morgan';
 import cookieParser from 'cookie-parser';
@@ -10,10 +11,10 @@ import swaggerUi from 'swagger-ui-express';
 import swaggerSpec from './swagger/swaggerSpec.js';
 
 // Routes
-import wcUnitRoutes from './routes/map/wcUnitRoutes.js';
 import menuRoutes from './routes/map/menuRoutes.js';
 import iconRoutes from './routes/map/iconRoutes.js';
 import spotRoutes from './routes/map/spotRoutes.js';
+import wcUnitRoutes from './routes/map/wcUnitRoutes.js';
 import animalRoutes from './routes/map/animalRoutes.js';
 import statusRoutes from './routes/map/statusRoutes.js';
 import buffetRoutes from './routes/map/buffetRoutes.js';
@@ -23,11 +24,14 @@ import postRoutes from './routes/news/postRoutes.js';
 import commentRoutes from './routes/news/commentRoutes.js';
 
 import personRoutes from './routes/ticket/personRoutes.js';
-import ticketTypeRoutes from './routes/ticket/ticketTypeRoutes.js';
 import ticketRoutes from './routes/ticket/ticketRoutes.js';
+import ticketTypeRoutes from './routes/ticket/ticketTypeRoutes.js';
 
 // Middleware
 import errorHandler from './middleware/errorHandler.js';
+import { apiLimiter } from './middleware/rateLimiter.js';
+
+const csrfProtection = csurf({ cookie: true });
 
 const swaggerCss = fs.readFileSync(join(process.cwd(), 'swagger', 'swaggerTheme.css'), 'utf8');
 
@@ -39,6 +43,7 @@ app.use(cors());
 app.use(express.json());
 app.use(cookieParser());
 app.use(morgan('dev'));
+app.use(csrfProtection);
 
 // --- Swagger docs ---
 app.use(
@@ -48,6 +53,9 @@ app.use(
         customCss: swaggerCss,
     }),
 );
+
+// --- API Limiter ---
+app.use('/api/', apiLimiter);
 
 // --- Routes ---
 app.use('/wc-units', wcUnitRoutes);
