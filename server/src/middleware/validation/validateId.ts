@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import { RequestWithId } from '../types/express.js';
+import { RequestWithId } from '../../types/express.js';
 
 export const validateId = (req: Request, res: Response, next: NextFunction) => {
     const id = Number(req.params.id);
