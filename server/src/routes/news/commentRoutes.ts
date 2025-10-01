@@ -15,7 +15,7 @@ const router = Router();
 
 /**
  * @openapi
- * /comment:
+ * /comments:
  *   get:
  *     summary: Get all comment
  *     tags:
@@ -33,7 +33,7 @@ const router = Router();
 
 /**
  * @openapi
- * /comment/{id}:
+ * /comments/{id}:
  *   get:
  *     summary: Get a single comment by ID
  *     tags:
@@ -56,7 +56,7 @@ const router = Router();
 
 /**
  * @openapi
- * /comment:
+ * /comments:
  *   post:
  *     summary: Create a new comment
  *     tags:
@@ -74,7 +74,7 @@ const router = Router();
 
 /**
  * @openapi
- * /comment/{id}:
+ * /comments/{id}:
  *   patch:
  *     summary: Update a comment
  *     tags:
@@ -99,7 +99,7 @@ const router = Router();
 
 /**
  * @openapi
- * /comment/{id}:
+ * /comments/{id}:
  *   delete:
  *     summary: Delete a comment
  *     tags:

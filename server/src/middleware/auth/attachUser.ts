@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
 import { Roles } from '../../types/roles.js';
+import { config } from '../../config/env.js';
 
 interface TokenPayload {
     id: number;
@@ -8,7 +9,7 @@ interface TokenPayload {
     role: Roles;
 }
 
-const JWT_SECRET = process.env.JWT_SECRET || 'your_default_secret'; // Always set in .env in real apps
+const JWT_SECRET = config.jwtSecret;
 
 export const attachUser = (req: Request, res: Response, next: NextFunction) => {
     const authHeader = req.headers.authorization;
@@ -28,7 +29,7 @@ export const attachUser = (req: Request, res: Response, next: NextFunction) => {
         };
 
         next();
-    } catch (err) {
+    } catch {
         return res.status(401).json({ message: 'Invalid or expired token' });
     }
 };

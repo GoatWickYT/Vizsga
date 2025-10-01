@@ -13,8 +13,6 @@ import { Roles } from '../../types/roles.js';
 
 const router = Router();
 
-router.use(attachUser);
-
 /**
  * @openapi
  * /animals:
