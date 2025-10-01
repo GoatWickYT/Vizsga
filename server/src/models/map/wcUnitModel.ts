@@ -11,7 +11,7 @@ export interface WcUnit {
  * @returns Promise resolving to an array of all WcUnit objects
  */
 export const getAllWcUnits = async (): Promise<WcUnit[]> => {
-    return await queryRows<WcUnit>('SELECT * FROM Wc_units');
+    return await queryRows<WcUnit>('SELECT * FROM wc_units');
 };
 
 /**
@@ -20,7 +20,7 @@ export const getAllWcUnits = async (): Promise<WcUnit[]> => {
  * @returns Promise resolving to the WcUnit object if found, or null if not
  */
 export const getSingleWcUnit = async (id: number): Promise<WcUnit | null> => {
-    const rows = await queryRows<WcUnit>('SELECT * FROM Wc_units WHERE id = ?', [id]);
+    const rows = await queryRows<WcUnit>('SELECT * FROM wc_units WHERE id = ?', [id]);
     return rows[0] || null;
 };
 
@@ -30,7 +30,7 @@ export const getSingleWcUnit = async (id: number): Promise<WcUnit | null> => {
  * @returns Promise resolving to the ID of the newly inserted WcUnit
  */
 export const createWcUnit = async (WcUnit: WcUnit): Promise<number> => {
-    const result = await queryExec('INSERT INTO Wc_units (name, spot_id) VALUES (?, ?)', [
+    const result = await queryExec('INSERT INTO wc_units (name, spot_id) VALUES (?, ?)', [
         WcUnit.name,
         WcUnit.spotId,
     ]);
@@ -44,7 +44,7 @@ export const createWcUnit = async (WcUnit: WcUnit): Promise<number> => {
  * @returns Promise resolving to true if a row was updated, false otherwise
  */
 export const updateWcUnit = async (id: number, WcUnit: Partial<WcUnit>): Promise<boolean> => {
-    const result = await queryExec('UPDATE Wc_units SET name = ? WHERE id = ?', [WcUnit.name, id]);
+    const result = await queryExec('UPDATE wc_units SET name = ? WHERE id = ?', [WcUnit.name, id]);
     return result.affectedRows > 0;
 };
 
@@ -54,6 +54,6 @@ export const updateWcUnit = async (id: number, WcUnit: Partial<WcUnit>): Promise
  * @returns Promise resolving to true if a row was deleted, false otherwise
  */
 export const deleteWcUnit = async (id: number): Promise<boolean> => {
-    const result = await queryExec('DELETE FROM Wc_units WHERE id = ?', [id]);
+    const result = await queryExec('DELETE FROM wc_units WHERE id = ?', [id]);
     return result.affectedRows > 0;
 };
