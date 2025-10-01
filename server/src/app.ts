@@ -2,6 +2,7 @@ import fs from 'fs';
 import cors from 'cors';
 import helmet from 'helmet';
 import cookieParser from 'cookie-parser';
+import compression from 'compression';
 import { join } from 'path';
 import express from 'express';
 
@@ -43,6 +44,7 @@ app.use(cors());
 app.use(helmet());
 app.use(requestLogger);
 app.use(express.json());
+app.use(compression());
 app.use(cookieParser());
 
 // --- Swagger docs ---
