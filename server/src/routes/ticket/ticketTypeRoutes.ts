@@ -1,14 +1,17 @@
+import * as ticketTypeController from '../../controllers/ticket/ticketTypeController.js';
 import { Router } from 'express';
 import { updateCount } from '../../middleware/updateCounts.js';
 import {
     createTicketTypeValidator,
     updateTicketTypeValidator,
 } from '../../middleware/validation/ticket/ticketTypeValidator.js';
-import { validateRequest } from '../../middleware/validation/validateRequest.js';
 import { validateId } from '../../middleware/validation/validateId.js';
-import * as ticketTypeController from '../../controllers/ticket/ticketTypeController.js';
+import { validateRequest } from '../../middleware/validation/validateRequest.js';
+import { authorizeRoles } from '../../middleware/auth/authorizeRoles.js';
+import { attachUser } from '../../middleware/auth/attachUser.js';
+import { Roles } from '../../types/roles.js';
 
-const ticketTypeRouter = Router();
+const router = Router();
 
 /**
  * @openapi
@@ -39,7 +42,7 @@ const ticketTypeRouter = Router();
  *       - in: path
  *         name: id
  *         schema:
- *           type: string
+ *           type: number
  *         required: true
  *         description: The ticketType ID
  *     responses:
@@ -112,16 +115,19 @@ const ticketTypeRouter = Router();
  *       204:
  *         description: ticketType deleted
  */
-ticketTypeRouter.get('/', ticketTypeController.getTicketTypes);
-ticketTypeRouter.get('/:id', validateId, ticketTypeController.getTicketType);
-ticketTypeRouter.post(
+router.get('/', ticketTypeController.getTicketTypes);
+router.get('/:id', validateId, ticketTypeController.getTicketType);
+
+router.use(attachUser, authorizeRoles(Roles.Admin, Roles.Owner));
+
+router.post(
     '/',
     createTicketTypeValidator,
     validateRequest,
     ticketTypeController.addTicketType,
     updateCount('ticket'),
 );
-ticketTypeRouter.patch(
+router.patch(
     '/:id',
     updateTicketTypeValidator,
     validateRequest,
@@ -129,11 +135,6 @@ ticketTypeRouter.patch(
     ticketTypeController.updateTicketType,
     updateCount('ticket'),
 );
-ticketTypeRouter.delete(
-    '/:id',
-    validateId,
-    ticketTypeController.deleteTicketType,
-    updateCount('ticket'),
-);
+router.delete('/:id', validateId, ticketTypeController.deleteTicketType, updateCount('ticket'));
 
-export default ticketTypeRouter;
+export default router;

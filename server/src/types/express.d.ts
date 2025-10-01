@@ -1,5 +1,16 @@
-import { Request } from 'express';
+import { Role } from './roles';
 
-export interface RequestWithId extends Request {
-    validId: number;
+declare global {
+    namespace Express {
+        interface Request {
+            user?: {
+                id: number;
+                role: Role;
+                userName: string;
+            };
+            validId?: number;
+        }
+    }
 }
+
+export {};

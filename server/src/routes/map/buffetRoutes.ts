@@ -1,12 +1,15 @@
+import * as BuffetController from '../../controllers/map/buffetController.js';
 import { Router } from 'express';
 import { updateCount } from '../../middleware/updateCounts.js';
 import {
     createBuffetValidator,
     updateBuffetValidator,
 } from '../../middleware/validation/map/buffetValidator.js';
-import { validateRequest } from '../../middleware/validation/validateRequest.js';
 import { validateId } from '../../middleware/validation/validateId.js';
-import * as BuffetController from '../../controllers/map/buffetController.js';
+import { validateRequest } from '../../middleware/validation/validateRequest.js';
+import { authorizeRoles } from '../../middleware/auth/authorizeRoles.js';
+import { attachUser } from '../../middleware/auth/attachUser.js';
+import { Roles } from '../../types/roles.js';
 
 const router = Router();
 
@@ -39,7 +42,7 @@ const router = Router();
  *       - in: path
  *         name: id
  *         schema:
- *           type: string
+ *           type: number
  *         required: true
  *         description: The buffet ID
  *     responses:
@@ -114,6 +117,9 @@ const router = Router();
  */
 router.get('/', BuffetController.getBuffets);
 router.get('/:id', validateId, BuffetController.getBuffet);
+
+router.use(attachUser, authorizeRoles(Roles.Admin, Roles.Owner));
+
 router.post(
     '/',
     createBuffetValidator,

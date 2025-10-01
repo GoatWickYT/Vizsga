@@ -16,6 +16,7 @@ const options = {
                         name: { type: 'string' },
                         description: { type: 'string' },
                         adopter: { type: 'string' },
+                        type: { type: 'string' },
                         spotId: { type: 'number' },
                     },
                 },
@@ -25,25 +26,10 @@ const options = {
                         name: { type: 'string' },
                         description: { type: 'string' },
                         adopter: { type: 'string' },
+                        type: { type: 'string' },
                         spotId: { type: 'number' },
                     },
-                    required: ['name', 'description', 'spotId'],
-                },
-                AnimalType: {
-                    type: 'object',
-                    properties: {
-                        id: { type: 'number' },
-                        name: { type: 'string' },
-                        animalId: { type: 'number' },
-                    },
-                },
-                AnimalTypeInput: {
-                    type: 'object',
-                    properties: {
-                        name: { type: 'string' },
-                        animalId: { type: 'number' },
-                    },
-                    required: ['name', 'animalId'],
+                    required: ['name', 'description', 'type', 'spotId'],
                 },
                 Buffet: {
                     type: 'object',
@@ -62,24 +48,6 @@ const options = {
                         spotId: { type: 'number' },
                     },
                     required: ['name', 'menulId', 'spotId'],
-                },
-                Icon: {
-                    type: 'object',
-                    properties: {
-                        id: { type: 'number' },
-                        name: { type: 'string' },
-                        imageLink: { type: 'number' },
-                        spotId: { type: 'number' },
-                    },
-                },
-                IconInput: {
-                    type: 'object',
-                    properties: {
-                        name: { type: 'string' },
-                        imageLink: { type: 'number' },
-                        spotId: { type: 'number' },
-                    },
-                    required: ['name', 'imageLink', 'spotId'],
                 },
                 Menu: {
                     type: 'object',
@@ -106,15 +74,18 @@ const options = {
                         name: { type: 'string' },
                         locationX: { type: 'number' },
                         locationY: { type: 'number' },
+                        icon: { type: 'string' },
+                        status: { type: 'string' },
                     },
                 },
                 SpotInput: {
                     type: 'object',
                     properties: {
-                        id: { type: 'number' },
                         name: { type: 'string' },
                         locationX: { type: 'number' },
                         locationY: { type: 'number' },
+                        icon: { type: 'string' },
+                        status: { type: 'string' },
                     },
                     required: ['name', 'locationX', 'locationY'],
                 },
@@ -133,24 +104,6 @@ const options = {
                         spotId: { type: 'number' },
                     },
                     required: ['name', 'spotId'],
-                },
-                Status: {
-                    type: 'object',
-                    properties: {
-                        id: { type: 'number' },
-                        name: { type: 'string' },
-                        age: { type: 'number' },
-                        spotId: { type: 'number' },
-                    },
-                },
-                StatusInput: {
-                    type: 'object',
-                    properties: {
-                        name: { type: 'string' },
-                        age: { type: 'number' },
-                        spotId: { type: 'number' },
-                    },
-                    required: ['name', 'age', 'spotId'],
                 },
                 Comment: {
                     type: 'object',
@@ -245,6 +198,14 @@ const options = {
                         price: { type: 'number' },
                     },
                     required: ['name', 'price'],
+                },
+                SafeUser: {
+                    type: 'object',
+                    properties: {
+                        id: { type: 'number' },
+                        userName: { type: 'string' },
+                        role: { type: 'string' },
+                    },
                 },
             },
         },

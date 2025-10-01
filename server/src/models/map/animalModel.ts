@@ -1,8 +1,10 @@
+import { Type } from '../../types/animalTypes.js';
 import { queryExec, queryRows } from '../util/queryHelper.js';
 
 export interface Animal {
     id?: number;
     name: string;
+    type: Type;
     description: string;
     adopter?: string;
     spotId?: number;
@@ -33,8 +35,8 @@ export const getSingleAnimal = async (id: number): Promise<Animal | null> => {
  */
 export const createAnimal = async (Animal: Animal): Promise<number> => {
     const result = await queryExec(
-        'INSERT INTO animals (name, description, spot_id, adopter) VALUES (?,?,?,?)',
-        [Animal.name, Animal.description, Animal.spotId, Animal?.adopter],
+        'INSERT INTO animals (name, description, spot_id, type, adopter) VALUES (?,?,?,?,?)',
+        [Animal.name, Animal.description, Animal.spotId, Animal.type, Animal?.adopter],
     );
     return result.insertId;
 };
@@ -47,8 +49,8 @@ export const createAnimal = async (Animal: Animal): Promise<number> => {
  */
 export const updateAnimal = async (id: number, Animal: Partial<Animal>): Promise<boolean> => {
     const result = await queryExec(
-        'UPDATE animals SET name = ?, description = ?, adopter = ? WHERE id = ?',
-        [Animal.name, Animal.description, Animal?.adopter, id],
+        'UPDATE animals WHERE id = ? SET name = ?, description = ?, type = ?, adopter = ? ',
+        [id, Animal.name, Animal.description, Animal.type, Animal?.adopter],
     );
     return result.affectedRows > 0;
 };

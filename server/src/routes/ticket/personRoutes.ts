@@ -1,14 +1,17 @@
+import * as personController from '../../controllers/ticket/personController.js';
 import { Router } from 'express';
 import { updateCount } from '../../middleware/updateCounts.js';
 import {
     createPersonValidator,
     updatePersonValidator,
 } from '../../middleware/validation/ticket/personValidator.js';
-import { validateRequest } from '../../middleware/validation/validateRequest.js';
 import { validateId } from '../../middleware/validation/validateId.js';
-import * as personController from '../../controllers/ticket/personController.js';
+import { validateRequest } from '../../middleware/validation/validateRequest.js';
+import { authorizeRoles } from '../../middleware/auth/authorizeRoles.js';
+import { attachUser } from '../../middleware/auth/attachUser.js';
+import { Roles } from '../../types/roles.js';
 
-const personRouter = Router();
+const router = Router();
 
 /**
  * @openapi
@@ -30,7 +33,7 @@ const personRouter = Router();
 
 /**
  * @openapi
- * /people/{id}:
+ * /people/id/{id}:
  *   get:
  *     summary: Get a single person by ID
  *     tags:
@@ -39,9 +42,55 @@ const personRouter = Router();
  *       - in: path
  *         name: id
  *         schema:
- *           type: string
+ *           type: number
  *         required: true
  *         description: The person ID
+ *     responses:
+ *       200:
+ *         description: Single person
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Person'
+ */
+
+/**
+ * @openapi
+ * /people/name/{name}:
+ *   get:
+ *     summary: Get a single person by Username
+ *     tags:
+ *       - Ticket / People
+ *     parameters:
+ *       - in: path
+ *         name: name
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: The person Username
+ *     responses:
+ *       200:
+ *         description: Single person
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Person'
+ */
+
+/**
+ * @openapi
+ * /people/email/{email}:
+ *   get:
+ *     summary: Get a single person by Email
+ *     tags:
+ *       - Ticket / People
+ *     parameters:
+ *       - in: path
+ *         name: email
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: The person Email
  *     responses:
  *       200:
  *         description: Single person
@@ -112,16 +161,21 @@ const personRouter = Router();
  *       204:
  *         description: people deleted
  */
-personRouter.get('/', personController.getPeople);
-personRouter.get('/:id', validateId, personController.getPerson);
-personRouter.post(
+
+router.use(attachUser, authorizeRoles(Roles.Admin, Roles.Owner));
+
+router.get('/', personController.getPeople);
+router.get('/id/:id', validateId, personController.getPerson);
+router.get('/name/:name', validateId, personController.getPersonWithName);
+router.get('/email/:email', validateId, personController.getPersonWithEmail);
+router.post(
     '/',
     createPersonValidator,
     validateRequest,
     personController.addPeople,
     updateCount('ticket'),
 );
-personRouter.patch(
+router.patch(
     '/:id',
     updatePersonValidator,
     validateRequest,
@@ -129,6 +183,6 @@ personRouter.patch(
     personController.updatePeople,
     updateCount('ticket'),
 );
-personRouter.delete('/:id', validateId, personController.deletePeople, updateCount('ticket'));
+router.delete('/:id', validateId, personController.deletePeople, updateCount('ticket'));
 
-export default personRouter;
+export default router;

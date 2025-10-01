@@ -1,3 +1,4 @@
+import { Status } from '../../types/spotStatus.js';
 import { queryExec, queryRows } from '../util/queryHelper.js';
 
 export interface Spot {
@@ -5,6 +6,8 @@ export interface Spot {
     name: string;
     locationX: number;
     locationY: number;
+    icon: string;
+    status: Status;
 }
 
 /**
@@ -32,8 +35,8 @@ export const getSingleSpot = async (id: number): Promise<Spot | null> => {
  */
 export const createSpot = async (Spot: Spot): Promise<number> => {
     const result = await queryExec(
-        'INSERT INTO spots (name, location_x, location_y) VALUES (?,?,?)',
-        [Spot.name, Spot.locationX, Spot.locationY],
+        'INSERT INTO spots (name, location_x, location_y, icon, status) VALUES (?,?,?,?,?)',
+        [Spot.name, Spot.locationX, Spot.locationY, Spot.icon, Spot.status],
     );
     return result.insertId;
 };
@@ -46,8 +49,8 @@ export const createSpot = async (Spot: Spot): Promise<number> => {
  */
 export const updateSpot = async (id: number, Spot: Partial<Spot>): Promise<boolean> => {
     const result = await queryExec(
-        'UPDATE spots SET name = ?, location_x = ?, location_y = ? WHERE id = ?',
-        [Spot.name, Spot.locationX, Spot.locationY, id],
+        'UPDATE spots SET name = ?, location_x = ?, location_y = ?, icon = ?, status = ? WHERE id = ?',
+        [Spot.name, Spot.locationX, Spot.locationY, Spot.icon, Spot.status, id],
     );
     return result.affectedRows > 0;
 };

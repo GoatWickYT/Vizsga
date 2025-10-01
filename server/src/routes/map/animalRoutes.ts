@@ -1,14 +1,19 @@
+import * as AnimalController from '../../controllers/map/animalController.js';
 import { Router } from 'express';
 import { updateCount } from '../../middleware/updateCounts.js';
-import { validateId } from '../../middleware/validation/validateId.js';
 import {
     createAnimalValidator,
     updateAnimalValidator,
 } from '../../middleware/validation/map/animalValidator.js';
+import { validateId } from '../../middleware/validation/validateId.js';
 import { validateRequest } from '../../middleware/validation/validateRequest.js';
-import * as AnimalController from '../../controllers/map/animalController.js';
+import { authorizeRoles } from '../../middleware/auth/authorizeRoles.js';
+import { attachUser } from '../../middleware/auth/attachUser.js';
+import { Roles } from '../../types/roles.js';
 
 const router = Router();
+
+router.use(attachUser);
 
 /**
  * @openapi
@@ -39,7 +44,7 @@ const router = Router();
  *       - in: path
  *         name: id
  *         schema:
- *           type: string
+ *           type: number
  *         required: true
  *         description: The animal ID
  *     responses:
@@ -114,6 +119,9 @@ const router = Router();
  */
 router.get('/', AnimalController.getAnimals);
 router.get('/:id', validateId, AnimalController.getAnimal);
+
+router.use(attachUser, authorizeRoles(Roles.Admin, Roles.Owner));
+
 router.post(
     '/',
     createAnimalValidator,

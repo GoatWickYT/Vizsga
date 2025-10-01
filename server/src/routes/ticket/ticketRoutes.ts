@@ -1,14 +1,17 @@
+import * as ticketController from '../../controllers/ticket/ticketController.js';
 import { Router } from 'express';
 import { updateCount } from '../../middleware/updateCounts.js';
 import {
     createTicketValidator,
     updateTicketValidator,
 } from '../../middleware/validation/ticket/ticketValidator.js';
-import { validateRequest } from '../../middleware/validation/validateRequest.js';
 import { validateId } from '../../middleware/validation/validateId.js';
-import * as ticketController from '../../controllers/ticket/ticketController.js';
+import { validateRequest } from '../../middleware/validation/validateRequest.js';
+import { authorizeRoles } from '../../middleware/auth/authorizeRoles.js';
+import { attachUser } from '../../middleware/auth/attachUser.js';
+import { Roles } from '../../types/roles.js';
 
-const ticketRouter = Router();
+const router = Router();
 
 /**
  * @openapi
@@ -39,7 +42,7 @@ const ticketRouter = Router();
  *       - in: path
  *         name: id
  *         schema:
- *           type: string
+ *           type: number
  *         required: true
  *         description: The ticket ID
  *     responses:
@@ -112,16 +115,19 @@ const ticketRouter = Router();
  *       204:
  *         description: ticket deleted
  */
-ticketRouter.get('/', ticketController.getTickets);
-ticketRouter.get('/:id', validateId, ticketController.getTicket);
-ticketRouter.post(
+
+router.use(attachUser, authorizeRoles(Roles.Admin, Roles.Owner));
+
+router.get('/', ticketController.getTickets);
+router.get('/:id', validateId, ticketController.getTicket);
+router.post(
     '/',
     createTicketValidator,
     validateRequest,
     ticketController.addTicket,
     updateCount('ticket'),
 );
-ticketRouter.patch(
+router.patch(
     '/:id',
     updateTicketValidator,
     validateRequest,
@@ -129,6 +135,6 @@ ticketRouter.patch(
     ticketController.updateTicket,
     updateCount('ticket'),
 );
-ticketRouter.delete('/:id', validateId, ticketController.deleteTicket, updateCount('ticket'));
+router.delete('/:id', validateId, ticketController.deleteTicket, updateCount('ticket'));
 
-export default ticketRouter;
+export default router;

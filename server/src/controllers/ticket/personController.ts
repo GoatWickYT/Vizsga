@@ -6,6 +6,8 @@ import {
     updatePerson,
     deletePerson,
     Person,
+    getPersonByEmail,
+    getPersonByUsername,
 } from '../../models/ticket/personModel.js';
 
 export const getPeople = async (req: Request, res: Response, next: NextFunction) => {
@@ -36,6 +38,34 @@ export const getPerson = async (req: Request, res: Response, next: NextFunction)
         } else {
             res.status(404).json({ message: 'Person not found' });
         }
+    } catch (err) {
+        next(err);
+    }
+};
+
+export const getPersonWithName = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const name = req.params.name;
+        const person = await getPersonByUsername(name);
+        if (person) {
+            res.status(200).json(person);
+        } else {
+            res.status(404).json({ message: 'Person not found' });
+        }
+    } catch (err) {
+        next(err);
+    }
+};
+
+export const getPersonWithEmail = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const email = req.params.email;
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (emailRegex.test(email)) {
+            const person = await getPersonByEmail(email);
+            if (person) res.status(200).json(person);
+            else res.status(404).json({ message: 'Person not found' });
+        } else res.status(403).json({ message: 'Email not correct form' });
     } catch (err) {
         next(err);
     }

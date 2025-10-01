@@ -7,12 +7,15 @@ export const initDb = async () => {
                 (id INT PRIMARY KEY AUTO_INCREMENT,
                 name VARCHAR(50) NOT NULL UNIQUE,
                 location_x INT NOT NULL UNIQUE,
-                location_y INT NOT NULL UNIQUE)
+                location_y INT NOT NULL UNIQUE,
+                icon VARCHAR(40),
+                status VARCHAR(10) NOT NULL)
         `);
         await db.query(`
             CREATE TABLE IF NOT EXISTS animals
                 (id INT PRIMARY KEY AUTO_INCREMENT,
                 name VARCHAR(50) NOT NULL UNIQUE,
+                type VARCHAR(10) NOT NULL,
                 description VARCHAR(200) NOT NULL,
                 adopter VARCHAR(50),
                 spot_id INT NOT NULL UNIQUE,
@@ -25,35 +28,12 @@ export const initDb = async () => {
                 spot_id INT NOT NULL UNIQUE,
                 FOREIGN KEY (spot_id) REFERENCES spots(id) ON DELETE CASCADE)
         `);
-        await db.query(`
-            CREATE TABLE IF NOT EXISTS icons
-                (id INT PRIMARY KEY AUTO_INCREMENT,
-                name VARCHAR(50) NOT NULL UNIQUE,
-                spot_id INT NOT NULL UNIQUE,
-                image_link VARCHAR(50) NOT NULL UNIQUE,
-                FOREIGN KEY (spot_id) REFERENCES spots(id) ON DELETE CASCADE)
-        `);
-        await db.query(`
-            CREATE TABLE IF NOT EXISTS animal_types
-                (id INT PRIMARY KEY AUTO_INCREMENT,
-                name VARCHAR(50) NOT NULL UNIQUE,
-                animal_id INT NOT NULL,
-                FOREIGN KEY (animal_id) REFERENCES animals(id) ON DELETE CASCADE)
-        `);
-        await db.query(`
+        db.query(`
             CREATE TABLE IF NOT EXISTS menus
                 (id INT PRIMARY KEY AUTO_INCREMENT,
                 name VARCHAR(50) NOT NULL UNIQUE,
                 price double NOT NULL,
                 available BOOLEAN)
-        `);
-        await db.query(`
-            CREATE TABLE IF NOT EXISTS statuses
-                (id INT PRIMARY KEY AUTO_INCREMENT,
-                name VARCHAR(50) NOT NULL UNIQUE,
-                age tinyINT,
-                spot_id INT NOT NULL UNIQUE,
-                FOREIGN KEY (spot_id) REFERENCES spots(id) ON DELETE CASCADE)
         `);
         await db.query(`
             CREATE TABLE IF NOT EXISTS buffets

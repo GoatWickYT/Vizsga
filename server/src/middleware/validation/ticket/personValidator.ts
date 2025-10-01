@@ -1,4 +1,7 @@
 import { body } from 'express-validator';
+import { Roles } from '../../../types/roles.js';
+
+const allowedRoles = Object.values(Roles);
 
 export const createPersonValidator = [
     body('userName').trim().notEmpty().escape(),
@@ -7,6 +10,10 @@ export const createPersonValidator = [
     body('email').isEmail().normalizeEmail(),
     body('creditCard').optional().trim().escape(),
     body('password').notEmpty().withMessage('Password is required'),
+    body('role')
+        .notEmpty()
+        .isIn(allowedRoles)
+        .withMessage(`Role must be one of: ${allowedRoles.join(', ')}`),
 ];
 
 export const updatePersonValidator = [
@@ -16,4 +23,8 @@ export const updatePersonValidator = [
     body('email').optional().isEmail().normalizeEmail(),
     body('creditCard').optional().trim().escape(),
     body('password').optional().notEmpty(),
+    body('role')
+        .notEmpty()
+        .isIn(allowedRoles)
+        .withMessage(`Role must be one of: ${allowedRoles.join(', ')}`),
 ];

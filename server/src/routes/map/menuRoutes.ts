@@ -1,12 +1,15 @@
+import * as MenuController from '../../controllers/map/menuController.js';
 import { Router } from 'express';
 import { updateCount } from '../../middleware/updateCounts.js';
 import {
     createMenuValidator,
     updateMenuValidator,
 } from '../../middleware/validation/map/menuValidator.js';
-import { validateRequest } from '../../middleware/validation/validateRequest.js';
 import { validateId } from '../../middleware/validation/validateId.js';
-import * as MenuController from '../../controllers/map/menuController.js';
+import { validateRequest } from '../../middleware/validation/validateRequest.js';
+import { authorizeRoles } from '../../middleware/auth/authorizeRoles.js';
+import { attachUser } from '../../middleware/auth/attachUser.js';
+import { Roles } from '../../types/roles.js';
 
 const router = Router();
 
@@ -39,7 +42,7 @@ const router = Router();
  *       - in: path
  *         name: id
  *         schema:
- *           type: string
+ *           type: number
  *         required: true
  *         description: The menu ID
  *     responses:
@@ -114,6 +117,9 @@ const router = Router();
  */
 router.get('/', MenuController.getMenus);
 router.get('/:id', validateId, MenuController.getMenu);
+
+router.use(attachUser, authorizeRoles(Roles.Admin, Roles.Owner));
+
 router.post(
     '/',
     createMenuValidator,
