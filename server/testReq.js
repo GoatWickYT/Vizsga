@@ -3,8 +3,8 @@ const API_BASE = 'https://vizsga.onrender.com/auth'; // adjust to your backend
 // Static test data
 const testRegisterData = {
     username: 'testuser123',
-    email: 'testuser123@example.com',
     name: 'Test User',
+    email: 'testuser123@example.com',
     password: 'password123',
 };
 

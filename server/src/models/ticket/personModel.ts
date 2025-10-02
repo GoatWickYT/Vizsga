@@ -18,7 +18,7 @@ export const getAllPeople = async (): Promise<Person[]> => {
 
 export const createPerson = async (person: Person): Promise<number> => {
     const result = await queryExec(
-        'INSERT INTO people (user_name, name, email, password, role, phone, creditCard) VALUES (?,?,?,?,?,?,?)',
+        'INSERT INTO people (user_name, name, email, password, role, phone, credit_card) VALUES (?,?,?,?,?,?,?)',
         [
             person.username,
             person.name,
@@ -49,7 +49,7 @@ export const getPersonByEmail = async (email: string): Promise<Person | null> =>
 
 export const updatePerson = async (id: number, person: Person): Promise<boolean> => {
     const result = await queryExec(
-        'UPDATE people SET user_name = ?, name = ?, phone = ?, creditCard = ?, password = ?, role = ? WHERE id = ?',
+        'UPDATE people SET user_name = ?, name = ?, phone = ?, creditCard = ?, password = ?, role = ?, credit_card WHERE id = ?',
         [
             person.username,
             person.name,
@@ -57,6 +57,7 @@ export const updatePerson = async (id: number, person: Person): Promise<boolean>
             person.creditCard,
             person.password,
             person.role,
+            person.creditCard || null,
             id,
         ],
     );

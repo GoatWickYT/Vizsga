@@ -64,6 +64,7 @@ export const initDb = async () => {
                 phone VARCHAR(20),
                 email VARCHAR(50) UNIQUE NOT NULL,
                 credit_card VARCHAR(20),
+                role VARCHAR(20) NOT NULL,
                 password VARCHAR(255) NOT NULL)
         `);
         await db.query(`
