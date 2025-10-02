@@ -34,7 +34,7 @@ const router = Router();
 
 /**
  * @openapi
- * /posts/{id}:
+ * /posts/id/{id}:
  *   get:
  *     summary: Get a single post by ID
  *     tags:
@@ -49,6 +49,22 @@ const router = Router();
  *     responses:
  *       200:
  *         description: Single post
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Post'
+ */
+
+/**
+ * @openapi
+ * /posts/important:
+ *   get:
+ *     summary: Get all post which are important
+ *     tags:
+ *       - News / Posts
+ *     responses:
+ *       200:
+ *         description: Posts tagged with Important
  *         content:
  *           application/json:
  *             schema:
@@ -167,8 +183,8 @@ const router = Router();
  *         description: post deleted
  */
 router.get('/', PostController.getPosts);
-router.get('/:id', validateId, PostController.getPost);
-
+router.get('/id/:id', validateId, PostController.getPost);
+router.get('/important', PostController.getImportantPosts);
 router.use(attachUser, authorizeRoles(Roles.Admin, Roles.Owner));
 
 router.post('/', createPostValidator, validateRequest, PostController.addPost, updateCount('news'));

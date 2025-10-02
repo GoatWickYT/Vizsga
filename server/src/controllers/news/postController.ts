@@ -44,8 +44,7 @@ export const getPost = async (req: Request, res: Response, next: NextFunction) =
 };
 export const getImportantPosts = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const important = Boolean(req.params.important);
-        const post = await getPostByImportance(important);
+        const post = await getPostByImportance();
         if (!post) {
             return res.status(404).json({ message: 'Post not found' });
         }

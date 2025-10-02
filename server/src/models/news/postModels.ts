@@ -19,9 +19,9 @@ export const getPostById = async (id: number): Promise<Post | null> => {
     return rows[0] || null;
 };
 
-export const getPostByImportance = async (important: boolean): Promise<Post | null> => {
-    const rows = await queryRows<Post>('SELECT * FROM posts WHERE important = ?', [important]);
-    return rows[0] || null;
+export const getPostByImportance = async (): Promise<Post[] | null> => {
+    const rows = await queryRows<Post>('SELECT * FROM posts WHERE important = true');
+    return rows || null;
 };
 
 export const createPost = async (Post: Post): Promise<number> => {
