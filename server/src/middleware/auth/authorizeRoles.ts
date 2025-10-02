@@ -9,10 +9,10 @@ export const authorizeRoles = (...allowedRoles: Roles[]) => {
             return res.status(401).json({ message: 'Not authenticated' });
         }
 
-        if (!allowedRoles.includes(user.role)) {
-            return res.status(401).json({ message: 'Not authenticated' });
+        if (allowedRoles.includes(user.role)) {
+            return next();
         }
 
-        next();
+        return res.status(401).json({ message: 'Not authenticated' });
     };
 };

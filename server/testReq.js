@@ -37,8 +37,17 @@ async function loginUser() {
 }
 
 async function main() {
-    await registerUser();
+    // await registerUser();
     const loginRes = await loginUser();
+    const peopleRes = await fetch(`${API_BASE}/people`, {
+        method: 'GET',
+        headers: {
+            'Authorization': `Bearer ${loginRes.token}`,
+            'Content-Type': 'application/json',
+        },
+    });
+    const peopleData = await peopleRes.json();
+    console.log('People response:', peopleData);
     console.log('Received token:', loginRes.token);
 }
 
