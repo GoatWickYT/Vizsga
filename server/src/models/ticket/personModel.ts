@@ -3,7 +3,7 @@ import { queryExec, queryRows } from '../util/queryHelper.js';
 
 export interface Person {
     id?: number;
-    userName: string;
+    username: string;
     name: string;
     phone?: string;
     email: string;
@@ -18,9 +18,9 @@ export const getAllPeople = async (): Promise<Person[]> => {
 
 export const createPerson = async (person: Person): Promise<number> => {
     const result = await queryExec(
-        'INSERT INTO people (userName, name, email, password, role, phone, creditCard) VALUES (?,?,?,?,?,?,?)',
+        'INSERT INTO people (user_name, name, email, password, role, phone, creditCard) VALUES (?,?,?,?,?,?,?)',
         [
-            person.userName,
+            person.username,
             person.name,
             person.email,
             person.password,
@@ -38,7 +38,7 @@ export const getPersonById = async (id: number): Promise<Person | null> => {
 };
 
 export const getPersonByUsername = async (username: string): Promise<Person | null> => {
-    const rows = await queryRows<Person>('SELECT * FROM people WHERE username = ?', [username]);
+    const rows = await queryRows<Person>('SELECT * FROM people WHERE user_name = ?', [username]);
     return rows[0] || null;
 };
 
@@ -49,9 +49,9 @@ export const getPersonByEmail = async (email: string): Promise<Person | null> =>
 
 export const updatePerson = async (id: number, person: Person): Promise<boolean> => {
     const result = await queryExec(
-        'UPDATE people SET userName = ?, name = ?, phone = ?, creditCard = ?, password = ?, role = ? WHERE id = ?',
+        'UPDATE people SET user_name = ?, name = ?, phone = ?, creditCard = ?, password = ?, role = ? WHERE id = ?',
         [
-            person.userName,
+            person.username,
             person.name,
             person.phone,
             person.creditCard,
