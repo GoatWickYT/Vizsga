@@ -163,7 +163,7 @@ const options = {
                     type: 'object',
                     properties: {
                         id: { type: 'number' },
-                        userName: { type: 'string' },
+                        username: { type: 'string' },
                         name: { type: 'string' },
                         phone: { type: 'string' },
                         email: { type: 'string' },
@@ -173,13 +173,13 @@ const options = {
                 PersonInput: {
                     type: 'object',
                     properties: {
-                        userName: { type: 'string' },
+                        username: { type: 'string' },
                         name: { type: 'string' },
                         phone: { type: 'string' },
                         email: { type: 'string' },
                         creditCard: { type: 'string' },
                     },
-                    required: ['userName', 'name', 'email', 'password'],
+                    required: ['username', 'name', 'email', 'password'],
                 },
                 Ticket: {
                     type: 'object',
@@ -219,7 +219,7 @@ const options = {
                     type: 'object',
                     properties: {
                         id: { type: 'number' },
-                        userName: { type: 'string' },
+                        username: { type: 'string' },
                         role: { type: 'string' },
                     },
                 },
