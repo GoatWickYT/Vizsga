@@ -1,7 +1,8 @@
 import jwt from 'jsonwebtoken';
 import { Roles } from '../types/roles.js';
+import { config } from '../config/env.js';
 
-const JWT_SECRET = process.env.JWT_SECRET || 'dev-secret';
+const JWT_SECRET = config.jwtSecret;
 const JWT_EXPIRES_IN = '1h';
 
 interface JwtPayload {
@@ -23,7 +24,7 @@ export const signJwt = (payload: JwtPayload): string => {
 export const verifyJwt = (token: string): JwtPayload | null => {
     try {
         return jwt.verify(token, JWT_SECRET) as JwtPayload;
-    } catch (err) {
+    } catch {
         return null;
     }
 };

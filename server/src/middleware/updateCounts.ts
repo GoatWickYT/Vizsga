@@ -2,51 +2,61 @@ import fs from 'fs';
 import path from 'path';
 import { Request, Response, NextFunction } from 'express';
 
-export const updateCount = (category: 'map' | 'ticket' | 'news') => {
-    return (req: Request, res: Response, next: NextFunction) => {
-        // Only count if modifying the data
-        if (['POST', 'PATCH', 'PUT', 'DELETE'].includes(req.method)) {
-            incrementUpdateCount(category);
-        }
-        next();
-    };
-};
-
-const filePath = path.join(process.cwd(), 'updateCounts.json');
-
 export interface UpdateCounts {
     map: number;
     ticket: number;
     news: number;
 }
-
+const filePath = path.join(process.cwd(), 'updateCounts.json');
 let updateCounts: UpdateCounts = { map: 0, ticket: 0, news: 0 };
+let writeInProgress = false;
+let pendingWrite = false;
 
-// Load counts from file on server start
-try {
-    const data = fs.readFileSync(filePath, 'utf-8');
-    updateCounts = JSON.parse(data);
-    console.log('Loaded update counts:', updateCounts);
-} catch {
-    console.log('No existing updateCounts file, starting fresh');
-}
+const saveCounts = async () => {
+    if (writeInProgress) {
+        pendingWrite = true;
+        return;
+    }
 
-// Save counts to file (async to avoid blocking)
-const saveCounts = () => {
-    fs.writeFile(filePath, JSON.stringify(updateCounts, null, 2), (err) => {
-        if (err) console.error('Failed to save update counts:', err);
-    });
+    writeInProgress = true;
+    try {
+        await fs.promises.writeFile(filePath, JSON.stringify(updateCounts, null, 2), 'utf-8');
+    } catch (err) {
+        console.error('Failed to save update counts:', err);
+    } finally {
+        writeInProgress = false;
+        if (pendingWrite) {
+            pendingWrite = false;
+            saveCounts();
+        }
+    }
 };
-
 const incrementUpdateCount = (category: keyof UpdateCounts) => {
-    if (updateCounts.hasOwnProperty(category)) {
+    if (Object.prototype.hasOwnProperty.call(updateCounts, category)) {
         updateCounts[category]++;
         saveCounts();
     } else {
         console.warn(`Invalid update count category: ${category}`);
     }
 };
-
+const loadCounts = async () => {
+    try {
+        const data = await fs.promises.readFile(filePath, 'utf-8');
+        const parsed = JSON.parse(data) as Partial<UpdateCounts>;
+        updateCounts = { ...updateCounts, ...parsed };
+    } catch {
+        throw new Error('No existing updateCounts file');
+    }
+};
+loadCounts();
+export const updateCount = (category: keyof UpdateCounts) => {
+    return (req: Request, res: Response, next: NextFunction) => {
+        if (['POST', 'PATCH', 'PUT', 'DELETE'].includes(req.method)) {
+            incrementUpdateCount(category);
+        }
+        next();
+    };
+};
 export const getUpdateCounts = (): UpdateCounts => {
-    return updateCounts;
+    return { ...updateCounts };
 };

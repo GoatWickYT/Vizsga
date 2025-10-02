@@ -1,10 +1,10 @@
 import fs from 'fs';
 import cors from 'cors';
 import helmet from 'helmet';
-import morgan from 'morgan';
 import cookieParser from 'cookie-parser';
+import compression from 'compression';
 import { join } from 'path';
-import express, { Request, Response } from 'express';
+import express from 'express';
 
 // --- Swagger ---
 import swaggerUi from 'swagger-ui-express';
@@ -28,10 +28,12 @@ import ticketTypeRoutes from './routes/ticket/ticketTypeRoutes.js';
 import updateRoutes from './routes/updateCountsRoutes.js';
 
 // --- Middleware ---
-import errorHandler from './middleware/errorHandler.js';
+import { errorHandler } from './middleware/errorHandler.js';
 import { apiLimiter } from './middleware/rateLimiter.js';
+import { requestLogger } from './middleware/loggerMiddelware.js';
 
 import basicAuth from 'express-basic-auth';
+import { notFoundHandler } from './middleware/404Handler.js';
 
 const swaggerCss = fs.readFileSync(join(process.cwd(), 'swagger', 'swaggerTheme.css'), 'utf8');
 
@@ -40,8 +42,9 @@ const app = express();
 // --- Global middleware ---
 app.use(cors());
 app.use(helmet());
-app.use(morgan('dev'));
+app.use(requestLogger);
 app.use(express.json());
+app.use(compression());
 app.use(cookieParser());
 
 // --- Swagger docs ---
@@ -79,12 +82,8 @@ app.use('/ticket-types', ticketTypeRoutes);
 
 app.use('/auth', authRoutes);
 
-// --- 404 handler ---
-app.use((req: Request, res: Response) => {
-    res.status(404).json({ message: 'Route not found' });
-});
-
 // --- Error handler ---
+app.use(notFoundHandler);
 app.use(errorHandler);
 
 export default app;

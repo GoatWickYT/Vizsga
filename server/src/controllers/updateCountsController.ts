@@ -1,4 +1,4 @@
-import { Request, Response, NextFunction } from 'express';
+import { Request, Response } from 'express';
 import { UpdateCounts } from '../middleware/updateCounts.js';
 import { getUpdateCounts } from '../middleware/updateCounts.js';
 
