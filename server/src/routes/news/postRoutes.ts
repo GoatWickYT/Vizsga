@@ -185,6 +185,7 @@ const router = Router();
 router.get('/', PostController.getPosts);
 router.get('/id/:id', validateId, PostController.getPost);
 router.get('/important', PostController.getImportantPosts);
+
 router.use(attachUser, authorizeRoles(Roles.Admin, Roles.Owner));
 
 router.post('/', createPostValidator, validateRequest, PostController.addPost, updateCount('news'));

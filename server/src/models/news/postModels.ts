@@ -11,7 +11,7 @@ export interface Post {
     date: Date;
 }
 export const getAllPosts = async (): Promise<Post[]> => {
-    return queryRows<Post>('SELECT * FROM posts');
+    return await queryRows<Post>('SELECT * FROM posts');
 };
 
 export const getPostById = async (id: number): Promise<Post | null> => {
@@ -55,8 +55,8 @@ export const setStatistics = async (
     return result.affectedRows > 0;
 };
 
-export const setImportance = async (id: Number, state: Boolean) => {
-    const result = await queryExec('UPDATE posts SET important = ? WHERE id = ?');
+export const setImportance = async (id: number, state: boolean) => {
+    const result = await queryExec('UPDATE posts SET important = ? WHERE id = ?', [state, id]);
     return result.affectedRows > 0;
 };
 

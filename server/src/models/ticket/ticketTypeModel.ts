@@ -1,4 +1,4 @@
-import db from '../../config/db.js';
+import { queryExec, queryRows } from '../util/queryHelper.js';
 
 export interface TicketType {
     id?: number;
@@ -7,31 +7,32 @@ export interface TicketType {
 }
 
 export const getAllTicketTypes = async (): Promise<TicketType[]> => {
-    const [rows] = await db.query('SELECT * FROM ticket_types');
-    return rows as TicketType[];
+    return await queryRows<TicketType>('SELECT * FROM ticket_types');
 };
 
-export const createTicketType = async (ticketType: TicketType): Promise<void> => {
-    await db.query('INSERT INTO ticket_types (name, price) VALUES (?, ?)', [
+export const createTicketType = async (ticketType: TicketType): Promise<number> => {
+    const result = await queryExec('INSERT INTO ticket_types (name, price) VALUES (?, ?)', [
         ticketType.name,
         ticketType.price,
     ]);
+    return result.insertId;
 };
 
 export const getTicketTypeById = async (id: number): Promise<TicketType | null> => {
-    const [rows] = await db.query('SELECT * FROM ticket_types WHERE id = ?', [id]);
-    const ticketTypes = rows as TicketType[];
-    return ticketTypes.length > 0 ? ticketTypes[0] : null;
+    const rows = await queryRows<TicketType>('SELECT * FROM ticket_types WHERE id = ?', [id]);
+    return rows[0] || null;
 };
 
-export const updateTicketType = async (id: number, ticketType: TicketType): Promise<void> => {
-    await db.query('UPDATE ticket_types SET name = ?, price = ? WHERE id = ?', [
+export const updateTicketType = async (id: number, ticketType: TicketType): Promise<boolean> => {
+    const result = await queryExec('UPDATE ticket_types SET name = ?, price = ? WHERE id = ?', [
         ticketType.name,
         ticketType.price,
         id,
     ]);
+    return result.affectedRows > 0;
 };
 
-export const deleteTicketType = async (id: number): Promise<void> => {
-    await db.query('DELETE FROM ticket_types WHERE id = ?', [id]);
+export const deleteTicketType = async (id: number): Promise<boolean> => {
+    const result = await queryExec('DELETE FROM ticket_types WHERE id = ?', [id]);
+    return result.affectedRows > 0;
 };

@@ -4,6 +4,7 @@ export const createTicketValidator = [
     body('name').trim().notEmpty().escape(),
     body('amount').isInt({ min: 1 }),
     body('typeId').isInt({ min: 1 }),
+    body('userId').isInt({ min: 1 }),
 ];
 
 export const updateTicketValidator = [

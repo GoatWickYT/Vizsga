@@ -1,9 +1,17 @@
 import { NextFunction, Request, Response } from 'express';
-import * as ticketModel from '../../models/ticket/ticketModel.js';
+import {
+    getAllTickets,
+    createTicket,
+    removeTicket,
+    getTicketById,
+    getMyTicket,
+    setTicket,
+    Ticket,
+} from '../../models/ticket/ticketModel.js';
 
 export const getTickets = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const tickets = await ticketModel.getAllTickets();
+        const tickets = await getAllTickets();
         res.status(200).json(tickets);
     } catch (err) {
         next(err);
@@ -12,8 +20,8 @@ export const getTickets = async (req: Request, res: Response, next: NextFunction
 
 export const addTicket = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const ticket: ticketModel.Ticket = req.body;
-        await ticketModel.createTicket(ticket);
+        const ticket: Ticket = req.body;
+        await createTicket(ticket);
         res.status(201).json({ message: 'Ticket created' });
     } catch (err) {
         next(err);
@@ -23,7 +31,7 @@ export const addTicket = async (req: Request, res: Response, next: NextFunction)
 export const getTicket = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const id = Number(req.params.id);
-        const ticket = await ticketModel.getTicketById(id);
+        const ticket = await getTicketById(id);
         if (ticket) {
             res.status(200).json(ticket);
         } else {
@@ -34,11 +42,22 @@ export const getTicket = async (req: Request, res: Response, next: NextFunction)
     }
 };
 
+export const getMyTickets = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const userId = req.user?.id;
+        if (!userId) return res.status(401).json({ message: 'Unauthorized' });
+        const tickets: Ticket[] | null = await getMyTicket(userId);
+        res.status(200).json(tickets);
+    } catch (err) {
+        next(err);
+    }
+};
+
 export const updateTicket = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const id = Number(req.params.id);
-        const ticket: ticketModel.Ticket = req.body;
-        await ticketModel.updateTicket(id, ticket);
+        const ticket: Ticket = req.body;
+        await setTicket(id, ticket);
         res.status(200).json({ message: 'Ticket updated' });
     } catch (err) {
         next(err);
@@ -48,7 +67,7 @@ export const updateTicket = async (req: Request, res: Response, next: NextFuncti
 export const deleteTicket = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const id = Number(req.params.id);
-        await ticketModel.deleteTicket(id);
+        await removeTicket(id);
         res.status(200).json({ message: 'Ticket deleted' });
     } catch (err) {
         next(err);

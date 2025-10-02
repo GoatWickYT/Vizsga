@@ -5,9 +5,9 @@ import {
     getPersonById,
     updatePerson,
     deletePerson,
-    Person,
     getPersonByEmail,
     getPersonByUsername,
+    Person,
 } from '../../models/ticket/personModel.js';
 
 export const getPeople = async (req: Request, res: Response, next: NextFunction) => {

@@ -8,7 +8,7 @@ export interface Comment {
     postId?: number;
 }
 export const getAllComments = async (): Promise<Comment[]> => {
-    return queryRows<Comment>('SELECT * FROM comments');
+    return await queryRows<Comment>('SELECT * FROM comments');
 };
 
 export const createComment = async (comment: Comment): Promise<number> => {

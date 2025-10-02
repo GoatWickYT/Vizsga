@@ -116,6 +116,10 @@ const router = Router();
  *         description: ticket deleted
  */
 
+router.use(attachUser, authorizeRoles(Roles.User));
+
+router.get('/my', ticketController.getMyTickets);
+
 router.use(attachUser, authorizeRoles(Roles.Admin, Roles.Owner));
 
 router.get('/', ticketController.getTickets);
