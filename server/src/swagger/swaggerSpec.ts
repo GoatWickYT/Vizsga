@@ -143,6 +143,22 @@ const options = {
                     },
                     required: ['name', 'date', 'description'],
                 },
+                PostStatusInput: {
+                    type: 'object',
+                    properties: {
+                        views: { type: 'number' },
+                        likeCount: { type: 'number' },
+                        dislikeCount: { type: 'number' },
+                    },
+                    required: ['views', 'likeCount', 'dislikeCount'],
+                },
+                PostImportanceInput: {
+                    type: 'object',
+                    properties: {
+                        important: { type: 'boolean' },
+                    },
+                    required: ['important'],
+                },
                 Person: {
                     type: 'object',
                     properties: {

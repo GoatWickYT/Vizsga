@@ -4,6 +4,10 @@ export interface Post {
     id?: number;
     name: string;
     description: string;
+    important: boolean;
+    likeCount: number;
+    dislikeCount: number;
+    views: number;
     date: Date;
 }
 export const getAllPosts = async (): Promise<Post[]> => {
@@ -12,6 +16,11 @@ export const getAllPosts = async (): Promise<Post[]> => {
 
 export const getPostById = async (id: number): Promise<Post | null> => {
     const rows = await queryRows<Post>('SELECT * FROM posts WHERE id = ?', [id]);
+    return rows[0] || null;
+};
+
+export const getPostByImportance = async (important: boolean): Promise<Post | null> => {
+    const rows = await queryRows<Post>('SELECT * FROM posts WHERE important = ?', [important]);
     return rows[0] || null;
 };
 
@@ -30,6 +39,24 @@ export const updatePost = async (id: number, Post: Partial<Post>): Promise<boole
         Post.description,
         id,
     ]);
+    return result.affectedRows > 0;
+};
+
+export const setStatistics = async (
+    views: number,
+    likes: number,
+    dislikes: number,
+    id: number,
+): Promise<boolean> => {
+    const result = await queryExec(
+        'UPDATE posts SET views = ?, likes = ?, dislikes = ? WHERE id = ?',
+        [views, likes, dislikes, id],
+    );
+    return result.affectedRows > 0;
+};
+
+export const setImportance = async (id: Number, state: Boolean) => {
+    const result = await queryExec('UPDATE posts SET important = ? WHERE id = ?');
     return result.affectedRows > 0;
 };
 

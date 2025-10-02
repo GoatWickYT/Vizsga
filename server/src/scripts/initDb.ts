@@ -33,7 +33,7 @@ export const initDb = async () => {
                 (id INT PRIMARY KEY AUTO_INCREMENT,
                 name VARCHAR(50) NOT NULL UNIQUE,
                 price double NOT NULL,
-                available BOOLEAN)
+                available BOOLEAN NOT NULL)
         `);
         await db.query(`
             CREATE TABLE IF NOT EXISTS buffets
@@ -48,19 +48,24 @@ export const initDb = async () => {
             CREATE TABLE IF NOT EXISTS posts (
                 id INT AUTO_INCREMENT PRIMARY KEY,
                 name VARCHAR(50) NOT NULL,
-                description  VARCHAR(255) NOT NULL,
+                description VARCHAR(255) NOT NULL,
+                imageLink VARCHAR(255),
+                important BOOLEAN NOT NULL,
+                likeCount INT DEFAULT 0,
+                dislikeCount INT DEFAULT 0,
+                views INT DEFAULT 0,
                 date TIMESTAMP DEFAULT CURRENT_TIMESTAMP)
-            `);
+        `);
         await db.query(`
-                CREATE TABLE IF NOT EXISTS people (
-                    id INT AUTO_INCREMENT PRIMARY KEY,
-                    user_name VARCHAR(20) NOT NULL,
-                    name VARCHAR(40) NOT NULL,
-                    phone VARCHAR(20),
-                    email VARCHAR(50) UNIQUE NOT NULL,
-                    credit_card VARCHAR(20),
-                    password VARCHAR(100) NOT NULL)
-                `);
+            CREATE TABLE IF NOT EXISTS people (
+                id INT AUTO_INCREMENT PRIMARY KEY,
+                user_name VARCHAR(20) NOT NULL,
+                name VARCHAR(40) NOT NULL,
+                phone VARCHAR(20),
+                email VARCHAR(50) UNIQUE NOT NULL,
+                credit_card VARCHAR(20),
+                password VARCHAR(255) NOT NULL)
+        `);
         await db.query(`
             CREATE TABLE IF NOT EXISTS comments (
                 id INT AUTO_INCREMENT PRIMARY KEY,
@@ -71,13 +76,13 @@ export const initDb = async () => {
                 date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                 FOREIGN KEY (post_id) REFERENCES posts(id) ON DELETE CASCADE,
                 FOREIGN KEY (user_id) REFERENCES people(id) ON DELETE CASCADE)
-            `);
+         `);
         await db.query(`
-                CREATE TABLE IF NOT EXISTS ticket_types (
-                    id INT AUTO_INCREMENT PRIMARY KEY,
-                    name VARCHAR(50) NOT NULL,
-                    price FLOAT NOT NULL)
-                `);
+            CREATE TABLE IF NOT EXISTS ticket_types (
+                id INT AUTO_INCREMENT PRIMARY KEY,
+                name VARCHAR(50) NOT NULL,
+                price FLOAT NOT NULL)
+        `);
         await db.query(`
             CREATE TABLE IF NOT EXISTS tickets (
                 id INT AUTO_INCREMENT PRIMARY KEY,
@@ -86,7 +91,7 @@ export const initDb = async () => {
                 amount INT NOT NULL,
                 FOREIGN KEY (user_id) REFERENCES people(id) ON DELETE CASCADE,
                 FOREIGN KEY (type_id) REFERENCES ticket_types(id) ON DELETE RESTRICT)
-            `);
+        `);
         console.log('Database initialized successfully!');
     } catch (err) {
         console.error('Error initializing database:', err);

@@ -1,9 +1,10 @@
-import * as PostController from '../../controllers/news/postcontroller.js';
+import * as PostController from '../../controllers/news/postController.js';
 import { Router } from 'express';
 import { updateCount } from '../../middleware/updateCounts.js';
 import {
     createPostValidator,
     updatePostValidator,
+    updatePostStatValidator,
 } from '../../middleware/validation/news/postValidator.js';
 import { validateId } from '../../middleware/validation/validateId.js';
 import { validateRequest } from '../../middleware/validation/validateRequest.js';
@@ -74,7 +75,7 @@ const router = Router();
 
 /**
  * @openapi
- * /posts/{id}:
+ * /posts/content/{id}:
  *   patch:
  *     summary: Update a post
  *     tags:
@@ -95,6 +96,56 @@ const router = Router();
  *     responses:
  *       200:
  *         description: post updated
+ */
+
+/**
+ * @openapi
+ * /posts/stats/{id}:
+ *   patch:
+ *     summary: Update a post
+ *     tags:
+ *       - News / Posts
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: The post ID
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/PostStatusInput'
+ *     responses:
+ *       200:
+ *         description: Statistics updated
+ */
+
+/**
+ * @openapi
+ * /posts/important/{id}:
+ *   patch:
+ *     summary: Update a post
+ *     tags:
+ *       - News / Posts
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: The post ID
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/PostImportantInput'
+ *     responses:
+ *       200:
+ *         description: importance state updated
  */
 
 /**
@@ -122,7 +173,16 @@ router.use(attachUser, authorizeRoles(Roles.Admin, Roles.Owner));
 
 router.post('/', createPostValidator, validateRequest, PostController.addPost, updateCount('news'));
 router.patch(
-    '/:id',
+    '/stats/:id',
+    updatePostStatValidator,
+    validateRequest,
+    validateId,
+    PostController.updateStatistics,
+    updateCount('news'),
+);
+router.patch('/important/:id', validateId, PostController.changeImportance, updateCount('news'));
+router.patch(
+    '/content/:id',
     updatePostValidator,
     validateRequest,
     validateId,

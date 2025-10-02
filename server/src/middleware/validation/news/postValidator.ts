@@ -11,3 +11,9 @@ export const updatePostValidator = [
     body('date').optional().isISO8601(),
     body('description').optional().trim().notEmpty().escape(),
 ];
+
+export const updatePostStatValidator = [
+    body('views').optional().notEmpty().isNumeric(),
+    body('likeCount').optional().notEmpty().isNumeric(),
+    body('dislikeCount').optional().notEmpty().isNumeric(),
+];

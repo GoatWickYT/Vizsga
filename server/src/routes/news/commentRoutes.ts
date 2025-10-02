@@ -1,4 +1,4 @@
-import * as CommentController from '../../controllers/news/commentcontroller.js';
+import * as CommentController from '../../controllers/news/commentController.js';
 import { Router } from 'express';
 import { updateCount } from '../../middleware/updateCounts.js';
 import {
