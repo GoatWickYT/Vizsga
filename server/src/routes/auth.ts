@@ -2,6 +2,8 @@ import * as authController from '../controllers/auth.js';
 import { Router } from 'express';
 import { validateId } from '../middleware/validation/validateId.js';
 import { attachUser } from '../middleware/auth/attachUser.js';
+import { authorizeRoles } from '../middleware/auth/authorizeRoles.js';
+import { Roles } from '../types/roles.js';
 
 const router = Router();
 
@@ -25,7 +27,7 @@ const router = Router();
 
 /**
  * @openapi
- * /auth/{id}:
+ * /auth/id/{id}:
  *   get:
  *     summary: Get a single person by ID
  *     tags:
@@ -145,10 +147,13 @@ const router = Router();
  *         description: Username or email already in use
  */
 
-router.get('/', authController.getPeople);
-router.get('/:id', validateId, authController.getPerson);
 router.get('/me', attachUser, authController.getMe);
 router.post('/login', authController.login);
 router.post('/register', authController.register);
+
+router.use(attachUser, authorizeRoles(Roles.Admin, Roles.Owner));
+
+router.get('/', authController.getPeople);
+router.get('/id/:id', validateId, authController.getPerson);
 
 export default router;

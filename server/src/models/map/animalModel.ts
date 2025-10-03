@@ -7,7 +7,7 @@ export interface Animal {
     type: Type;
     description: string;
     adopter?: string;
-    spotId?: number;
+    spotId: number;
 }
 
 /**
@@ -48,10 +48,32 @@ export const createAnimal = async (Animal: Animal): Promise<number> => {
  * @returns Promise resolving to true if a row was updated, false otherwise
  */
 export const updateAnimal = async (id: number, Animal: Partial<Animal>): Promise<boolean> => {
-    const result = await queryExec(
-        'UPDATE animals WHERE id = ? SET name = ?, description = ?, type = ?, adopter = ? ',
-        [id, Animal.name, Animal.description, Animal.type, Animal?.adopter],
-    );
+    const fields = [];
+    const values = [];
+
+    if (Animal.name !== undefined) {
+        fields.push('name = ?');
+        values.push(Animal.name);
+    }
+    if (Animal.description !== undefined) {
+        fields.push('description = ?');
+        values.push(Animal.description);
+    }
+    if (Animal.type !== undefined) {
+        fields.push('type = ?');
+        values.push(Animal.type);
+    }
+    if (Animal.adopter !== undefined) {
+        fields.push('adopter = ?');
+        values.push(Animal.adopter);
+    }
+
+    if (fields.length === 0) return false;
+
+    values.push(id);
+
+    const query = `UPDATE animals SET ${fields.join(', ')} WHERE id = ?`;
+    const result = await queryExec(query, values);
     return result.affectedRows > 0;
 };
 

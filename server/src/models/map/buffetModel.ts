@@ -3,8 +3,8 @@ import { queryExec, queryRows } from '../util/queryHelper.js';
 export interface Buffet {
     id?: number;
     name: string;
-    menuId?: number;
-    spotId?: number;
+    menuId: number;
+    spotId: number;
 }
 
 /**

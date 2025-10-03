@@ -24,6 +24,7 @@ export const updatePersonValidator = [
     body('creditCard').optional().trim().escape(),
     body('password').optional().notEmpty(),
     body('role')
+        .optional()
         .notEmpty()
         .isIn(allowedRoles)
         .withMessage(`Role must be one of: ${allowedRoles.join(', ')}`),

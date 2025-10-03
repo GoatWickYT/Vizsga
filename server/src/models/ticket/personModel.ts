@@ -46,21 +46,40 @@ export const getPersonByEmail = async (email: string): Promise<Person | null> =>
     const rows = await queryRows<Person>('SELECT * FROM people WHERE email = ?', [email]);
     return rows[0] || null;
 };
+export const updatePerson = async (id: number, person: Partial<Person>): Promise<boolean> => {
+    const fields: string[] = [];
+    const values: (string | number | boolean | null)[] = [];
 
-export const updatePerson = async (id: number, person: Person): Promise<boolean> => {
-    const result = await queryExec(
-        'UPDATE people SET user_name = ?, name = ?, phone = ?, creditCard = ?, password = ?, role = ?, credit_card WHERE id = ?',
-        [
-            person.username,
-            person.name,
-            person.phone,
-            person.creditCard,
-            person.password,
-            person.role,
-            person.creditCard || null,
-            id,
-        ],
-    );
+    if (person.username !== undefined) {
+        fields.push('user_name = ?');
+        values.push(person.username);
+    }
+    if (person.name !== undefined) {
+        fields.push('name = ?');
+        values.push(person.name);
+    }
+    if (person.phone !== undefined) {
+        fields.push('phone = ?');
+        values.push(person.phone);
+    }
+    if (person.creditCard !== undefined) {
+        fields.push('credit_card = ?');
+        values.push(person.creditCard);
+    }
+    if (person.password !== undefined) {
+        fields.push('password = ?');
+        values.push(person.password);
+    }
+    if (person.role !== undefined) {
+        fields.push('role = ?');
+        values.push(person.role);
+    }
+
+    if (fields.length === 0) return false;
+
+    values.push(id);
+    const query = `UPDATE people SET ${fields.join(', ')} WHERE id = ?`;
+    const result = await queryExec(query, values);
     return result.affectedRows > 0;
 };
 

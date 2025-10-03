@@ -69,7 +69,7 @@ const router = Router();
  *             $ref: '#/components/schemas/TicketInput'
  *     responses:
  *       201:
- *         description: ticket created
+ *         description: Ticket created
  */
 
 /**
@@ -83,7 +83,7 @@ const router = Router();
  *       - in: path
  *         name: id
  *         schema:
- *           type: string
+ *           type: number
  *         required: true
  *         description: The ticket ID
  *     requestBody:
@@ -94,7 +94,7 @@ const router = Router();
  *             $ref: '#/components/schemas/TicketInput'
  *     responses:
  *       200:
- *         description: ticket updated
+ *         description: Ticket updated
  */
 
 /**
@@ -108,22 +108,44 @@ const router = Router();
  *       - in: path
  *         name: id
  *         schema:
- *           type: string
+ *           type: number
  *         required: true
  *         description: The ticket ID
  *     responses:
  *       204:
- *         description: ticket deleted
+ *         description: Ticket deleted
  */
 
-router.use(attachUser, authorizeRoles(Roles.User));
+/**
+ * @openapi
+ * /tickets/my:
+ *   get:
+ *     summary: Get tickets of the logged-in user
+ *     tags:
+ *       - Ticket / Tickets
+ *     security:
+ *       - bearerAuth: []   # Indicates this endpoint requires a JWT or similar auth
+ *     responses:
+ *       200:
+ *         description: List of tickets belonging to the authenticated user
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Ticket'
+ *       401:
+ *         description: Unauthorized – user must be logged in
+ */
+
+router.use(attachUser, authorizeRoles(Roles.User, Roles.Admin, Roles.Owner));
 
 router.get('/my', ticketController.getMyTickets);
 
 router.use(attachUser, authorizeRoles(Roles.Admin, Roles.Owner));
 
 router.get('/', ticketController.getTickets);
-router.get('/:id', validateId, ticketController.getTicket);
+router.get('/id/:id', validateId, ticketController.getTicket);
 router.post(
     '/',
     createTicketValidator,
