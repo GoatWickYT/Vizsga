@@ -39,7 +39,7 @@ export const getPerson = async (req: Request, res: Response, next: NextFunction)
         if (person) {
             res.status(200).json(toSafeUser(person));
         } else {
-            res.status(404).json({ message: 'Person not found' });
+            res.status(404).json({ error: 'Person not found' });
         }
     } catch (err) {
         next(err);
@@ -48,7 +48,7 @@ export const getPerson = async (req: Request, res: Response, next: NextFunction)
 
 export const getMe = (req: Request, res: Response) => {
     if (!req.user) {
-        return res.status(401).json({ message: 'Not authenticated' });
+        return res.status(401).json({ error: 'Not authenticated' });
     }
 
     const safeUser = {
@@ -65,13 +65,13 @@ export const login = async (req: Request, res: Response, next: NextFunction) => 
         const { usernameOrEmail, password } = req.body;
 
         if (!usernameOrEmail || !password)
-            return res.status(400).json({ message: 'Username/email and password are required' });
+            return res.status(400).json({ error: 'Username/email and password are required' });
         let user = await getPersonByEmail(usernameOrEmail);
         if (!user) user = await getPersonByUsername(usernameOrEmail);
-        if (!user) return res.status(401).json({ message: 'Invalid credentials' });
+        if (!user) return res.status(401).json({ error: 'Invalid credentials' });
 
         const passwordMatch = await compare(password, user.password);
-        if (!passwordMatch) return res.status(401).json({ message: 'Invalid credentials' });
+        if (!passwordMatch) return res.status(401).json({ error: 'Invalid credentials' });
 
         const token = signJwt({
             id: user.id!,
@@ -99,17 +99,17 @@ export const register = async (req: Request, res: Response, next: NextFunction) 
         if (!username || !email || !password || !name) {
             return res
                 .status(400)
-                .json({ message: 'Username, email, password, and name are required' });
+                .json({ error: 'Username, email, password, and name are required' });
         }
 
         let user = await getPersonByEmail(email);
         if (user) {
-            return res.status(409).json({ message: 'Email already in use' });
+            return res.status(409).json({ error: 'Email already in use' });
         }
 
         user = await getPersonByUsername(username);
         if (user) {
-            return res.status(409).json({ message: 'Username already taken' });
+            return res.status(409).json({ error: 'Username already taken' });
         }
 
         const hashedPassword = await hash(password);

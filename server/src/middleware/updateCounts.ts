@@ -9,8 +9,8 @@ export interface UpdateCounts {
 }
 const filePath = path.join(process.cwd(), 'updateCounts.json');
 let updateCounts: UpdateCounts = { map: 0, ticket: 0, news: 0 };
-let writeInProgress = false;
-let pendingWrite = false;
+let writeInProgress: boolean = false;
+let pendingWrite: boolean = false;
 
 const saveCounts = async () => {
     if (writeInProgress) {
@@ -41,8 +41,8 @@ const incrementUpdateCount = (category: keyof UpdateCounts) => {
 };
 const loadCounts = async () => {
     try {
-        const data = await fs.promises.readFile(filePath, 'utf-8');
-        const parsed = JSON.parse(data) as Partial<UpdateCounts>;
+        const data: string = await fs.promises.readFile(filePath, 'utf-8');
+        const parsed: Partial<UpdateCounts> = JSON.parse(data) as Partial<UpdateCounts>;
         updateCounts = { ...updateCounts, ...parsed };
     } catch {
         throw new Error('No existing updateCounts file');

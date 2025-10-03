@@ -6,7 +6,7 @@ import * as SpotService from '../../models/map/spotModel.js';
  */
 export const getSpots = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const spots = await SpotService.getAllSpots();
+        const spots: SpotService.Spot[] = await SpotService.getAllSpots();
         res.status(200).json(spots);
     } catch (err) {
         next(err);
@@ -18,9 +18,9 @@ export const getSpots = async (req: Request, res: Response, next: NextFunction) 
  */
 export const getSpot = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const id = Number(req.params.id);
-        const spot = await SpotService.getSingleSpot(id);
-        if (!spot) return res.status(404).json({ message: 'Spot not found' });
+        const id: number = Number(req.params.id);
+        const spot: SpotService.Spot | null = await SpotService.getSingleSpot(id);
+        if (!spot) return res.status(404).json({ error: 'Spot not found' });
         res.status(200).json(spot);
     } catch (err) {
         next(err);
@@ -32,8 +32,8 @@ export const getSpot = async (req: Request, res: Response, next: NextFunction) =
  */
 export const createSpot = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const spotData = req.body;
-        const insertId = await SpotService.createSpot(spotData);
+        const spotData: SpotService.Spot = req.body;
+        const insertId: number = await SpotService.createSpot(spotData);
         res.status(201).json({ message: 'Spot created', id: insertId });
     } catch (err) {
         next(err);
@@ -45,10 +45,10 @@ export const createSpot = async (req: Request, res: Response, next: NextFunction
  */
 export const updateSpot = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const id = Number(req.params.id);
-        const spotData = req.body;
-        const updated = await SpotService.updateSpot(id, spotData);
-        if (!updated) return res.status(404).json({ message: 'Spot not found or not updated' });
+        const id: number = Number(req.params.id);
+        const spotData: SpotService.Spot = req.body;
+        const updated: boolean = await SpotService.updateSpot(id, spotData);
+        if (!updated) return res.status(404).json({ error: 'Spot not found or not updated' });
         res.status(200).json({ message: 'Spot updated' });
     } catch (err) {
         next(err);
@@ -60,9 +60,9 @@ export const updateSpot = async (req: Request, res: Response, next: NextFunction
  */
 export const deleteSpot = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const id = Number(req.params.id);
-        const deleted = await SpotService.deleteSpot(id);
-        if (!deleted) return res.status(404).json({ message: 'Spot not found or not deleted' });
+        const id: number = Number(req.params.id);
+        const deleted: boolean = await SpotService.deleteSpot(id);
+        if (!deleted) return res.status(404).json({ error: 'Spot not found or not deleted' });
         res.status(204).send();
     } catch (err) {
         next(err);

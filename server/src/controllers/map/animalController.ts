@@ -6,7 +6,7 @@ import * as AnimalService from '../../models/map/animalModel.js';
  */
 export const getAnimals = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const animals = await AnimalService.getAllAnimals();
+        const animals: AnimalService.Animal[] = await AnimalService.getAllAnimals();
         res.status(200).json(animals);
     } catch (err) {
         next(err);
@@ -18,9 +18,9 @@ export const getAnimals = async (req: Request, res: Response, next: NextFunction
  */
 export const getAnimal = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const id = Number(req.params.id);
-        const animal = await AnimalService.getSingleAnimal(id);
-        if (!animal) return res.status(404).json({ message: 'Animal not found' });
+        const id: number = Number(req.params.id);
+        const animal: AnimalService.Animal | null = await AnimalService.getSingleAnimal(id);
+        if (!animal) return res.status(404).json({ error: 'Animal not found' });
         res.status(200).json(animal);
     } catch (err) {
         next(err);
@@ -32,8 +32,8 @@ export const getAnimal = async (req: Request, res: Response, next: NextFunction)
  */
 export const createAnimal = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const animalData = req.body;
-        const insertId = await AnimalService.createAnimal(animalData);
+        const animalData: AnimalService.Animal = req.body;
+        const insertId: number = await AnimalService.createAnimal(animalData);
         res.status(201).json({ message: 'Animal created', id: insertId });
     } catch (err) {
         next(err);
@@ -45,10 +45,10 @@ export const createAnimal = async (req: Request, res: Response, next: NextFuncti
  */
 export const updateAnimal = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const id = Number(req.params.id);
-        const animalData = req.body;
-        const updated = await AnimalService.updateAnimal(id, animalData);
-        if (!updated) return res.status(404).json({ message: 'Animal not found or not updated' });
+        const id: number = Number(req.params.id);
+        const animalData: AnimalService.Animal = req.body;
+        const updated: boolean = await AnimalService.updateAnimal(id, animalData);
+        if (!updated) return res.status(404).json({ error: 'Animal not found or not updated' });
         res.status(200).json({ message: 'Animal updated' });
     } catch (err) {
         next(err);
@@ -60,9 +60,9 @@ export const updateAnimal = async (req: Request, res: Response, next: NextFuncti
  */
 export const deleteAnimal = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const id = Number(req.params.id);
-        const deleted = await AnimalService.deleteAnimal(id);
-        if (!deleted) return res.status(404).json({ message: 'Animal not found or not deleted' });
+        const id: number = Number(req.params.id);
+        const deleted: boolean = await AnimalService.deleteAnimal(id);
+        if (!deleted) return res.status(404).json({ error: 'Animal not found or not deleted' });
         res.status(204).send();
     } catch (err) {
         next(err);

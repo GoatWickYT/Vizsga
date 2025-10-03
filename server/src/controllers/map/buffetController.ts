@@ -6,7 +6,7 @@ import * as BuffetService from '../../models/map/buffetModel.js';
  */
 export const getBuffets = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const buffets = await BuffetService.getAllBuffets();
+        const buffets: BuffetService.Buffet[] = await BuffetService.getAllBuffets();
         res.status(200).json(buffets);
     } catch (err) {
         next(err);
@@ -18,9 +18,9 @@ export const getBuffets = async (req: Request, res: Response, next: NextFunction
  */
 export const getBuffet = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const id = Number(req.params.id);
-        const buffet = await BuffetService.getSingleBuffet(id);
-        if (!buffet) return res.status(404).json({ message: 'Buffet not found' });
+        const id: number = Number(req.params.id);
+        const buffet: BuffetService.Buffet | null = await BuffetService.getSingleBuffet(id);
+        if (!buffet) return res.status(404).json({ error: 'Buffet not found' });
         res.status(200).json(buffet);
     } catch (err) {
         next(err);
@@ -32,8 +32,8 @@ export const getBuffet = async (req: Request, res: Response, next: NextFunction)
  */
 export const createBuffet = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const buffetData = req.body;
-        const insertId = await BuffetService.createBuffet(buffetData);
+        const buffetData: BuffetService.Buffet = req.body;
+        const insertId: number = await BuffetService.createBuffet(buffetData);
         res.status(201).json({ message: 'Buffet created', id: insertId });
     } catch (err) {
         next(err);
@@ -45,10 +45,10 @@ export const createBuffet = async (req: Request, res: Response, next: NextFuncti
  */
 export const updateBuffet = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const id = Number(req.params.id);
-        const buffetData = req.body;
-        const updated = await BuffetService.updateBuffet(id, buffetData);
-        if (!updated) return res.status(404).json({ message: 'Buffet not found or not updated' });
+        const id: number = Number(req.params.id);
+        const buffetData: BuffetService.Buffet = req.body;
+        const updated: boolean = await BuffetService.updateBuffet(id, buffetData);
+        if (!updated) return res.status(404).json({ error: 'Buffet not found or not updated' });
         res.status(200).json({ message: 'Buffet updated' });
     } catch (err) {
         next(err);
@@ -60,9 +60,9 @@ export const updateBuffet = async (req: Request, res: Response, next: NextFuncti
  */
 export const deleteBuffet = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const id = Number(req.params.id);
-        const deleted = await BuffetService.deleteBuffet(id);
-        if (!deleted) return res.status(404).json({ message: 'Buffet not found or not deleted' });
+        const id: number = Number(req.params.id);
+        const deleted: boolean = await BuffetService.deleteBuffet(id);
+        if (!deleted) return res.status(404).json({ error: 'Buffet not found or not deleted' });
         res.status(204).send();
     } catch (err) {
         next(err);
