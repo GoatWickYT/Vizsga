@@ -7,7 +7,6 @@ const PORT = config.port;
 
 const server = app.listen(PORT, async () => {
     await initDb();
-    console.log(`Server running on http://localhost:${PORT}`);
 });
 
 process.on('uncaughtException', (err) => {
