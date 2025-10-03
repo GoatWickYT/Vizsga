@@ -1,0 +1,91 @@
+import { Status } from '../../types/spotStatus.js';
+import { queryExec, queryRows } from '../util/queryHelper.js';
+
+export interface Spot {
+    id?: number;
+    name: string;
+    locationX: number;
+    locationY: number;
+    icon: string;
+    status: Status;
+}
+
+/**
+ * Get all Spots
+ * @returns Promise resolving to an array of all Spot objects
+ */
+export const getAllSpots = async (): Promise<Spot[]> => {
+    return await queryRows<Spot>('SELECT * FROM spots');
+};
+
+/**
+ * Get a single Spot by ID
+ * @param id The ID of the Spot to fetch
+ * @returns Promise resolving to the Spot object if found, or null if not
+ */
+export const getSingleSpot = async (id: number): Promise<Spot | null> => {
+    const rows = await queryRows<Spot>('SELECT * FROM spots WHERE id = ?', [id]);
+    return rows[0] || null;
+};
+
+/**
+ * Create a new Spot
+ * @param Spot The Spot object to insert (name required)
+ * @returns Promise resolving to the ID of the newly inserted Spot
+ */
+export const createSpot = async (Spot: Spot): Promise<number> => {
+    const result = await queryExec(
+        'INSERT INTO spots (name, location_x, location_y, icon, status) VALUES (?,?,?,?,?)',
+        [Spot.name, Spot.locationX, Spot.locationY, Spot.icon, Spot.status],
+    );
+    return result.insertId;
+};
+
+/**
+ * Update an existing Spot
+ * @param id The ID of the Spot to update
+ * @param Spot Partial Spot object with fields to update
+ * @returns Promise resolving to true if a row was updated, false otherwise
+ */
+export const updateSpot = async (id: number, Spot: Partial<Spot>): Promise<boolean> => {
+    const fields: string[] = [];
+    const values: (string | number | boolean | null)[] = [];
+
+    if (Spot.name !== undefined) {
+        fields.push('name = ?');
+        values.push(Spot.name);
+    }
+    if (Spot.locationX !== undefined) {
+        fields.push('location_x = ?');
+        values.push(Spot.locationX);
+    }
+    if (Spot.locationY !== undefined) {
+        fields.push('location_y = ?');
+        values.push(Spot.locationY);
+    }
+    if (Spot.icon !== undefined) {
+        fields.push('icon = ?');
+        values.push(Spot.icon);
+    }
+    if (Spot.status !== undefined) {
+        fields.push('status = ?');
+        values.push(Spot.status);
+    }
+
+    if (fields.length === 0) return false;
+
+    values.push(id);
+    const query = `UPDATE spots SET ${fields.join(', ')} WHERE id = ?`;
+    const result = await queryExec(query, values);
+    return result.affectedRows > 0;
+};
+
+/**
+ * Delete a Spot by ID
+ * @param id The ID of the Spot to delete
+ * @returns Promise resolving to true if a row was deleted, false otherwise
+ */
+export const deleteSpot = async (id: number): Promise<boolean> => {
+    const result = await queryExec('DELETE FROM spots WHERE id = ?', [id]);
+    return result.affectedRows > 0;
+};

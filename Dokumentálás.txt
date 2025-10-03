@@ -1,0 +1,17 @@
+2025 09 12 - Wittner Attila
+Elkészült a repository, megíródott a readme file
+
+2025 09 13 - Wittner Attila
+Szerver alapjai lefektetve, TypeScript+Node+MySQL szerver és adatbázis alapjai elkészítve
+
+ELSŐ BRANCH
+News részleg - Bódis Bálint
+Ticket részleg - Vida Tamás
+Map részleg - Wittner Attila
+
+Map Részleg backend branch - Wittner Attila
+2025 09 13 - alap szerver és adatbázis táblák létrehozása, lekódolása
+2025 09 14 - alap szerver és adatbázis táblák bővítése wc táblával (később wc_unit)
+2025 09 16 - AnimalType és Icon táblák, controllerei és route-ok elkészítése, adatbázis működésbe lépése
+2025 09 17 - tesztelve és befejezve, összehangolást igényel
+2025 09 26 - Swagger elkészítve, merge
