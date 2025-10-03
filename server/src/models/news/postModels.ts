@@ -34,11 +34,23 @@ export const createPost = async (Post: Post): Promise<number> => {
 };
 
 export const updatePost = async (id: number, Post: Partial<Post>): Promise<boolean> => {
-    const result = await queryExec('UPDATE posts SET name = ?, description = ? WHERE id = ?', [
-        Post.name,
-        Post.description,
-        id,
-    ]);
+    const fields: string[] = [];
+    const values: (string | number | boolean | null)[] = [];
+
+    if (Post.name !== undefined) {
+        fields.push('name = ?');
+        values.push(Post.name);
+    }
+    if (Post.description !== undefined) {
+        fields.push('description = ?');
+        values.push(Post.description);
+    }
+
+    if (fields.length === 0) return false;
+
+    values.push(id);
+    const query = `UPDATE posts SET ${fields.join(', ')} WHERE id = ?`;
+    const result = await queryExec(query, values);
     return result.affectedRows > 0;
 };
 

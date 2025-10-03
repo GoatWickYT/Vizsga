@@ -24,6 +24,13 @@ export const createAnimalValidator = [
         .withMessage('Adopter name must be under 100 characters')
         .escape(),
 
+    body('type')
+        .trim()
+        .notEmpty()
+        .withMessage('Type cannot be empty if provided')
+        .isString()
+        .isLength({ max: 50 }),
+
     body('spotId').optional().isInt({ min: 1 }).withMessage('spotId must be a positive integer'),
 ];
 
@@ -45,4 +52,12 @@ export const updateAnimalValidator = [
         .escape(),
 
     body('adopter').optional().trim().isLength({ max: 100 }).escape(),
+
+    body('type')
+        .optional()
+        .trim()
+        .notEmpty()
+        .withMessage('Type cannot be empty if provided')
+        .isString()
+        .isLength({ max: 50 }),
 ];

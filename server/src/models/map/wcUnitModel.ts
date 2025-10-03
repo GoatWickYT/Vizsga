@@ -3,7 +3,7 @@ import { queryExec, queryRows } from '../util/queryHelper.js';
 export interface WcUnit {
     id?: number;
     name: string;
-    spotId?: number;
+    spotId: number;
 }
 
 /**

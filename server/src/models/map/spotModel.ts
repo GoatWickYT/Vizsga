@@ -48,10 +48,35 @@ export const createSpot = async (Spot: Spot): Promise<number> => {
  * @returns Promise resolving to true if a row was updated, false otherwise
  */
 export const updateSpot = async (id: number, Spot: Partial<Spot>): Promise<boolean> => {
-    const result = await queryExec(
-        'UPDATE spots SET name = ?, location_x = ?, location_y = ?, icon = ?, status = ? WHERE id = ?',
-        [Spot.name, Spot.locationX, Spot.locationY, Spot.icon, Spot.status, id],
-    );
+    const fields: string[] = [];
+    const values: (string | number | boolean | null)[] = [];
+
+    if (Spot.name !== undefined) {
+        fields.push('name = ?');
+        values.push(Spot.name);
+    }
+    if (Spot.locationX !== undefined) {
+        fields.push('location_x = ?');
+        values.push(Spot.locationX);
+    }
+    if (Spot.locationY !== undefined) {
+        fields.push('location_y = ?');
+        values.push(Spot.locationY);
+    }
+    if (Spot.icon !== undefined) {
+        fields.push('icon = ?');
+        values.push(Spot.icon);
+    }
+    if (Spot.status !== undefined) {
+        fields.push('status = ?');
+        values.push(Spot.status);
+    }
+
+    if (fields.length === 0) return false;
+
+    values.push(id);
+    const query = `UPDATE spots SET ${fields.join(', ')} WHERE id = ?`;
+    const result = await queryExec(query, values);
     return result.affectedRows > 0;
 };
 

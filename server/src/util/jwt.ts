@@ -7,7 +7,7 @@ const JWT_EXPIRES_IN = '1h';
 
 interface JwtPayload {
     id: number;
-    userName: string;
+    username: string;
     role: Roles;
 }
 

@@ -5,7 +5,7 @@ import { config } from '../../config/env.js';
 
 interface TokenPayload {
     id: number;
-    userName: string;
+    username: string;
     role: Roles;
 }
 
@@ -24,7 +24,7 @@ export const attachUser = (req: Request, res: Response, next: NextFunction) => {
         const decoded = jwt.verify(token, JWT_SECRET) as TokenPayload;
         req.user = {
             id: decoded.id,
-            userName: decoded.userName,
+            username: decoded.username,
             role: decoded.role,
         };
 

@@ -53,7 +53,7 @@ export const getMe = (req: Request, res: Response) => {
 
     const safeUser = {
         id: req.user.id,
-        userName: req.user.userName,
+        username: req.user.username,
         role: req.user.role,
     };
 
@@ -76,14 +76,14 @@ export const login = async (req: Request, res: Response, next: NextFunction) => 
         const token = signJwt({
             id: user.id!,
             role: user.role as Roles,
-            userName: user.userName,
+            username: user.username,
         });
 
         res.status(200).json({
             token,
             user: {
                 id: user.id!,
-                userName: user.userName,
+                username: user.username,
                 role: user.role,
             },
         });
@@ -115,7 +115,7 @@ export const register = async (req: Request, res: Response, next: NextFunction) 
         const hashedPassword = await hash(password);
 
         await createPerson({
-            userName: username,
+            username: username,
             name,
             email,
             password: hashedPassword,

@@ -23,12 +23,27 @@ export const getTicketTypeById = async (id: number): Promise<TicketType | null> 
     return rows[0] || null;
 };
 
-export const updateTicketType = async (id: number, ticketType: TicketType): Promise<boolean> => {
-    const result = await queryExec('UPDATE ticket_types SET name = ?, price = ? WHERE id = ?', [
-        ticketType.name,
-        ticketType.price,
-        id,
-    ]);
+export const updateTicketType = async (
+    id: number,
+    ticketType: Partial<TicketType>,
+): Promise<boolean> => {
+    const fields: string[] = [];
+    const values: (string | number | boolean | null)[] = [];
+
+    if (ticketType.name !== undefined) {
+        fields.push('name = ?');
+        values.push(ticketType.name);
+    }
+    if (ticketType.price !== undefined) {
+        fields.push('price = ?');
+        values.push(ticketType.price);
+    }
+
+    if (fields.length === 0) return false;
+
+    values.push(id);
+    const query = `UPDATE ticket_types SET ${fields.join(', ')} WHERE id = ?`;
+    const result = await queryExec(query, values);
     return result.affectedRows > 0;
 };
 
