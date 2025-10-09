@@ -1,0 +1,12 @@
+# Ignore Docker and Git files
+Dockerfile
+.dockerignore
+.git
+.gitignore
+
+# Ignore logs, editor settings, and temp files
+*.log
+*.env
+.env.*
+.vscode
+.idea
