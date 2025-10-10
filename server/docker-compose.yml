@@ -1,9 +1,27 @@
 services:
     app:
         build: .
-        container_name: node_app
+        container_name: vadaspark_app
         env_file:
-            - .env
+            - .dockerenv
         ports:
-            - '${PORT}:${PORT}'
+            - '3000:3000'
         restart: unless-stopped
+        depends_on:
+            db:
+                condition: service_healthy
+    db:
+        image: mysql
+        container_name: vadaspark_db
+        restart: always
+        ports:
+            - '3306:3306'
+        env_file:
+            - .dockerenv
+        environment:
+            MYSQL_DATABASE: vadaspark_db
+            MYSQL_ROOT_PASSWORD: god
+        healthcheck:
+            test: ['CMD', 'mysql', '-uroot', '-pgod', '-e', 'SELECT 1', 'vadaspark_db']
+            interval: 5s
+            retries: 5

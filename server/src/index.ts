@@ -7,6 +7,8 @@ const PORT = config.port;
 
 const server = app.listen(PORT, async () => {
     await initDb();
+    console.log(`Server running on http://localhost:${PORT}/`);
+    console.log(`Swagger running on http://localhost:${PORT}/api-docs`);
 });
 
 process.on('uncaughtException', (err) => {

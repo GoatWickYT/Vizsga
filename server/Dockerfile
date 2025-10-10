@@ -1,23 +1,13 @@
-# Use Node.js 20 Alpine for a small image
-FROM node:20-alpine
+FROM node:20-bookworm
 
-# Set working directory
 WORKDIR /usr/src/app
 
-# Copy package.json and package-lock.json first for caching
 COPY package*.json ./
-
-# Install dependencies
-RUN npm install
-
-# Copy all source files
+COPY tsconfig.json tsconfig.json 
+COPY updateCounts.json updateCounts.json 
 COPY . .
 
-# Build TypeScript
+RUN npm install
 RUN npm run build
 
-# Expose the port defined in .env
-ENV PORT=${PORT}
-
-# Start the compiled app
-CMD ["node", "dist/index.js"]
+CMD ["npm", "start"]
