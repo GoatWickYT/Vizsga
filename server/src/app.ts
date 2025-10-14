@@ -25,8 +25,6 @@ import personRoutes from './routes/ticket/personRoutes.js';
 import ticketRoutes from './routes/ticket/ticketRoutes.js';
 import ticketTypeRoutes from './routes/ticket/ticketTypeRoutes.js';
 
-import updateRoutes from './routes/updateCountsRoutes.js';
-
 // --- Middleware ---
 import { errorHandler } from './middleware/errorHandler.js';
 import { apiLimiter } from './middleware/rateLimiter.js';
@@ -62,9 +60,6 @@ app.use(
 
 // --- API Limiter ---
 app.use('/', apiLimiter);
-
-// --- Get Updates ---
-app.use('/update-counts', updateRoutes);
 
 // --- Routes ---
 app.use('/wc-units', wcUnitRoutes);
