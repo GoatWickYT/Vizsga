@@ -30,22 +30,22 @@
 <h1>Teendők</h1>
 </div>
 
-- [x] Adatbázis -> [docs](server/src/config/DOCS.md)
-  - [x] Kód
-  - [x] Dokumentálás
-- [ ] Szerver -> [docs](server/src/DOCS.md)
-  - [x] Kód
-  - [ ] Dokumentálás
-- [ ] Webes Elérhetőség
-  - [ ] Kód
-  - [ ] Dokumentálás
-- [ ] Mobilos Alkalmazás
-  - [ ] Kód
-  - [ ] Dokumentálás
-- [ ] \*Asztali Alkalmazás
-  - [ ] Kód
-  - [ ] Dokumentálás
-- [ ] \*\* Értékesítés
+-   [x] Adatbázis -> [docs](server/src/config/README.md)
+    -   [x] Kód
+    -   [x] Dokumentálás
+-   [ ] Szerver -> [docs](server/README.md)
+    -   [x] Kód
+    -   [ ] Dokumentálás
+-   [ ] Webes Elérhetőség
+    -   [ ] Kód
+    -   [ ] Dokumentálás
+-   [ ] Mobilos Alkalmazás
+    -   [ ] Kód
+    -   [ ] Dokumentálás
+-   [ ] \*Asztali Alkalmazás
+    -   [ ] Kód
+    -   [ ] Dokumentálás
+-   [ ] \*\* Értékesítés
 
 \* Az asztali alkalmazás csak és kizárólag a Vadaspark Dolgozóinak lesz hasznos és ezen okból elérhető
 
@@ -58,15 +58,15 @@
 </div>
 
 > ## Belépők
-> 
+>
 > Alkalmazásunk és webes platformunk nem csak lehetővé teszi a jegyek vásárlását de ezek szerkesztését és kénylemes kezelését is
 
 > ## Térkép
-> 
+>
 > Amint belépnek a felhasználók a Vadaspark területére és megnyitják az alkalmazást egy térkép válik számukra elérhetővé ahol meg tudják tekinteni a saját, az állatok és egyéb fontos pontnak a helyzetét, emellett, a Vadasparkba történő eseményeket is látják
 
 > ## Hírek
-> 
+>
 > Amellett hogy a Vadaspark híreit megnézhetik az alkalmazás értesítést is küld a telefonjukra az éppen fontos hírekről és közeledő eseményekről így biztosan tudni fognak a Vadaspark által tartott különleges alkalmakról
 
 ---
@@ -88,22 +88,22 @@
 <h1>To-Do List</h1>
 </div>
 
-- [x] Database -> [docs](server/src/config/DOCS.md)
-  - [x] Code
-  - [x] Documentation
-- [ ] Server -> [docs](server/src/DOCS.md)
-  - [x] Code
-  - [ ] Documentation
-- [ ] Web Front
-  - [ ] Code
-  - [ ] Documentation
-- [ ] Mobile App
-  - [ ] Code
-  - [ ] Documentation
-- [ ] \*Desktop App
-  - [ ] Code
-  - [ ] Documentation
-- [ ] \*\*Bussiness Deal
+-   [x] Database -> [docs](server/src/config/README.md)
+    -   [x] Code
+    -   [x] Documentation
+-   [ ] Server -> [docs](server/src/README.md)
+    -   [x] Code
+    -   [ ] Documentation
+-   [ ] Web Front
+    -   [ ] Code
+    -   [ ] Documentation
+-   [ ] Mobile App
+    -   [ ] Code
+    -   [ ] Documentation
+-   [ ] \*Desktop App
+    -   [ ] Code
+    -   [ ] Documentation
+-   [ ] \*\*Bussiness Deal
 
 \* Desktop Application is to be made purely for administrative work and therefore will only be useable and useful for employees
 
@@ -116,23 +116,23 @@
 </div>
 
 > ## Tickets
-> 
+>
 > Our app and web platform will make it possible to purchase and manage your tickets without having to leave the comfort of your home
 
 > ## Map
-> 
+>
 > Once you enter the establishment, you will be able to check on our mobile app your current whereabouts, location of bufets, animals and point of interests, along with different events going on nearby
 
 > ## News
-> 
+>
 > With the extra addition of being able to not just check but be notified of upcoming events the zoo is hosting you will surely never miss a halloween event hosted by the zoo
 
 ---
 
 > ### Elérhetőség:
-> 
+>
 > email-BB: b1bodbal@vasvari.org
-> 
+>
 > email-VT: b1vidtam@vasari.org
-> 
+>
 > email-WA: b1witatt@vasvari.org

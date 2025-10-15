@@ -1,8 +1,8 @@
 <div align="center">
-<img src="../../Images/magyar.png"/>
+<img src="../Images/magyar.png"/>
 </div>
 
-[Vissza](../../README.md)
+[Vissza](../README.md)
 
 <div align="center">
 <h1>
@@ -28,7 +28,7 @@ Ahogy korábban említettük, az `app.ts` fájl az, ami az összes réteget egy�
 
 Az útvonalak határozzák meg a végpontokat — ők az utak elágazásai és a táblák, amik megmutatják, melyik út hová vezet. Az útvonalak a felhasználót a megfelelő irányba terelik, és összekapcsolják az alkalmazást a vezérlőkkel.
 
-További részletek itt -> [dokumentáció](./routes/DOCS.md)
+További részletek itt -> [dokumentáció](./src/routes/README.md)
 
 <div align="center">
 <h2>
@@ -38,7 +38,7 @@ További részletek itt -> [dokumentáció](./routes/DOCS.md)
 
 A vezérlők az útvonalak után következő lépést jelentik — gondolj rájuk, mint biztonsági ellenőrző pontokra. Biztosítják, hogy az elküldött vagy kért adatok biztonságosak, és a felhasználók jogosultak azokhoz hozzáférni. Ha visszatérünk az úthasonlathoz: ők azok, akik ellenőrzik az útleveled, és ha minden rendben van, beengednek — ha nem, akkor elutasítanak egy üzenettel.
 
-További részletek itt -> [dokumentáció](./controllers/DOCS.md)
+További részletek itt -> [dokumentáció](./src/controllers/README.md)
 
 <div align="center">
 <h2>
@@ -48,7 +48,7 @@ További részletek itt -> [dokumentáció](./controllers/DOCS.md)
 
 A modellek az utolsó réteget jelentik, és kevés vagy semmilyen biztonsági funkcióval nem rendelkeznek. Egyetlen feladatuk az adatok beküldésének és lekérésének kezelése az adatbázisban. Minden jogosulatlan vagy szabálytalan hozzáférés korábban már le lett tiltva a szerver által, így itt csak az adatküldés és -fogadás történik.
 
-További részletek itt -> [dokumentáció](./models/DOCS.md)
+További részletek itt -> [dokumentáció](./src/models/README.md)
 
 <div align="center">
 <h2>
@@ -58,7 +58,7 @@ További részletek itt -> [dokumentáció](./models/DOCS.md)
 
 A middleware segédfunkció a vezérlők és az útvonalak számára, amely ellenőrzi az adatok érvényességét, és csak a megtisztított adatokat engedi tovább. Kezeli a hibás hozzáféréseket, a belső hibákat, a naplózást és az adatellenőrzést.
 
-További részletek itt -> [dokumentáció](./middleware/DOCS.md)
+További részletek itt -> [dokumentáció](./src/middleware/README.md)
 
 <div align="center">
 <h2>
@@ -84,10 +84,10 @@ A segédmodulok jelenleg két fájlt tartalmaznak: a `jwt.ts` fájlt, ami a toke
 ---
 
 <div align="center">
-<img src="../../Images/english.png"/>
+<img src="../Images/english.png"/>
 </div>
 
-[Back](../../README.md)
+[Back](../README.md)
 
 <div align="center">
 <h1>
@@ -113,7 +113,7 @@ As stated earlier the `app.ts` file is what keeps all the layers working togethe
 
 The routes define the endpoints, the routes are the branches in the road, and the signs telling you what road leads where, they send the user down the path they need to go, they connect the app to the controllers
 
-Read more in detail here -> [docs](./routes/DOCS.md)
+Read more in detail here -> [docs](./src/routes/README.md)
 
 <div align="center">
 <h2>
@@ -123,7 +123,7 @@ Read more in detail here -> [docs](./routes/DOCS.md)
 
 The controllers are the next step after the routes, think of them as security checkpoints, they make sure the data being sent or requested is secure and the users are allowed to access that data, going back to the road analogy they take your passport and make sure you are clear to enter, if not they deny access via a message.
 
-Read more in detail here -> [docs](./controllers/DOCS.md)
+Read more in detail here -> [docs](./src/controllers/README.md)
 
 <div align="center">
 <h2>
@@ -133,7 +133,7 @@ Read more in detail here -> [docs](./controllers/DOCS.md)
 
 Models are the final layer containing little to no security, their only job is to handle the transaction of submitting data to and getting data from the database, every possible unauthorized or illegal access has been denied previously by the server so here it just sends and gets data.
 
-Read more in detail here -> [docs](./models/DOCS.md)
+Read more in detail here -> [docs](./src/models/README.md)
 
 <div align="center">
 <h2>
@@ -143,7 +143,7 @@ Read more in detail here -> [docs](./models/DOCS.md)
 
 Middleware is a helper for controllers and routes to check data validity and only allow sanitized data through, it includes wrong accesses, internal errors, logging and validation.
 
-Read more in detail here -> [docs](./middleware/DOCS.md)
+Read more in detail here -> [docs](./src/middleware/README.md)
 
 <div align="center">
 <h2>

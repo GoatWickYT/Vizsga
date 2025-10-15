@@ -4,7 +4,6 @@ WORKDIR /usr/src/app
 
 COPY package*.json ./
 COPY tsconfig.json tsconfig.json 
-COPY updateCounts.json updateCounts.json 
 COPY . .
 
 RUN npm install

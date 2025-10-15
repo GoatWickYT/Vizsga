@@ -2,6 +2,8 @@
 <img src="../../../Images/magyar.png"/>
 </div>
 
+[Vissza](../../README.md)
+
 <div align="center">
 <h1>
     Köztes rétegek (Middleware)
@@ -57,6 +59,8 @@ Egyszerű frissítésszámláló, amely biztosítja, hogy a felhasználó csak a
 <div align="center">
 <img src="../../../Images/english.png"/>
 </div>
+
+[Back](../../README.md)
 
 <div align="center">
 <h1>
