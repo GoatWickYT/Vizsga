@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
-import * as PostService from '../../models/news/postModels.js';
+import * as PostService from '../../models/news/postModel.js';
 
 export const getPosts = async (req: Request, res: Response, next: NextFunction) => {
     try {

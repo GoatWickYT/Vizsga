@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
-import * as CommentService from '../../models/news/commentModels.js';
+import * as CommentService from '../../models/news/commentModel.js';
 
 export const getComments = async (req: Request, res: Response, next: NextFunction) => {
     try {
