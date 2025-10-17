@@ -1,6 +1,6 @@
 import * as PostController from '../../controllers/news/postController.js';
 import { Router } from 'express';
-import { updateCount } from '../../middleware/updateCounts.js';
+
 import {
     createPostValidator,
     updatePostValidator,
@@ -188,24 +188,22 @@ router.get('/important', PostController.getImportantPosts);
 
 router.use(attachUser, authorizeRoles(Roles.Admin, Roles.Owner));
 
-router.post('/', createPostValidator, validateRequest, PostController.addPost, updateCount('news'));
+router.post('/', createPostValidator, validateRequest, PostController.addPost);
 router.patch(
     '/stats/:id',
     updatePostStatValidator,
     validateRequest,
     validateId,
     PostController.updateStatistics,
-    updateCount('news'),
 );
-router.patch('/important/:id', validateId, PostController.changeImportance, updateCount('news'));
+router.patch('/important/:id', validateId, PostController.changeImportance);
 router.patch(
     '/content/:id',
     updatePostValidator,
     validateRequest,
     validateId,
     PostController.updatePosts,
-    updateCount('news'),
 );
-router.delete('/:id', validateId, PostController.removePost, updateCount('news'));
+router.delete('/:id', validateId, PostController.removePost);
 
 export default router;

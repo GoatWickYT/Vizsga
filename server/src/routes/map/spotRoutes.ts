@@ -1,6 +1,6 @@
 import * as SpotController from '../../controllers/map/spotController.js';
 import { Router } from 'express';
-import { updateCount } from '../../middleware/updateCounts.js';
+
 import {
     createSpotValidator,
     updateSpotValidator,
@@ -120,21 +120,8 @@ router.get('/:id', validateId, SpotController.getSpot);
 
 router.use(attachUser, authorizeRoles(Roles.Admin, Roles.Owner));
 
-router.post(
-    '/',
-    createSpotValidator,
-    validateRequest,
-    SpotController.createSpot,
-    updateCount('map'),
-);
-router.patch(
-    '/:id',
-    updateSpotValidator,
-    validateRequest,
-    validateId,
-    SpotController.updateSpot,
-    updateCount('map'),
-);
-router.delete('/:id', validateId, SpotController.deleteSpot, updateCount('map'));
+router.post('/', createSpotValidator, validateRequest, SpotController.createSpot);
+router.patch('/:id', updateSpotValidator, validateRequest, validateId, SpotController.updateSpot);
+router.delete('/:id', validateId, SpotController.deleteSpot);
 
 export default router;

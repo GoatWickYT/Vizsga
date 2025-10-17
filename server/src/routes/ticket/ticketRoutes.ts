@@ -1,6 +1,6 @@
 import * as ticketController from '../../controllers/ticket/ticketController.js';
 import { Router } from 'express';
-import { updateCount } from '../../middleware/updateCounts.js';
+
 import {
     createTicketValidator,
     updateTicketValidator,
@@ -146,21 +146,14 @@ router.use(attachUser, authorizeRoles(Roles.Admin, Roles.Owner));
 
 router.get('/', ticketController.getTickets);
 router.get('/id/:id', validateId, ticketController.getTicket);
-router.post(
-    '/',
-    createTicketValidator,
-    validateRequest,
-    ticketController.addTicket,
-    updateCount('ticket'),
-);
+router.post('/', createTicketValidator, validateRequest, ticketController.addTicket);
 router.patch(
     '/:id',
     updateTicketValidator,
     validateRequest,
     validateId,
     ticketController.updateTicket,
-    updateCount('ticket'),
 );
-router.delete('/:id', validateId, ticketController.deleteTicket, updateCount('ticket'));
+router.delete('/:id', validateId, ticketController.deleteTicket);
 
 export default router;

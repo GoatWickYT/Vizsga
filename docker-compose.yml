@@ -1,9 +1,9 @@
 services:
-    app:
+    api:
         build: .
         container_name: vadaspark_app
         env_file:
-            - .dockerenv
+            - server/.dockerenv
         ports:
             - '3000:3000'
         restart: unless-stopped
@@ -15,9 +15,9 @@ services:
         container_name: vadaspark_db
         restart: always
         ports:
-            - '3306:3306'
+            - '3307:3307'
         env_file:
-            - .dockerenv
+            - server/.dockerenv
         environment:
             MYSQL_DATABASE: vadaspark_db
             MYSQL_ROOT_PASSWORD: god

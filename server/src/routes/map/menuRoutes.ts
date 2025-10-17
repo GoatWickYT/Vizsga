@@ -1,6 +1,6 @@
 import * as MenuController from '../../controllers/map/menuController.js';
 import { Router } from 'express';
-import { updateCount } from '../../middleware/updateCounts.js';
+
 import {
     createMenuValidator,
     updateMenuValidator,
@@ -120,21 +120,8 @@ router.get('/:id', validateId, MenuController.getMenu);
 
 router.use(attachUser, authorizeRoles(Roles.Admin, Roles.Owner));
 
-router.post(
-    '/',
-    createMenuValidator,
-    validateRequest,
-    MenuController.createMenu,
-    updateCount('map'),
-);
-router.patch(
-    '/:id',
-    updateMenuValidator,
-    validateRequest,
-    validateId,
-    MenuController.updateMenu,
-    updateCount('map'),
-);
-router.delete('/:id', validateId, MenuController.deleteMenu, updateCount('map'));
+router.post('/', createMenuValidator, validateRequest, MenuController.createMenu);
+router.patch('/:id', updateMenuValidator, validateRequest, validateId, MenuController.updateMenu);
+router.delete('/:id', validateId, MenuController.deleteMenu);
 
 export default router;

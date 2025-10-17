@@ -1,6 +1,6 @@
 import * as personController from '../../controllers/ticket/personController.js';
 import { Router } from 'express';
-import { updateCount } from '../../middleware/updateCounts.js';
+
 import {
     createPersonValidator,
     updatePersonValidator,
@@ -168,21 +168,14 @@ router.get('/', personController.getPeople);
 router.get('/id/:id', validateId, personController.getPerson);
 router.get('/name/:name', validateId, personController.getPersonWithName);
 router.get('/email/:email', validateId, personController.getPersonWithEmail);
-router.post(
-    '/',
-    createPersonValidator,
-    validateRequest,
-    personController.addPeople,
-    updateCount('ticket'),
-);
+router.post('/', createPersonValidator, validateRequest, personController.addPeople);
 router.patch(
     '/:id',
     updatePersonValidator,
     validateRequest,
     validateId,
     personController.updatePeople,
-    updateCount('ticket'),
 );
-router.delete('/:id', validateId, personController.deletePeople, updateCount('ticket'));
+router.delete('/:id', validateId, personController.deletePeople);
 
 export default router;

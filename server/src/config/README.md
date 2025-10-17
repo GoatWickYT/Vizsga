@@ -1,8 +1,8 @@
 <div align="center">
-<img src="../../../Images/magyar.png"/>
+<img style="border-radius:20px; border:2px solid white;"  src="../../../Images/magyar.png"/>
 </div>
 
-[Vissza](../../../README.md)
+### [Vissza](../../../README.md)
 
 <div align="center">
 <h1>
@@ -18,7 +18,9 @@ A `db.ts` kapcsolatot hoz létre a szerver és adatbázis között, avagy össze
 </h2>
 </div>
 
-Az adatbázis tábláinak legenerálására külön `script` íródott, részleteseben itt -> [docs](../scripts/README.md)
+Az adatbázis tábláinak legenerálására külön `script` íródott.
+
+> Részleteseben itt -> [docs](../scripts/README.md)
 
 <div align="center">
 <h2>
@@ -28,13 +30,13 @@ Az adatbázis tábláinak legenerálására külön `script` íródott, részlet
 
 Az adatbázisban tárolt adatoknak modelleket és emellé interfészeket kellett definiálni, ezek a modellek külön kategorizálva lettek `map`, `ticket` és `news` kategóriákba, ezek tartalmazzás a kategóriák alá tartozó modellek definiálását emellett szerver oldalon a vezérlők és útvonalak is így lett szétosztva.
 
----
+<hr style="height:100px;">
 
 <div align="center">
-<img src="../../../Images/english.png"/>
+<img style="border-radius:20px; border:2px solid white;"  src="../../../Images/english.png"/>
 </div>
 
-[Back](../../../README.md)
+### [Back](../../../README.md)
 
 <div align="center">
 <h1>
@@ -50,7 +52,9 @@ Az adatbázisban tárolt adatoknak modelleket és emellé interfészeket kellett
 </h2>
 </div>
 
-To generate the tables in the database we made a `script` which you can read about in detail here -> [docs](../scripts/README.md)
+To generate the tables in the database we made a `script` which is run on command, if the database were to be moved or changed this script help
+
+> Details here -> [docs](../scripts/README.md)
 
 <div align="center">
 <h2>

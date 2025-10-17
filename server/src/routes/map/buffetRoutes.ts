@@ -1,6 +1,6 @@
 import * as BuffetController from '../../controllers/map/buffetController.js';
 import { Router } from 'express';
-import { updateCount } from '../../middleware/updateCounts.js';
+
 import {
     createBuffetValidator,
     updateBuffetValidator,
@@ -120,21 +120,14 @@ router.get('/:id', validateId, BuffetController.getBuffet);
 
 router.use(attachUser, authorizeRoles(Roles.Admin, Roles.Owner));
 
-router.post(
-    '/',
-    createBuffetValidator,
-    validateRequest,
-    BuffetController.createBuffet,
-    updateCount('map'),
-);
+router.post('/', createBuffetValidator, validateRequest, BuffetController.createBuffet);
 router.patch(
     '/:id',
     updateBuffetValidator,
     validateRequest,
     validateId,
     BuffetController.updateBuffet,
-    updateCount('map'),
 );
-router.delete('/:id', validateId, BuffetController.deleteBuffet, updateCount('map'));
+router.delete('/:id', validateId, BuffetController.deleteBuffet);
 
 export default router;

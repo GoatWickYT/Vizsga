@@ -2,9 +2,9 @@ FROM node:20-bookworm
 
 WORKDIR /usr/src/app
 
-COPY package*.json ./
-COPY tsconfig.json tsconfig.json 
-COPY . .
+COPY server/package*.json ./
+COPY server/tsconfig.json tsconfig.json 
+COPY server/. .
 
 RUN npm install
 RUN npm run build

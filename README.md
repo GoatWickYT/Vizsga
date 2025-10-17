@@ -1,4 +1,4 @@
-<img src="./Images/Logo.png"/>
+<img style="border-radius:20px; border-left:2px solid white;"  src="./Images/Logo.png"/>
 
 <div align="center">
 <h1>
@@ -8,23 +8,21 @@
 </h1>
 </div>
 
----
+<hr style="height:100px;">
 
 <div align="center">
-<img src="./Images/magyar.png"/>
+<img style="border-radius:20px; border:2px solid white;"  src="./Images/magyar.png"/>
 </div>
 
 <div align="center" id="hun">
 <h1 style="text-decoration: underline;">    
 <strong>
-<u>
 <a href="https://zooszeged.hu/">Vadaspark</a> Térképes Alkalmazás
-</u> 
 </strong>
 </h1>
 </div>
 
----
+<hr style="height:100px;">
 
 <div align="center">
 <h1>Teendők</h1>
@@ -33,9 +31,9 @@
 -   [x] Adatbázis -> [docs](server/src/config/README.md)
     -   [x] Kód
     -   [x] Dokumentálás
--   [ ] Szerver -> [docs](server/README.md)
+-   [x] Szerver -> [docs](server/README.md)
     -   [x] Kód
-    -   [ ] Dokumentálás
+    -   [x] Dokumentálás
 -   [ ] Webes Elérhetőség
     -   [ ] Kód
     -   [ ] Dokumentálás
@@ -51,7 +49,7 @@
 
 \*\* Miután elkészül az alkalmazás értékesítésre kerülne sor, a Vadaspark igazgatójával való tárgyalás után
 
----
+<hr style="height:100px;">
 
 <div>
 <h1 align="center">Leírás</h1>
@@ -69,17 +67,16 @@
 >
 > Amellett hogy a Vadaspark híreit megnézhetik az alkalmazás értesítést is küld a telefonjukra az éppen fontos hírekről és közeledő eseményekről így biztosan tudni fognak a Vadaspark által tartott különleges alkalmakról
 
----
+<hr style="height:100px;">
 
 <div align="center">
-<img src="./Images/english.png"/>
+    <img style="border-radius:20px; border:2px solid white;"  src="./Images/english.png"/>
 </div>
 
 <div align="center" id="eng">
 <h1 style="text-decoration: underline;">    
 <strong>
-<u>
-<a href="https://zooszeged.hu/">Zoo</a></u> Map Application
+    <a href="https://zooszeged.hu/">Zoo</a> Map Application
 </strong>
 </h1>
 </div>
@@ -88,12 +85,12 @@
 <h1>To-Do List</h1>
 </div>
 
--   [x] Database -> [docs](server/src/config/README.md)
+-   [x] Database
     -   [x] Code
-    -   [x] Documentation
--   [ ] Server -> [docs](server/src/README.md)
+    -   [x] [Documentation](server/src/config/README.md)
+-   [x] Server
     -   [x] Code
-    -   [ ] Documentation
+    -   [x] [Documentation](server/README.md)
 -   [ ] Web Front
     -   [ ] Code
     -   [ ] Documentation
@@ -109,7 +106,7 @@
 
 \*\* After app is done and ready for use possible deal with the zoo manager to sell working app
 
----
+<hr style="height:100px;">
 
 <div align="center">
 <h1>Description</h1>
@@ -127,12 +124,16 @@
 >
 > With the extra addition of being able to not just check but be notified of upcoming events the zoo is hosting you will surely never miss a halloween event hosted by the zoo
 
----
+<hr style="height:100px;margin-bottom:100px">
 
-> ### Elérhetőség:
+> ---
 >
-> email-BB: b1bodbal@vasvari.org
+> ### Elérhetőség/Availability:
 >
-> email-VT: b1vidtam@vasari.org
+> > email-WA: b1witatt@vasvari.org
 >
-> email-WA: b1witatt@vasvari.org
+> > email-BB: b1bodbal@vasvari.org
+>
+> > email-VT: b1vidtam@vasari.org
+>
+> ---

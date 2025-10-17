@@ -1,8 +1,8 @@
 <div align="center">
-<img src="../../../Images/magyar.png"/>
+<img style="border-radius:20px; border:2px solid white;"  src="../../../Images/magyar.png"/>
 </div>
 
-[Vissza](../../README.md)
+### [Vissza](../../README.md)
 
 <div align="center">
 <h1>
@@ -10,9 +10,9 @@
 </h1>
 </div>
 
-dokumentáció a hitelesítésről
+> [dokumentáció a hitelesítésről](./auth/README.md)
 
-dokumentáció az adatellenőrzésről
+> [dokumentáció az adatellenőrzésről](./validation/README.md)
 
 <div align="center">
 <h2>
@@ -46,21 +46,13 @@ Naplózza a hozzáféréseket és a válaszidőket minden egyes szerverhez érke
 
 Korlátozza a felhasználó által a szerverhez küldhető kérések számát (100 kérés 15 percenként).
 
-<div align="center">
-<h2>
-    Frissítésszámláló
-</h2>
-</div>
-
-Egyszerű frissítésszámláló, amely biztosítja, hogy a felhasználó csak akkor küldjön `get` frissítést az adatbázisnak, ha az adatok valóban megváltoztak (teszteletlen funkció, előfordulhat, hogy nem működik — ha így van, egy új adatbázistábla váltja majd fel, vagy teljesen el lesz távolítva).
-
----
+<hr style="height:100px;">
 
 <div align="center">
-<img src="../../../Images/english.png"/>
+<img style="border-radius:20px; border:2px solid white;"  src="../../../Images/english.png"/>
 </div>
 
-[Back](../../README.md)
+### [Back](../../README.md)
 
 <div align="center">
 <h1>
@@ -68,9 +60,9 @@ Egyszerű frissítésszámláló, amely biztosítja, hogy a felhasználó csak a
 </h1>
 </div>
 
-docs for authentication
+> [docs for authentication](./auth/README.md)
 
-docs for validation
+> [docs for validation](./validation/README.md)
 
 <div align="center">
 <h2>
@@ -103,11 +95,3 @@ Logs accesses and response times for each hit the server gets
 </div>
 
 Limits the number of hits from a user to the server (100 requests per 15 minutes)
-
-<div align="center">
-<h2>
-    Update Counts
-</h2>
-</div>
-
-Rudementary update counter, makes it so that the user only hits the database with an update `get` if data has changed (untested, could be non-working if it turns out to not work will be replaced by either a new table in the db or removed completely)

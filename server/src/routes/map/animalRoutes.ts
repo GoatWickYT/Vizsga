@@ -1,6 +1,6 @@
 import * as AnimalController from '../../controllers/map/animalController.js';
 import { Router } from 'express';
-import { updateCount } from '../../middleware/updateCounts.js';
+
 import {
     createAnimalValidator,
     updateAnimalValidator,
@@ -120,21 +120,14 @@ router.get('/:id', validateId, AnimalController.getAnimal);
 
 router.use(attachUser, authorizeRoles(Roles.Admin, Roles.Owner));
 
-router.post(
-    '/',
-    createAnimalValidator,
-    validateRequest,
-    AnimalController.createAnimal,
-    updateCount('map'),
-);
+router.post('/', createAnimalValidator, validateRequest, AnimalController.createAnimal);
 router.patch(
     '/:id',
     updateAnimalValidator,
     validateRequest,
     validateId,
     AnimalController.updateAnimal,
-    updateCount('map'),
 );
-router.delete('/:id', validateId, AnimalController.deleteAnimal, updateCount('map'));
+router.delete('/:id', validateId, AnimalController.deleteAnimal);
 
 export default router;
