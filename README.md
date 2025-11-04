@@ -28,12 +28,12 @@
 <h1>Teendők</h1>
 </div>
 
--   [x] Adatbázis -> [docs](server/src/config/README.md)
+-   [x] Adatbázis
     -   [x] Kód
-    -   [x] Dokumentálás
--   [x] Szerver -> [docs](server/README.md)
+    -   [x] [Dokumentálás](server/src/config/README.md)
+-   [x] Szerver
     -   [x] Kód
-    -   [x] Dokumentálás
+    -   [x] [Dokumentálás](server/README.md)
 -   [ ] Webes Elérhetőség
     -   [ ] Kód
     -   [ ] Dokumentálás

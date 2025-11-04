@@ -1,4 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
+import crypto from 'crypto';
 import { Roles } from '../types/roles.js';
 import { compare, hash } from '../util/hash.js';
 import { signJwt } from '../util/jwt.js';
@@ -10,6 +11,7 @@ import {
     getPersonByUsername,
     createPerson,
 } from '../models/ticket/personModel.js';
+import { getAllTokens, createRefreshToken, RefreshToken } from '../models/refreshTokenModel.js';
 
 interface SafeUser {
     id: number;
@@ -79,8 +81,21 @@ export const login = async (req: Request, res: Response, next: NextFunction) => 
             username: user.username,
         });
 
+        const refreshTokenPlain = crypto.randomBytes(32).toString('hex');
+        const hashedRefreshToken = await hash(refreshTokenPlain);
+
+        await createRefreshToken({
+            userId: user.id!,
+            token: hashedRefreshToken,
+            device: 'Default Device',
+            expiry: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
+            revoked: false,
+            created: new Date(),
+        });
+
         res.status(200).json({
             token,
+            refreshToken: refreshTokenPlain,
             user: {
                 id: user.id!,
                 username: user.username,
@@ -123,6 +138,38 @@ export const register = async (req: Request, res: Response, next: NextFunction) 
         });
 
         res.status(201).json({ message: 'User registered successfully' });
+    } catch (err) {
+        next(err);
+    }
+};
+
+export const refresh = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const tokens = await getAllTokens();
+        const refreshToken: string = req.body.refreshToken;
+
+        let tokenRecord: RefreshToken | undefined;
+
+        for (const token of tokens) {
+            if (await compare(refreshToken, token.token)) {
+                tokenRecord = token;
+                break;
+            }
+        }
+
+        if (!tokenRecord) return res.status(401).json({ message: 'Unauthorized' });
+
+        const user = await getPersonById(Number(tokenRecord.userId));
+        console.log(user);
+        if (!user) return res.status(401).json({ message: 'Unauthorized' });
+
+        res.status(200).json({
+            token: signJwt({
+                id: user.id!,
+                role: user.role as Roles,
+                username: user.username,
+            }),
+        });
     } catch (err) {
         next(err);
     }

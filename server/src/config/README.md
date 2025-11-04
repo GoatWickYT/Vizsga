@@ -20,7 +20,7 @@ A `db.ts` kapcsolatot hoz létre a szerver és adatbázis között, avagy össze
 
 Az adatbázis tábláinak legenerálására külön `script` íródott.
 
-> Részleteseben itt -> [docs](../scripts/README.md)
+> [Részleteseben itt](../scripts/README.md)
 
 <div align="center">
 <h2>
@@ -54,7 +54,7 @@ Az adatbázisban tárolt adatoknak modelleket és emellé interfészeket kellett
 
 To generate the tables in the database we made a `script` which is run on command, if the database were to be moved or changed this script help
 
-> Details here -> [docs](../scripts/README.md)
+> [Details here](../scripts/README.md)
 
 <div align="center">
 <h2>

@@ -16,7 +16,6 @@ import spotRoutes from './routes/map/spotRoutes.js';
 import wcUnitRoutes from './routes/map/wcUnitRoutes.js';
 import animalRoutes from './routes/map/animalRoutes.js';
 import buffetRoutes from './routes/map/buffetRoutes.js';
-import authRoutes from './routes/auth.js';
 
 import postRoutes from './routes/news/postRoutes.js';
 import commentRoutes from './routes/news/commentRoutes.js';
@@ -24,6 +23,9 @@ import commentRoutes from './routes/news/commentRoutes.js';
 import personRoutes from './routes/ticket/personRoutes.js';
 import ticketRoutes from './routes/ticket/ticketRoutes.js';
 import ticketTypeRoutes from './routes/ticket/ticketTypeRoutes.js';
+
+import authRoutes from './routes/auth.js';
+import refreshTokenRoutes from './routes/refreshTokensRoutes.js';
 
 // --- Middleware ---
 import { errorHandler } from './middleware/errorHandler.js';
@@ -76,6 +78,7 @@ app.use('/tickets', ticketRoutes);
 app.use('/ticket-types', ticketTypeRoutes);
 
 app.use('/auth', authRoutes);
+app.use('/refresh-tokens', refreshTokenRoutes);
 
 // --- Error handler ---
 app.use(notFoundHandler);

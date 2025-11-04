@@ -77,7 +77,7 @@ export const initDb = async () => {
                 date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                 FOREIGN KEY (post_id) REFERENCES posts(id) ON DELETE CASCADE,
                 FOREIGN KEY (user_id) REFERENCES people(id) ON DELETE CASCADE)
-         `);
+        `);
         await db.query(`
             CREATE TABLE IF NOT EXISTS ticket_types (
                 id INT AUTO_INCREMENT PRIMARY KEY,
@@ -93,6 +93,17 @@ export const initDb = async () => {
                 FOREIGN KEY (user_id) REFERENCES people(id) ON DELETE CASCADE,
                 FOREIGN KEY (type_id) REFERENCES ticket_types(id) ON DELETE RESTRICT)
         `);
+        await db.query(`
+            CREATE TABLE IF NOT EXISTS refresh_tokens (
+                id INT AUTO_INCREMENT PRIMARY KEY,
+                user_id INT NOT NULL,
+                token VARCHAR(255) NOT NULL,
+                device VARCHAR(50) NOT NULL,
+                revoked BOOLEAN DEFAULT FALSE,
+                expiry TIMESTAMP NOT NULL,
+                created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                FOREIGN KEY (user_id) REFERENCES people(id) ON DELETE CASCADE)
+            `);
         console.log('Database initialized successfully!');
     } catch (err) {
         console.error('Error initializing database:', err);
