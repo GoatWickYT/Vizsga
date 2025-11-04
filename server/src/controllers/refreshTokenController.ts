@@ -1,11 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import * as RefreshTokenService from '../models/refreshTokenModel.js';
 import { compare, hash } from '../util/hash.js';
-
-RefreshTokenService.getAllDevicesRefreshTokens;
-RefreshTokenService.getRefreshTokenByToken;
-RefreshTokenService.revokeAllTokensForUser;
-RefreshTokenService.revokeRefreshToken;
+import { Roles } from '../types/roles.js';
 
 export const cleanRefreshToken = async (req: Request, res: Response, next: NextFunction) => {
     try {
@@ -58,6 +54,9 @@ export const getRefreshTokenByToken = async (req: Request, res: Response, next: 
 export const revokeAllTokensForUser = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const userId: number = req.body;
+        if (req.user!.role === Roles.User && req.user!.id !== userId) {
+            return res.status(403).json({ error: 'Cannot revoke other users’ tokens' });
+        }
         const revokedCount: number = await RefreshTokenService.revokeAllTokensForUser(userId);
         res.status(200).json({ message: `Revoked ${revokedCount} token(s)` });
     } catch (err) {

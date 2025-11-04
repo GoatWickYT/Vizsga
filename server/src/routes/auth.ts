@@ -147,9 +147,44 @@ const router = Router();
  *         description: Username or email already in use
  */
 
+/**
+ * @openapi
+ * /auth/refresh:
+ *   post:
+ *     summary: Refresh access token using a valid refresh token
+ *     tags:
+ *       - Authentication
+ *     requestBody:
+ *       description: The refresh token
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - refreshToken
+ *             properties:
+ *               refreshToken:
+ *                 type: string
+ *                 description: Refresh token issued to the user
+ *     responses:
+ *       200:
+ *         description: New access token issued
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 accessToken:
+ *                   type: string
+ *       401:
+ *         description: Unauthorized (invalid, revoked, or expired token)
+ */
+
 router.get('/me', attachUser, authController.getMe);
 router.post('/login', authController.login);
 router.post('/register', authController.register);
+router.post('/refresh', authController.refresh);
 
 router.use(attachUser, authorizeRoles(Roles.Admin, Roles.Owner));
 
