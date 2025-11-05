@@ -1,3 +1,4 @@
+import '../index.css';
 import './Home.css';
 
 const Home = () => {
