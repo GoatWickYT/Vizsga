@@ -149,6 +149,72 @@ const router = Router();
 
 /**
  * @openapi
+ * /auth/change-password:
+ *   patch:
+ *     summary: Change a user's password
+ *     description: >
+ *       Allows a user to change their password.
+ *       Requires the current (old) password for verification.
+ *       Automatically revokes all refresh tokens associated with the user, forcing re-login on all devices.
+ *     tags:
+ *       - Authentication
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - username
+ *               - oldPassword
+ *               - newPassword
+ *             properties:
+ *               username:
+ *                 type: string
+ *                 example: johndoe
+ *               oldPassword:
+ *                 type: string
+ *                 example: OldPass123!
+ *               newPassword:
+ *                 type: string
+ *                 example: NewPass456!
+ *     responses:
+ *       200:
+ *         description: Password changed successfully, all sessions revoked.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: Password changed successfully, all sessions revoked
+ *       400:
+ *         description: Missing fields or invalid request body.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: Both passwords and username are required
+ *       401:
+ *         description: Invalid credentials — old password does not match or user not found.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: Invalid credentials
+ *       500:
+ *         description: Internal server error.
+ */
+
+/**
+ * @openapi
  * /auth/refresh:
  *   post:
  *     summary: Refresh access token using a valid refresh token
@@ -181,10 +247,14 @@ const router = Router();
  *         description: Unauthorized (invalid, revoked, or expired token)
  */
 
-router.get('/me', attachUser, authController.getMe);
 router.post('/login', authController.login);
 router.post('/register', authController.register);
+
+router.use(attachUser, authorizeRoles(Roles.Admin, Roles.Owner, Roles.User));
+
+router.get('/me', attachUser, authController.getMe);
 router.post('/refresh', authController.refresh);
+router.patch('/change-password', authController.changePassword);
 
 router.use(attachUser, authorizeRoles(Roles.Admin, Roles.Owner));
 

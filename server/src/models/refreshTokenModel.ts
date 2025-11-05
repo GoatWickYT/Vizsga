@@ -19,6 +19,17 @@ export const getAllDevicesRefreshTokens = async (userId: number): Promise<string
     ]);
 };
 
+export const getRefreshTokenForDevice = async (
+    userId: number,
+    device: string,
+): Promise<RefreshToken | null> => {
+    const rows = await queryRows<RefreshToken>(
+        'SELECT * FROM refresh_tokens WHERE user_id = ? AND device = ? AND revoked = FALSE AND expiry > NOW()',
+        [userId, device],
+    );
+    return rows[0] || null;
+};
+
 export const getRefreshTokenByToken = async (token: string): Promise<RefreshToken | null> => {
     const rows = await queryRows<RefreshToken>(
         'SELECT * FROM refresh_tokens WHERE token = ? AND revoked = FALSE AND expiry > NOW();',
