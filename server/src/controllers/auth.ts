@@ -10,8 +10,15 @@ import {
     getPersonByEmail,
     getPersonByUsername,
     createPerson,
+    updatePerson,
 } from '../models/ticket/personModel.js';
-import { getAllTokens, createRefreshToken, RefreshToken } from '../models/refreshTokenModel.js';
+import {
+    getAllTokens,
+    createRefreshToken,
+    RefreshToken,
+    revokeAllTokensForUser,
+    getRefreshTokenForDevice,
+} from '../models/refreshTokenModel.js';
 
 interface SafeUser {
     id: number;
@@ -62,13 +69,37 @@ export const getMe = (req: Request, res: Response) => {
     res.status(200).json(safeUser);
 };
 
+export const changePassword = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+        const { oldPassword, newPassword, username } = req.body;
+        if (!oldPassword || !newPassword || !username)
+            return res.status(400).json({ error: 'Both passwords and username are required' });
+
+        let user = await getPersonByUsername(username);
+        if (!user) return res.status(401).json({ error: 'Invalid credentials' });
+
+        const passwordMatch = await compare(oldPassword, user.password);
+        if (!passwordMatch) return res.status(401).json({ error: 'Invalid credentials' });
+
+        const hashedPassword = await hash(newPassword);
+
+        await updatePerson(user.id!, { password: hashedPassword });
+        await revokeAllTokensForUser(user.id!);
+        res.status(200).json({ message: 'Password changed successfully, all sessions revoked' });
+    } catch (err) {
+        next(err);
+    }
+};
+
 export const login = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const { usernameOrEmail, password } = req.body;
+        const { usernameOrEmail, password, keepLoggedIn, device } = req.body;
 
-        if (!usernameOrEmail || !password)
+        if (!usernameOrEmail || !password) {
             return res.status(400).json({ error: 'Username/email and password are required' });
-        let user = await getPersonByEmail(usernameOrEmail);
+        }
+
+        let user: Person | null = await getPersonByEmail(usernameOrEmail);
         if (!user) user = await getPersonByUsername(usernameOrEmail);
         if (!user) return res.status(401).json({ error: 'Invalid credentials' });
 
@@ -81,17 +112,30 @@ export const login = async (req: Request, res: Response, next: NextFunction) => 
             username: user.username,
         });
 
-        const refreshTokenPlain = crypto.randomBytes(32).toString('hex');
-        const hashedRefreshToken = await hash(refreshTokenPlain);
+        const deviceName: string = device || 'Default Device';
 
-        await createRefreshToken({
-            userId: user.id!,
-            token: hashedRefreshToken,
-            device: 'Default Device',
-            expiry: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
-            revoked: false,
-            created: new Date(),
-        });
+        let refreshTokenPlain: string;
+        const existing = await getRefreshTokenForDevice(user.id!, deviceName);
+
+        if (existing) {
+            refreshTokenPlain = existing.token;
+        } else {
+            refreshTokenPlain = crypto.randomBytes(32).toString('hex');
+            const hashedRefreshToken = await hash(refreshTokenPlain);
+
+            const expiry = keepLoggedIn
+                ? new Date(Date.now() + 30 * 24 * 60 * 60 * 1000) // 30 days
+                : new Date(Date.now() + 24 * 60 * 60 * 1000); // 1 day
+
+            await createRefreshToken({
+                userId: user.id!,
+                token: hashedRefreshToken,
+                device: deviceName,
+                expiry,
+                revoked: false,
+                created: new Date(),
+            });
+        }
 
         res.status(200).json({
             token,
@@ -158,7 +202,7 @@ export const refresh = async (req: Request, res: Response, next: NextFunction) =
         }
 
         if (!tokenRecord) return res.status(401).json({ message: 'Unauthorized' });
-
+        if (tokenRecord.revoked) return res.status(401).json({ message: 'Unauthorized' });
         const user = await getPersonById(Number(tokenRecord.userId));
         console.log(user);
         if (!user) return res.status(401).json({ message: 'Unauthorized' });
