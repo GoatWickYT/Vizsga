@@ -3,7 +3,8 @@ import { createRoot } from 'react-dom/client';
 import { StrictMode } from 'react';
 import Home from './pages/Home';
 import './index.css';
-import Navbar from './pages/Navbar';
+import './i18n';
+import Navbar from './components/Navbar';
 
 createRoot(document.getElementById('root')!).render(
     <StrictMode>
