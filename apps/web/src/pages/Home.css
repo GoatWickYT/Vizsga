@@ -1,0 +1,33 @@
+/* Light mode */
+@media (prefers-color-scheme: light) {
+    :root {
+        --primary-text: #2f2b25;
+        --primary-bg: #f3f0e6;
+        --primary-detail: #e9b44c;
+
+        --secondary-text: #2f2b25;
+        --secondary-bg: #f3f0e6;
+        --secondary-detail: #e9b44c;
+
+        --highlight-text: #e9b44c;
+        --highlight-bg: #e9b44c;
+        --highlight-detail: #e9b44c;
+    }
+}
+
+/* Dark mode */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --primary-text: #ecedee;
+        --primary-bg: #1c1b19;
+        --primary-detail: #c79200;
+
+        --secondary-text: #ffffff;
+        --secondary-bg: #030303;
+        --secondary-detail: #856100;
+
+        --highlight-text: #ffdd7e;
+        --highlight-bg: #2c240d;
+        --highlight-detail: #b48504;
+    }
+}

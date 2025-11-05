@@ -1,11 +1,11 @@
 {
   "expo": {
-    "name": "mobileVersion",
-    "slug": "mobileVersion",
+    "name": "VadasparkApp",
+    "slug": "VadasparkApp",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "mobileversion",
+    "scheme": "VadasparkApp",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
