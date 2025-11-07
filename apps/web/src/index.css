@@ -6,12 +6,12 @@
         --primary-detail: #e9b44c;
 
         --secondary-text: #2f2b25;
-        --secondary-bg: #f3f0e6;
+        --secondary-bg: #ffffff;
         --secondary-detail: #e9b44c;
 
-        --highlight-text: #e9b44c;
-        --highlight-bg: #e9b44c;
-        --highlight-detail: #e9b44c;
+        --highlight-text: #b48504;
+        --highlight-bg: #fff6e4;
+        --highlight-detail: #ffdd7e;
     }
 }
 

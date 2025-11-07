@@ -1,4 +1,5 @@
 .leaflet-container {
     height: 92vh;
     overflow: hidden;
+    z-index: 1;
 }

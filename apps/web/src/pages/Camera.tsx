@@ -1,9 +1,10 @@
 import '../index.css';
 import './Camera.css';
-import { useState, useEffect, useRef } from 'react';
+import { useState, useRef } from 'react';
 import ReactPlayer from 'react-player';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 const Camera = () => {
     const urls: string[] = [
@@ -17,16 +18,10 @@ const Camera = () => {
     ];
 
     const [selected, setSelected] = useState(0);
+    const { t } = useTranslation();
     const [direction, setDirection] = useState(0);
-    const playerRef = useRef<HTMLDivElement>(null);
 
-    // Auto fullscreen on desktop
-    useEffect(() => {
-        const isMobile = /Mobi|Android/i.test(navigator.userAgent);
-        if (!isMobile && playerRef.current && document.fullscreenElement === null) {
-            playerRef.current.requestFullscreen().catch(() => {});
-        }
-    }, []);
+    const playerRef = useRef<HTMLDivElement>(null);
 
     const nextCam = () => {
         setDirection(1);
@@ -53,7 +48,7 @@ const Camera = () => {
     return (
         <main className="Camera">
             {/* Background video */}
-            <div ref={playerRef} className="Camera__video-container">
+            <div ref={playerRef} className="video-container">
                 <AnimatePresence custom={direction} mode="wait">
                     <motion.div
                         key={selected}
@@ -62,37 +57,33 @@ const Camera = () => {
                         initial="enter"
                         animate="center"
                         exit="exit"
-                        transition={{ duration: 0.6 }}
-                        className="Camera__motion"
+                        transition={{ duration: 0.3 }}
+                        className="motion"
                     >
                         <ReactPlayer
                             src={urls[selected]}
                             playing
                             controls={false}
-                            width="100%"
-                            height="100%"
                             volume={0.4}
                             style={{ pointerEvents: 'none' }}
-                            className="Camera__player"
+                            className="player"
                         />
                     </motion.div>
                 </AnimatePresence>
-
-                <div className="Camera__overlay" />
             </div>
 
             {/* Arrows */}
-            <button onClick={prevCam} className="Camera__arrow Camera__arrow--left">
+            <button onClick={prevCam} className="arrow arrow--left">
                 <ChevronLeft size={32} />
             </button>
-            <button onClick={nextCam} className="Camera__arrow Camera__arrow--right">
+            <button onClick={nextCam} className="arrow arrow--right">
                 <ChevronRight size={32} />
             </button>
 
             {/* Footer */}
-            <div className="Camera__footer">
-                <span className="Camera__footer-text">
-                    Camera {selected + 1} / {urls.length}
+            <div className="footer">
+                <span className="footer-text">
+                    {t('c-cams')} ({selected + 1} / {urls.length})
                 </span>
             </div>
         </main>

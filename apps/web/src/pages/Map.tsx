@@ -1,17 +1,24 @@
+import { ImageOverlay, MapContainer, Marker, Polygon, TileLayer, Tooltip } from 'react-leaflet';
+import type { LatLngBoundsExpression, Marker as LeafletMarker } from 'leaflet';
+import { useMemo, useRef, useState } from 'react';
+import 'leaflet/dist/leaflet.css';
 import '../index.css';
 import './Map.css';
-import { ImageOverlay, MapContainer, Marker, Polygon, TileLayer, Tooltip } from 'react-leaflet';
-import 'leaflet/dist/leaflet.css';
-import { useMemo, useRef, useState } from 'react';
 
 const Map = () => {
     const center = {
         lat: 46.25,
         lng: 20.117,
     };
+
+    const bounds: LatLngBoundsExpression = [
+        [46.24569 /* BOTTOM */, 20.109 /* LEFT */],
+        [46.2539 /* TOP    */, 20.12623 /* RIGHT */],
+    ];
+
     const DraggableMarker = () => {
         const [position, setPosition] = useState(center);
-        const markerRef = useRef(null);
+        const markerRef = useRef<LeafletMarker | null>(null);
         const eventHandlers = useMemo(
             () => ({
                 dragend() {
@@ -40,20 +47,16 @@ const Map = () => {
 
     return (
         <main className="Map">
-            <MapContainer center={center} zoom={17}>
+            <MapContainer center={center} zoom={20}>
                 <TileLayer
                     attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                     zIndex={1}
                 />
-                <ImageOverlay
-                    opacity={0.0}
-                    url={'map.svg'}
-                    bounds={[
-                        [46.2456901 /* BOTTOM */, 20.1090001 /* LEFT */],
-                        [46.2539001 /* TOP    */, 20.1262301 /* RIGHT */],
-                    ]}
-                />
+                <ImageOverlay opacity={1} url={'map.svg'} bounds={bounds} />
+                <ImageOverlay opacity={1} url={'paths.svg'} bounds={bounds} />
+                <ImageOverlay opacity={0.6} url={'cages.svg'} bounds={bounds} />
+                {/*
                 <DraggableMarker />
                 <ImageOverlay
                     url={'icon.png'}
@@ -62,13 +65,9 @@ const Map = () => {
                         [46.2505, 20.1176],
                     ]}
                 />
-                {/* Old Door */}
                 <Marker position={[46.25347, 20.11551]}></Marker>
-                {/* Main Door */}
                 <Marker position={[46.25165, 20.11815]} />
-                {/* Staff */}
                 <Marker position={[46.24825, 20.1159]} />
-
                 <Polygon
                     positions={[
                         [46.25187, 20.11511],
@@ -95,7 +94,8 @@ const Map = () => {
                     ]}
                 >
                     <Tooltip permanent>002</Tooltip>
-                </Polygon>
+                </Polygon>{' '}
+                */}
             </MapContainer>
         </main>
     );
