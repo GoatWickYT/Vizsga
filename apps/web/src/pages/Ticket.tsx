@@ -4,8 +4,10 @@ import "./Ticket.css"
 const TicketPage = () => {
     return (
         <>
-            <div>
-                
+            <div className="mainDiv">
+                <div className="contentDiv">
+                    
+                </div>
             </div>
         </>
     );
