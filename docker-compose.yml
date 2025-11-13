@@ -15,7 +15,7 @@ services:
         container_name: vadaspark_db
         restart: always
         ports:
-            - '3307:3307'
+            - '3307:3306'
         env_file:
             - server/.dockerenv
         environment:
